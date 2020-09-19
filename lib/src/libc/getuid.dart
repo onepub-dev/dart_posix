@@ -11,7 +11,7 @@ typedef _getuid = int Function();
 /// processes.
 ///
 /// See: geteuid
-int  getuid() {
+int getuid() {
   final getuidPointer = Libc().lookup<_getuid_func>('getuid');
   final getuid = getuidPointer.asFunction<_getuid>();
   var uid = getuid();
