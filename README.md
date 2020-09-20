@@ -10,7 +10,10 @@ int uid = getuid();
 ```
 
 
-#Contributing
+# Contributing
+
+## Dart types only
+The api should only expose dart types. Any C types MUST be translated to dart types before being returned.
 
 ## setters and getters
 

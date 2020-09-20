@@ -12,7 +12,7 @@ headers:
 array-workaround: true      
 
 comments:
-    style: doxygen
+    style: any
     length: full
 
 use-supported-typedefs: true  

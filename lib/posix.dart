@@ -6,4 +6,4 @@
 
 export 'src/posix_exception.dart';
 
-export 'src/posix_bindings.dart';
+export 'src/unistd/bindings.dart';
