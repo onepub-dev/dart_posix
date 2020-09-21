@@ -15,7 +15,9 @@ class Libc {
     dylib = DynamicLibrary.open(path);
   }
 
-  Pointer<NativeFunction<F>> lookup<F extends Function>(String funcname) {
-    return dylib.lookup<NativeFunction<F>>(funcname);
-  }
+  Pointer<NativeFunction<F>> lookup<F extends Function>(String funcname) =>
+      dylib.lookup<NativeFunction<F>>(funcname);
+
+  F lookupFunction<T extends Function, F extends Function>(String symbolName) =>
+      dylib.lookupFunction(symbolName);
 }
