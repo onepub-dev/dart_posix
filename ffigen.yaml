@@ -6,7 +6,7 @@ output: 'lib/src/posix_bindings.dart'
 
 headers: 
   entry-points:
-      - '/usr/include/errno.h'
+      - '/usr/include/string.h'
 
 
 array-workaround: true      

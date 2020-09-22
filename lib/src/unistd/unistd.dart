@@ -2,6 +2,8 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 import 'package:posix/posix.dart';
+import 'package:posix/src/util/conversions.dart';
+import 'package:posix/src/string/string.dart';
 
 import 'libc.dart';
 
@@ -82,86 +84,119 @@ int close(
 
 _dart_close _close;
 
-/// Read NBYTES into BUF from FD.  Return the
-/// number read, -1 for errors or 0 for EOF.
+/// Read NBYTES  from FD.  Returning the bytes read.
+///
+/// The returned array will be empty if EOF was reached.
+///
+/// Throws a [PosixException] if an error occurs.
 ///
 /// This function is a cancellation point and therefore not marked with
 /// __THROW.
-int read(
+List<int> read(
   int fd,
-  ffi.Pointer<ffi.Void> buf,
   int nbytes,
 ) {
+  var c_buf = allocate<ffi.Int8>(count: nbytes);
+
   _read ??= Libc().lookupFunction<_c_read, _dart_read>('read');
-  return _read(
+  var result = _read(
     fd,
-    buf,
+    c_buf,
     nbytes,
   );
+
+  _throwIfErrno('read', result, c_buf);
+
+  var buf = c_buf.asTypedList(result);
+  free(c_buf);
+
+  return buf;
 }
 
 _dart_read _read;
 
-/// Write N bytes of BUF to FD.  Return the number written, or -1.
+/// Writes [buf] to FD.  Return the number of bytes written;
 ///
-/// This function is a cancellation point and therefore not marked with
-/// __THROW.
+/// Throws a [PosixException] if an error occurs.
+///
 int write(
   int fd,
-  ffi.Pointer<ffi.Void> buf,
-  int n,
+  List<int> buf, // ffi.Pointer<ffi.Void> buf,
 ) {
+  var c_buf = copyDartListToCBuff(buf);
+
   _write ??= Libc().lookupFunction<_c_write, _dart_write>('write');
-  return _write(
+  var written = _write(
     fd,
-    buf,
-    n,
+    c_buf,
+    buf.length,
   );
+
+  _throwIfErrno('pwrite', written, c_buf);
+
+  free(c_buf);
+
+  return written;
 }
 
 _dart_write _write;
 
-/// Read NBYTES into BUF from FD at the given position OFFSET without
-/// changing the file pointer.  Return the number read, -1 for errors
-/// or 0 for EOF.
+/// Read NBYTES and returns 'nbytes' from FD at the given position OFFSET without
+/// changing the file pointer.
 ///
-/// This function is a cancellation point and therefore not marked with
-/// __THROW.
-int pread(
+/// Returns a List<int> with the results. The length of the array will be
+/// the number of bytes read which may be less than 'nbytes' if we hit the
+/// end of the file when reading.
+///
+/// Throws: [PosixException] if an error occurs reading the data.
+List<int> pread(
   int fd,
-  ffi.Pointer<ffi.Void> buf,
   int nbytes,
   int offset,
 ) {
+  var c_buf = allocate<ffi.Int8>(count: nbytes);
   _pread ??= Libc().lookupFunction<_c_pread, _dart_pread>('pread');
-  return _pread(
+  var read = _pread(
     fd,
-    buf,
+    c_buf,
     nbytes,
     offset,
   );
+
+  _throwIfErrno('pread', read, c_buf);
+
+  var buf = c_buf.asTypedList(read);
+  free(c_buf);
+
+  return buf;
 }
 
 _dart_pread _pread;
 
 /// Write N bytes of BUF to FD at the given position OFFSET without
-/// changing the file pointer.  Return the number written, or -1.
+/// changing the file pointer.  Return the number of bytes written
 ///
-/// This function is a cancellation point and therefore not marked with
-/// __THROW.
+/// Throws a [PosixException] if an error occurs.
 int pwrite(
   int fd,
-  ffi.Pointer<ffi.Void> buf,
-  int n,
+  List<int> buf, // ffi.Pointer<ffi.Void> buf,
   int offset,
 ) {
+  var c_buf = copyDartListToCBuff(buf);
+
   _pwrite ??= Libc().lookupFunction<_c_pwrite, _dart_pwrite>('pwrite');
-  return _pwrite(
+  var written = _pwrite(
     fd,
-    buf,
-    n,
+    c_buf,
+    buf.length,
     offset,
   );
+
+  _throwIfErrno('pwrite', written, c_buf);
+
+  free(c_buf);
+
+  return written;
 }
 
 _dart_pwrite _pwrite;
@@ -170,13 +205,22 @@ _dart_pwrite _pwrite;
 /// If successful, two file descriptors are stored in PIPEDES;
 /// bytes written on PIPEDES[1] can be read from PIPEDES[0].
 /// Returns 0 if successful, -1 if not.
-int pipe(
+List<int> pipe(
   ffi.Pointer<ffi.Int32> __pipedes,
 ) {
+  var c_pipedes = allocate<ffi.Int32>(count: 2);
   _pipe ??= Libc().lookupFunction<_c_pipe, _dart_pipe>('pipe');
-  return _pipe(
-    __pipedes,
+  var result = _pipe(
+    c_pipedes,
   );
+
+  _throwIfErrno('pipe', result, c_pipedes);
+
+  var pipedes = c_pipedes.asTypedList(2);
+
+  free(c_pipedes);
+
+  return pipedes;
 }
 
 _dart_pipe _pipe;
@@ -191,6 +235,7 @@ _dart_pipe _pipe;
 int alarm(
   int seconds,
 ) {
+  // TODO look at setting errno before we call this method.
   _alarm ??= Libc().lookupFunction<_c_alarm, _dart_alarm>('alarm');
   return _alarm(
     seconds,
@@ -391,10 +436,7 @@ String getcwd() {
     0,
   );
 
-  var cwd = Utf8.fromUtf8(c_cwd.cast());
-  free(c_cwd);
-
-  return cwd;
+  return copyCBuffToDartString(c_cwd);
 }
 
 _dart_getcwd _getcwd;
@@ -409,7 +451,13 @@ String getwd() {
     c_buf,
   );
 
-  var wd = Utf8.fromUtf8(result.cast());
+  if (result == null) {
+    free(c_buf);
+    var error = Utf8.fromUtf8(result.cast());
+    throw PosixException(error, -1);
+  }
+
+  var wd = Utf8.fromUtf8(c_buf.cast());
 
   free(c_buf);
 
@@ -447,16 +495,22 @@ _dart_dup2 _dup2;
 /// Replace the current process, executing PATH with arguments ARGV and
 /// environment ENVP.  ARGV and ENVP are terminated by NULL pointers.
 int execve(
-  ffi.Pointer<ffi.Int8> __path,
+  String path, // ffi.Pointer<ffi.Int8> __path,
   ffi.Pointer<ffi.Pointer<ffi.Int8>> __argv,
   ffi.Pointer<ffi.Pointer<ffi.Int8>> __envp,
 ) {
+  var c_path = Utf8.toUtf8(path).cast();
+
   _execve ??= Libc().lookupFunction<_c_execve, _dart_execve>('execve');
-  return _execve(
-    __path,
+  var result = _execve(
+    c_path,
     __argv,
     __envp,
   );
+
+  free(c_path);
+
+  return result;
 }
 
 _dart_execve _execve;
@@ -480,14 +534,20 @@ _dart_fexecve _fexecve;
 
 /// Execute PATH with arguments ARGV and environment from `environ'.
 int execv(
-  ffi.Pointer<ffi.Int8> __path,
+  String path, // ffi.Pointer<ffi.Int8> __path,
   ffi.Pointer<ffi.Pointer<ffi.Int8>> __argv,
 ) {
+  var c_path = Utf8.toUtf8(path).cast();
+
   _execv ??= Libc().lookupFunction<_c_execv, _dart_execv>('execv');
-  return _execv(
-    __path,
+  var result = _execv(
+    c_path,
     __argv,
   );
+
+  free(c_path);
+
+  return result;
 }
 
 _dart_execv _execv;
@@ -495,14 +555,23 @@ _dart_execv _execv;
 /// Execute PATH with all arguments after PATH until a NULL pointer,
 /// and the argument after that for environment.
 int execle(
-  ffi.Pointer<ffi.Int8> __path,
-  ffi.Pointer<ffi.Int8> __arg,
+  String path, // ffi.Pointer<ffi.Int8> __path,
+  String arg, // ffi.Pointer<ffi.Int8> __arg,
 ) {
+  var c_path = Utf8.toUtf8(path).cast();
+
+  var c_arg = Utf8.toUtf8(arg).cast();
+
   _execle ??= Libc().lookupFunction<_c_execle, _dart_execle>('execle');
-  return _execle(
-    __path,
-    __arg,
+  var result = _execle(
+    c_path,
+    c_arg,
   );
+
+  free(c_path);
+  free(c_arg);
+
+  return result;
 }
 
 _dart_execle _execle;
@@ -510,14 +579,23 @@ _dart_execle _execle;
 /// Execute PATH with all arguments after PATH until
 /// a NULL pointer and environment from `environ'.
 int execl(
-  ffi.Pointer<ffi.Int8> __path,
-  ffi.Pointer<ffi.Int8> __arg,
+  String path, // ffi.Pointer<ffi.Int8> __path,
+  String arg, // ffi.Pointer<ffi.Int8> __arg,
 ) {
+  var c_path = Utf8.toUtf8(path).cast();
+
+  var c_arg = Utf8.toUtf8(arg).cast();
+
   _execl ??= Libc().lookupFunction<_c_execl, _dart_execl>('execl');
-  return _execl(
-    __path,
-    __arg,
+  var result = _execl(
+    c_path,
+    c_arg,
   );
+
+  free(c_path);
+  free(c_arg);
+
+  return result;
 }
 
 _dart_execl _execl;
@@ -525,14 +603,20 @@ _dart_execl _execl;
 /// Execute FILE, searching in the `PATH' environment variable if it contains
 /// no slashes, with arguments ARGV and environment from `environ'.
 int execvp(
-  ffi.Pointer<ffi.Int8> file,
+  String file, // ffi.Pointer<ffi.Int8> file,
   ffi.Pointer<ffi.Pointer<ffi.Int8>> __argv,
 ) {
+  var c_file = Utf8.toUtf8(file).cast();
+
   _execvp ??= Libc().lookupFunction<_c_execvp, _dart_execvp>('execvp');
-  return _execvp(
-    file,
+  var result = _execvp(
+    c_file,
     __argv,
   );
+
+  free(c_file);
+
+  return result;
 }
 
 _dart_execvp _execvp;
@@ -541,25 +625,33 @@ _dart_execvp _execvp;
 /// it contains no slashes, with all arguments after FILE until a
 /// NULL pointer and environment from `environ'.
 int execlp(
-  ffi.Pointer<ffi.Int8> file,
-  ffi.Pointer<ffi.Int8> __arg,
+  String file, // ffi.Pointer<ffi.Int8> file,
+  String arg, // ffi.Pointer<ffi.Int8> __arg,
 ) {
+  var c_file = Utf8.toUtf8(file).cast();
+
+  var c_arg = Utf8.toUtf8(arg).cast();
+
   _execlp ??= Libc().lookupFunction<_c_execlp, _dart_execlp>('execlp');
-  return _execlp(
-    file,
-    __arg,
+  var result = _execlp(
+    c_file,
+    c_arg,
   );
+  free(c_file);
+  free(c_arg);
+
+  return result;
 }
 
 _dart_execlp _execlp;
 
 /// Add INC to priority of the current process.
 int nice(
-  int __inc,
+  int inc,
 ) {
   _nice ??= Libc().lookupFunction<_c_nice, _dart_nice>('nice');
   return _nice(
-    __inc,
+    inc,
   );
 }
 
@@ -623,17 +715,33 @@ int sysconf(
 _dart_sysconf _sysconf;
 
 /// Get the value of the string-valued system variable NAME.
-int confstr(
+String confstr(
   int name,
-  ffi.Pointer<ffi.Int8> buf,
-  int len,
 ) {
   _confstr ??= Libc().lookupFunction<_c_confstr, _dart_confstr>('confstr');
-  return _confstr(
+  var len = _confstr(
     name,
-    buf,
+    null,
+    0,
+  );
+
+  if (len == 0) {
+    throw PosixException(strerror(errno()), errno());
+  }
+
+  var c_buf = allocate<ffi.Int8>(count: len);
+
+  var result = _confstr(
+    name,
+    c_buf,
     len,
   );
+
+  if (result == 0) {
+    throw PosixException(strerror(errno()), errno());
+  }
+
+  return copyCBuffToDartString(c_buf);
 }
 
 _dart_confstr _confstr;
@@ -1297,7 +1405,11 @@ void _throwIfErrno<T>(String method, int result,
   if (result == -1) {
     if (toFree1 != null) free(toFree1);
     if (toFree2 != null) free(toFree2);
-    throw PosixException('An error occured calling $method', errno());
+
+    var error = errno();
+
+    throw PosixException(
+        'An error occured calling $method: ${strerror(error)} ', error);
   }
 }
 
@@ -1838,52 +1950,52 @@ typedef _dart_close = int Function(
 
 typedef _c_read = ffi.Int64 Function(
   ffi.Int32 fd,
-  ffi.Pointer<ffi.Void> buf,
+  ffi.Pointer<ffi.Int8> buf,
   ffi.Uint64 nbytes,
 );
 
 typedef _dart_read = int Function(
   int fd,
-  ffi.Pointer<ffi.Void> buf,
+  ffi.Pointer<ffi.Int8> buf,
   int nbytes,
 );
 
 typedef _c_write = ffi.Int64 Function(
   ffi.Int32 fd,
-  ffi.Pointer<ffi.Void> buf,
+  ffi.Pointer<ffi.Int8> buf,
   ffi.Uint64 n,
 );
 
 typedef _dart_write = int Function(
   int fd,
-  ffi.Pointer<ffi.Void> buf,
+  ffi.Pointer<ffi.Int8> buf,
   int n,
 );
 
 typedef _c_pread = ffi.Int64 Function(
   ffi.Int32 fd,
-  ffi.Pointer<ffi.Void> buf,
+  ffi.Pointer<ffi.Int8> buf,
   ffi.Uint64 nbytes,
   ffi.Int64 offset,
 );
 
 typedef _dart_pread = int Function(
   int fd,
-  ffi.Pointer<ffi.Void> buf,
+  ffi.Pointer<ffi.Int8> buf,
   int nbytes,
   int offset,
 );
 
 typedef _c_pwrite = ffi.Int64 Function(
   ffi.Int32 fd,
-  ffi.Pointer<ffi.Void> buf,
+  ffi.Pointer<ffi.Int8> buf,
   ffi.Uint64 n,
   ffi.Int64 offset,
 );
 
 typedef _dart_pwrite = int Function(
   int fd,
-  ffi.Pointer<ffi.Void> buf,
+  ffi.Pointer<ffi.Int8> buf,
   int n,
   int offset,
 );
