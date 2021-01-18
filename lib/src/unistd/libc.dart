@@ -1,10 +1,10 @@
-import 'dart:ffi';
+import 'dart:ffi' as ffi;
 import 'dart:io' show Platform;
 
 class Libc {
   static final Libc _self = Libc._internal();
 
-  DynamicLibrary dylib;
+  ffi.DynamicLibrary dylib;
 
   factory Libc() => _self;
 
@@ -12,12 +12,12 @@ class Libc {
     var path = 'libc.so.6';
     if (Platform.isMacOS) path = '/usr/lib/libSystem.dylib';
     if (Platform.isWindows) path = r'primitives_library\Debug\primitives.dll';
-    dylib = DynamicLibrary.open(path);
+    dylib = ffi.DynamicLibrary.open(path);
   }
 
-  Pointer<NativeFunction<F>> lookup<F extends Function>(String funcname) =>
-      dylib.lookup<NativeFunction<F>>(funcname);
+  ffi.Pointer<T> lookup<T extends ffi.NativeType>(String funcname) =>
+      dylib.lookup(funcname);
 
-  F lookupFunction<T extends Function, F extends Function>(String symbolName) =>
-      dylib.lookupFunction(symbolName);
+  // F lookupFunction<T extends Function, F extends Function>(String symbolName) =>
+  //     dylib.lookupFunction(symbolName);
 }
