@@ -17,14 +17,14 @@ typedef _setreuid = int Function(int realUID, int effectiveUID);
 /// The real user id [ruid] is the uid of the user that started the process.
 ///
 /// See: getreuid
-void setreuid(int ruid, int euid) {
-  final setreuidPointer = Libc().lookup<_setreuid_func>('setreuid');
-  final setreuid = setreuidPointer.asFunction<_setreuid>();
+// void setreuid(int ruid, int euid) {
+//   final setreuidPointer = Libc().lookup<_setreuid_func>('setreuid');
+//   final setreuid = setreuidPointer.asFunction<_setreuid>();
 
-  var result = setreuid(ruid, euid);
+//   var result = setreuid(ruid, euid);
 
-  if (result != 0) {
-    throw PosixException(
-        'Unable to set the real and effetive UID: $result', result);
-  }
-}
+//   if (result != 0) {
+//     throw PosixException(
+//         'Unable to set the real and effetive UID: $result', result);
+//   }
+// }

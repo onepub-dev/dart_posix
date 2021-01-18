@@ -12,10 +12,10 @@ typedef _geteuid = int Function();
 /// access a resource.
 ///
 /// See: getreuid
-int geteuid() {
-  final geteuidPointer = Libc().lookup<_geteuid_func>('geteuid');
-  final geteuid = geteuidPointer.asFunction<_geteuid>();
-  var uid = geteuid();
+// int geteuid() {
+//   final geteuidPointer = Libc().lookup<_geteuid_func>('geteuid');
+//   final geteuid = geteuidPointer.asFunction<_geteuid>();
+//   var uid = geteuid();
 
-  return uid;
-}
+//   return uid;
+// }

@@ -13,13 +13,13 @@ typedef _seteuid = int Function(int euid);
 /// access a resource.
 ///
 /// See: getreuid
-void seteuid(int euid) {
-  final seteuidPointer = Libc().lookup<_seteuid_func>('seteuid');
-  final seteuid = seteuidPointer.asFunction<_seteuid>();
+// void seteuid(int euid) {
+//   final seteuidPointer = Libc().lookup<_seteuid_func>('seteuid');
+//   final seteuid = seteuidPointer.asFunction<_seteuid>();
 
-  var result = seteuid(euid);
+//   var result = seteuid(euid);
 
-  if (result != 0) {
-    throw PosixException('Unable to set the Effective UID: $result', result);
-  }
-}
+//   if (result != 0) {
+//     throw PosixException('Unable to set the Effective UID: $result', result);
+//   }
+// }
