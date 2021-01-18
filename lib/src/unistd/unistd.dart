@@ -205,7 +205,7 @@ _dart_pwrite _pwrite;
 /// If successful, two file descriptors are stored in PIPEDES;
 /// bytes written on PIPEDES[1] can be read from PIPEDES[0].
 /// Returns 0 if successful, -1 if not.
-List<int> pipe(
+List<int> native_pipe(
   ffi.Pointer<ffi.Int32> __pipedes,
 ) {
   var c_pipedes = allocate<ffi.Int32>(count: 2);
@@ -430,7 +430,7 @@ _dart_fchdir _fchdir;
 /// an array is allocated with `malloc'; the array is SIZE
 /// bytes long, unless SIZE == 0, in which case it is as
 /// big as necessary.
-ffi.Pointer<ffi.Int8> p_getcwd(
+ffi.Pointer<ffi.Int8> native_getcwd(
   ffi.Pointer<ffi.Int8> buf,
   int size,
 ) {
@@ -446,7 +446,7 @@ _dart_getcwd _getcwd;
 /// Put the absolute pathname of the current working directory in BUF.
 /// If successful, return BUF.  If not, put an error message in
 /// BUF and return NULL.  BUF should be at least PATH_MAX bytes long.
-ffi.Pointer<ffi.Int8> p_getwd(ffi.Pointer<ffi.Int8> buf) {
+ffi.Pointer<ffi.Int8> native_getwd(ffi.Pointer<ffi.Int8> buf) {
   _getwd ??= Libc().dylib.lookupFunction<_c_getwd, _dart_getwd>('getwd');
   return _getwd(
     buf,
@@ -483,7 +483,7 @@ _dart_dup2 _dup2;
 
 /// Replace the current process, executing PATH with arguments ARGV and
 /// environment ENVP.  ARGV and ENVP are terminated by NULL pointers.
-int execve(
+int native_execve(
   String path, // ffi.Pointer<ffi.Int8> __path,
   ffi.Pointer<ffi.Pointer<ffi.Int8>> __argv,
   ffi.Pointer<ffi.Pointer<ffi.Int8>> __envp,
@@ -506,7 +506,7 @@ _dart_execve _execve;
 
 /// Execute the file FD refers to, overlaying the running program image.
 /// ARGV and ENVP are passed to the new program, as for `execve'.
-int fexecve(
+int native_fexecve(
   int fd,
   ffi.Pointer<ffi.Pointer<ffi.Int8>> __argv,
   ffi.Pointer<ffi.Pointer<ffi.Int8>> __envp,
@@ -523,7 +523,7 @@ int fexecve(
 _dart_fexecve _fexecve;
 
 /// Execute PATH with arguments ARGV and environment from `environ'.
-int execv(
+int native_execv(
   String path, // ffi.Pointer<ffi.Int8> __path,
   ffi.Pointer<ffi.Pointer<ffi.Int8>> __argv,
 ) {
@@ -592,7 +592,7 @@ _dart_execl _execl;
 
 /// Execute FILE, searching in the `PATH' environment variable if it contains
 /// no slashes, with arguments ARGV and environment from `environ'.
-int execvp(
+int native_execvp(
   String file, // ffi.Pointer<ffi.Int8> file,
   ffi.Pointer<ffi.Pointer<ffi.Int8>> __argv,
 ) {
@@ -635,13 +635,14 @@ int execlp(
 
 _dart_execlp _execlp;
 
-/// Add INC to priority of the current process.
-int p_nice(
-  int inc,
+/// Add [increment]] to priority of the current process
+/// and returns the new process priority.
+int nice(
+  int increment,
 ) {
   _nice ??= Libc().dylib.lookupFunction<_c_nice, _dart_nice>('nice');
   return _nice(
-    inc,
+    increment,
   );
 }
 
@@ -740,7 +741,7 @@ String confstr(
 _dart_confstr _confstr;
 
 /// Get the process ID of the calling process.
-int p_getpid() {
+int getpid() {
   _getpid ??= Libc().dylib.lookupFunction<_c_getpid, _dart_getpid>('getpid');
   return _getpid();
 }
@@ -748,7 +749,7 @@ int p_getpid() {
 _dart_getpid _getpid;
 
 /// Get the process ID of the calling process's parent.
-int p_getppid() {
+int getppid() {
   _getppid ??=
       Libc().dylib.lookupFunction<_c_getppid, _dart_getppid>('getppid');
   return _getppid();
@@ -815,7 +816,7 @@ int setsid() {
 _dart_setsid _setsid;
 
 /// Return the session ID of the given process.
-int p_getsid(
+int native_getsid(
   int pid,
 ) {
   _getsid ??= Libc().dylib.lookupFunction<_c_getsid, _dart_getsid>('getsid');
@@ -827,7 +828,7 @@ int p_getsid(
 _dart_getsid _getsid;
 
 /// Get the real user ID of the calling process.
-int p_getuid() {
+int getuid() {
   _getuid ??= Libc().dylib.lookupFunction<_c_getuid, _dart_getuid>('getuid');
   return _getuid();
 }
@@ -852,7 +853,7 @@ int getgid() {
 _dart_getgid _getgid;
 
 /// Get the effective group ID of the calling process.
-int p_getegid() {
+int getegid() {
   _getegid ??=
       Libc().dylib.lookupFunction<_c_getegid, _dart_getegid>('getegid');
   return _getegid();
@@ -881,7 +882,7 @@ _dart_getgroups _getgroups;
 /// If the calling process is the super-user, set the real
 /// and effective user IDs, and the saved set-user-ID to UID;
 /// if not, the effective user ID is set to UID.
-void p_setuid(
+void setuid(
   int uid,
 ) {
   _setuid ??= Libc().dylib.lookupFunction<_c_setuid, _dart_setuid>('setuid');
@@ -897,7 +898,7 @@ _dart_setuid _setuid;
 /// Set the real user ID of the calling process to RUID,
 /// and the effective user ID of the calling process to EUID.
 /// Throws [PosixException] if the operation fails.
-void p_setreuid(
+void setreuid(
   int ruid,
   int euid,
 ) {
@@ -914,7 +915,7 @@ void p_setreuid(
 _dart_setreuid _setreuid;
 
 /// Set the effective user ID of the calling process to UID.
-void p_seteuid(
+void seteuid(
   int uid,
 ) {
   _seteuid ??=
@@ -933,7 +934,7 @@ _dart_seteuid _seteuid;
 /// and effective group IDs, and the saved set-group-ID to GID;
 /// if not, the effective group ID is set to GID.
 /// Throws [PosixException] if the operation fails.
-void p_setgid(
+void setgid(
   int gid,
 ) {
   _setgid ??= Libc().dylib.lookupFunction<_c_setgid, _dart_setgid>('setgid');
@@ -949,7 +950,7 @@ _dart_setgid _setgid;
 /// Set the real group ID of the calling process to RGID,
 /// and the effective group ID of the calling process to EGID.
 /// Throws [PosixException] if the operation fails.
-void p_setregid(
+void native_setregid(
   int rgid,
   int egid,
 ) {
@@ -1027,7 +1028,7 @@ _dart_vfork _vfork;
 /// Throws a [PosixException] if an error occurs.
 ///
 /// This method is not thread safe.
-ffi.Pointer<ffi.Int8> p_ttyname(
+ffi.Pointer<ffi.Int8> native_ttyname(
   int fd,
 ) {
   _ttyname ??=
@@ -1047,7 +1048,7 @@ _dart_ttyname _ttyname;
 
 /// Store at most BUFLEN characters of the pathname of the terminal FD is
 /// open on in BUF.  Return 0 on success, otherwise an error number.
-int ttyname_r(
+int native_ttyname_r(
   int fd,
   ffi.Pointer<ffi.Int8> buf,
   int buflen,
@@ -1169,7 +1170,7 @@ _dart_symlink _symlink;
 /// Read the contents of the symbolic link PATH into no more than
 /// LEN bytes of BUF.  The contents are not null-terminated.
 /// Returns the number of characters read, or -1 for errors.
-int readlink(
+int native_readlink(
   String path,
   ffi.Pointer<ffi.Int8> buf,
   int len,
@@ -1220,7 +1221,7 @@ void symlinkat(
 _dart_symlinkat _symlinkat;
 
 /// Like readlink but a relative PATH is interpreted relative to FD.
-void readlinkat(
+void native_readlinkat(
   int fd,
   String path,
   ffi.Pointer<ffi.Int8> buf,
@@ -1438,7 +1439,7 @@ void _throwIfError<T>(String method, int error,
 
 _dart_setlogin _setlogin;
 
-int getopt(
+int native_getopt(
   int argc,
   ffi.Pointer<ffi.Pointer<ffi.Int8>> ___argv,
   ffi.Pointer<ffi.Int8> __shortopts,
@@ -1588,7 +1589,7 @@ _dart_revoke _revoke;
 /// is enabled, the system examines the user PC and increments
 /// SAMPLE_BUFFER[((PC - OFFSET) / 2) * SCALE / 65536].  If SCALE is zero,
 /// disable profiling.  Returns zero on success, -1 on error.
-int profil(
+int native_profil(
   ffi.Pointer<ffi.Uint16> __sample_buffer,
   int size,
   int offset,
@@ -1625,7 +1626,7 @@ int acct(
 _dart_acct _acct;
 
 /// Successive calls return the shells listed in `/etc/shells'.
-ffi.Pointer<ffi.Int8> getusershell() {
+ffi.Pointer<ffi.Int8> native_getusershell() {
   _getusershell ??= Libc()
       .dylib
       .lookupFunction<_c_getusershell, _dart_getusershell>('getusershell');
@@ -1687,7 +1688,7 @@ _dart_chroot _chroot;
 
 /// Prompt with PROMPT and read a string from the terminal without echoing.
 /// Uses /dev/tty if possible; otherwise stderr and stdin.
-ffi.Pointer<ffi.Int8> getpass(
+ffi.Pointer<ffi.Int8> native_getpass(
   ffi.Pointer<ffi.Int8> __prompt,
 ) {
   _getpass ??=
@@ -1733,7 +1734,7 @@ _dart_sync_1 _sync_1;
 
 /// Return the number of bytes in a page.  This is the system's page size,
 /// which is not necessarily the same as the hardware page size.
-int p_getpagesize() {
+int getpagesize() {
   _getpagesize ??= Libc()
       .dylib
       .lookupFunction<_c_getpagesize, _dart_getpagesize>('getpagesize');
@@ -1787,7 +1788,7 @@ _dart_ftruncate _ftruncate;
 
 /// Set the end of accessible data space (aka "the break") to ADDR.
 /// Returns zero on success and -1 for errors (with errno set).
-int brk(
+int native_brk(
   ffi.Pointer<ffi.Void> addr,
 ) {
   _brk ??= Libc().dylib.lookupFunction<_c_brk, _dart_brk>('brk');
@@ -1869,7 +1870,7 @@ _dart_fdatasync _fdatasync;
 /// ensures that no two users' hashes are the same, even if they use
 /// the same passphrase.  The return value points to static storage
 /// which will be overwritten by the next call to crypt.
-ffi.Pointer<ffi.Int8> crypt(
+ffi.Pointer<ffi.Int8> native_crypt(
   ffi.Pointer<ffi.Int8> key,
   ffi.Pointer<ffi.Int8> salt,
 ) {
@@ -1884,7 +1885,7 @@ _dart_crypt _crypt;
 
 /// Write LENGTH bytes of randomness starting at BUFFER.  Return 0 on
 /// success or -1 on error.
-int getentropy(
+int native_getentropy(
   ffi.Pointer<ffi.Void> buffer,
   int length,
 ) {
