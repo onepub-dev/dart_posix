@@ -60,7 +60,6 @@ void main() {
         print('with privileges euid: ${geteuid()}');
         print('with privileges egid: ${getegid()}');
 
-
         delete('test2.txt');
         touch('test2.txt', create: true);
 

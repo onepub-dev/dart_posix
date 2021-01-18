@@ -26,6 +26,4 @@ void main() {
     expect(p_getppid(), equals(parent));
     expect(getppid(), equals(parent));
   });
-
-  
 }

@@ -1,3 +1,6 @@
+# 0.4.1
+Converted most of the unistd.dart methods to dart types. Now need to see If we can actually call any of the methods. generated code for strings.h no conversions as yet.
+
 # 0.4.0
 Work on changing all types sent and returned from the api to dart types. Also changed the methods to all be global functions.
 

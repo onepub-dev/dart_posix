@@ -27,7 +27,8 @@ ffi.Pointer<ffi.Void> memmove(
   ffi.Pointer<ffi.Void> __src,
   int __n,
 ) {
-  _memmove ??= Libc().dylib.lookupFunction<_c_memmove, _dart_memmove>('memmove');
+  _memmove ??=
+      Libc().dylib.lookupFunction<_c_memmove, _dart_memmove>('memmove');
   return _memmove(
     __dest,
     __src,
@@ -43,7 +44,8 @@ ffi.Pointer<ffi.Void> memccpy(
   int __c,
   int __n,
 ) {
-  _memccpy ??= Libc().dylib.lookupFunction<_c_memccpy, _dart_memccpy>('memccpy');
+  _memccpy ??=
+      Libc().dylib.lookupFunction<_c_memccpy, _dart_memccpy>('memccpy');
   return _memccpy(
     __dest,
     __src,
@@ -121,7 +123,8 @@ ffi.Pointer<ffi.Int8> strncpy(
   ffi.Pointer<ffi.Int8> __src,
   int __n,
 ) {
-  _strncpy ??= Libc().dylib.lookupFunction<_c_strncpy, _dart_strncpy>('strncpy');
+  _strncpy ??=
+      Libc().dylib.lookupFunction<_c_strncpy, _dart_strncpy>('strncpy');
   return _strncpy(
     __dest,
     __src,
@@ -151,7 +154,8 @@ ffi.Pointer<ffi.Int8> strncat(
   ffi.Pointer<ffi.Int8> __src,
   int __n,
 ) {
-  _strncat ??= Libc().dylib.lookupFunction<_c_strncat, _dart_strncat>('strncat');
+  _strncat ??=
+      Libc().dylib.lookupFunction<_c_strncat, _dart_strncat>('strncat');
   return _strncat(
     __dest,
     __src,
@@ -181,7 +185,8 @@ int strncmp(
   ffi.Pointer<ffi.Int8> __s2,
   int __n,
 ) {
-  _strncmp ??= Libc().dylib.lookupFunction<_c_strncmp, _dart_strncmp>('strncmp');
+  _strncmp ??=
+      Libc().dylib.lookupFunction<_c_strncmp, _dart_strncmp>('strncmp');
   return _strncmp(
     __s1,
     __s2,
@@ -196,7 +201,8 @@ int strcoll(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
 ) {
-  _strcoll ??= Libc().dylib.lookupFunction<_c_strcoll, _dart_strcoll>('strcoll');
+  _strcoll ??=
+      Libc().dylib.lookupFunction<_c_strcoll, _dart_strcoll>('strcoll');
   return _strcoll(
     __s1,
     __s2,
@@ -211,7 +217,8 @@ int strxfrm(
   ffi.Pointer<ffi.Int8> __src,
   int __n,
 ) {
-  _strxfrm ??= Libc().dylib.lookupFunction<_c_strxfrm, _dart_strxfrm>('strxfrm');
+  _strxfrm ??=
+      Libc().dylib.lookupFunction<_c_strxfrm, _dart_strxfrm>('strxfrm');
   return _strxfrm(
     __dest,
     __src,
@@ -227,7 +234,8 @@ int strcoll_l(
   ffi.Pointer<ffi.Int8> __s2,
   ffi.Pointer<__locale_struct> __l,
 ) {
-  _strcoll_l ??= Libc().dylib.lookupFunction<_c_strcoll_l, _dart_strcoll_l>('strcoll_l');
+  _strcoll_l ??=
+      Libc().dylib.lookupFunction<_c_strcoll_l, _dart_strcoll_l>('strcoll_l');
   return _strcoll_l(
     __s1,
     __s2,
@@ -245,7 +253,8 @@ int strxfrm_l(
   int __n,
   ffi.Pointer<__locale_struct> __l,
 ) {
-  _strxfrm_l ??= Libc().dylib.lookupFunction<_c_strxfrm_l, _dart_strxfrm_l>('strxfrm_l');
+  _strxfrm_l ??=
+      Libc().dylib.lookupFunction<_c_strxfrm_l, _dart_strxfrm_l>('strxfrm_l');
   return _strxfrm_l(
     __dest,
     __src,
@@ -272,7 +281,8 @@ ffi.Pointer<ffi.Int8> strndup(
   ffi.Pointer<ffi.Int8> __string,
   int __n,
 ) {
-  _strndup ??= Libc().dylib.lookupFunction<_c_strndup, _dart_strndup>('strndup');
+  _strndup ??=
+      Libc().dylib.lookupFunction<_c_strndup, _dart_strndup>('strndup');
   return _strndup(
     __string,
     __n,
@@ -298,7 +308,8 @@ ffi.Pointer<ffi.Int8> strrchr(
   ffi.Pointer<ffi.Int8> __s,
   int __c,
 ) {
-  _strrchr ??= Libc().dylib.lookupFunction<_c_strrchr, _dart_strrchr>('strrchr');
+  _strrchr ??=
+      Libc().dylib.lookupFunction<_c_strrchr, _dart_strrchr>('strrchr');
   return _strrchr(
     __s,
     __c,
@@ -313,7 +324,8 @@ int strcspn(
   ffi.Pointer<ffi.Int8> __s,
   ffi.Pointer<ffi.Int8> __reject,
 ) {
-  _strcspn ??= Libc().dylib.lookupFunction<_c_strcspn, _dart_strcspn>('strcspn');
+  _strcspn ??=
+      Libc().dylib.lookupFunction<_c_strcspn, _dart_strcspn>('strcspn');
   return _strcspn(
     __s,
     __reject,
@@ -341,7 +353,8 @@ ffi.Pointer<ffi.Int8> strpbrk(
   ffi.Pointer<ffi.Int8> __s,
   ffi.Pointer<ffi.Int8> __accept,
 ) {
-  _strpbrk ??= Libc().dylib.lookupFunction<_c_strpbrk, _dart_strpbrk>('strpbrk');
+  _strpbrk ??=
+      Libc().dylib.lookupFunction<_c_strpbrk, _dart_strpbrk>('strpbrk');
   return _strpbrk(
     __s,
     __accept,
@@ -395,7 +408,8 @@ int strnlen(
   ffi.Pointer<ffi.Int8> __string,
   int __maxlen,
 ) {
-  _strnlen ??= Libc().dylib.lookupFunction<_c_strnlen, _dart_strnlen>('strnlen');
+  _strnlen ??=
+      Libc().dylib.lookupFunction<_c_strnlen, _dart_strnlen>('strnlen');
   return _strnlen(
     __string,
     __maxlen,
@@ -408,7 +422,8 @@ _dart_strnlen _strnlen;
 String strerror(
   int errnum,
 ) {
-  _strerror ??= Libc().dylib.lookupFunction<_c_strerror, _dart_strerror>('strerror');
+  _strerror ??=
+      Libc().dylib.lookupFunction<_c_strerror, _dart_strerror>('strerror');
   var result = _strerror(
     errnum,
   );
@@ -423,7 +438,9 @@ int strerror_r(
   ffi.Pointer<ffi.Int8> __buf,
   int __buflen,
 ) {
-  _strerror_r ??= Libc().dylib.lookupFunction<_c_strerror_r, _dart_strerror_r>('strerror_r');
+  _strerror_r ??= Libc()
+      .dylib
+      .lookupFunction<_c_strerror_r, _dart_strerror_r>('strerror_r');
   return _strerror_r(
     __errnum,
     __buf,
@@ -438,7 +455,9 @@ ffi.Pointer<ffi.Int8> strerror_l(
   int __errnum,
   ffi.Pointer<__locale_struct> __l,
 ) {
-  _strerror_l ??= Libc().dylib.lookupFunction<_c_strerror_l, _dart_strerror_l>('strerror_l');
+  _strerror_l ??= Libc()
+      .dylib
+      .lookupFunction<_c_strerror_l, _dart_strerror_l>('strerror_l');
   return _strerror_l(
     __errnum,
     __l,
@@ -553,7 +572,9 @@ int strcasecmp(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
 ) {
-  _strcasecmp ??= Libc().dylib.lookupFunction<_c_strcasecmp, _dart_strcasecmp>('strcasecmp');
+  _strcasecmp ??= Libc()
+      .dylib
+      .lookupFunction<_c_strcasecmp, _dart_strcasecmp>('strcasecmp');
   return _strcasecmp(
     __s1,
     __s2,
@@ -567,7 +588,9 @@ int strncasecmp(
   ffi.Pointer<ffi.Int8> __s2,
   int __n,
 ) {
-  _strncasecmp ??= Libc().dylib.lookupFunction<_c_strncasecmp, _dart_strncasecmp>('strncasecmp');
+  _strncasecmp ??= Libc()
+      .dylib
+      .lookupFunction<_c_strncasecmp, _dart_strncasecmp>('strncasecmp');
   return _strncasecmp(
     __s1,
     __s2,
@@ -582,7 +605,9 @@ int strcasecmp_l(
   ffi.Pointer<ffi.Int8> __s2,
   ffi.Pointer<__locale_struct> __loc,
 ) {
-  _strcasecmp_l ??= Libc().dylib.lookupFunction<_c_strcasecmp_l, _dart_strcasecmp_l>('strcasecmp_l');
+  _strcasecmp_l ??= Libc()
+      .dylib
+      .lookupFunction<_c_strcasecmp_l, _dart_strcasecmp_l>('strcasecmp_l');
   return _strcasecmp_l(
     __s1,
     __s2,
@@ -598,7 +623,9 @@ int strncasecmp_l(
   int __n,
   ffi.Pointer<__locale_struct> __loc,
 ) {
-  _strncasecmp_l ??= Libc().dylib.lookupFunction<_c_strncasecmp_l, _dart_strncasecmp_l>('strncasecmp_l');
+  _strncasecmp_l ??= Libc()
+      .dylib
+      .lookupFunction<_c_strncasecmp_l, _dart_strncasecmp_l>('strncasecmp_l');
   return _strncasecmp_l(
     __s1,
     __s2,
@@ -615,7 +642,10 @@ void explicit_bzero(
   ffi.Pointer<ffi.Void> __s,
   int __n,
 ) {
-  _explicit_bzero ??= Libc().dylib.lookupFunction<_c_explicit_bzero, _dart_explicit_bzero>('explicit_bzero');
+  _explicit_bzero ??= Libc()
+      .dylib
+      .lookupFunction<_c_explicit_bzero, _dart_explicit_bzero>(
+          'explicit_bzero');
   return _explicit_bzero(
     __s,
     __n,
@@ -643,7 +673,8 @@ _dart_strsep _strsep;
 ffi.Pointer<ffi.Int8> strsignal(
   int __sig,
 ) {
-  _strsignal ??= Libc().dylib.lookupFunction<_c_strsignal, _dart_strsignal>('strsignal');
+  _strsignal ??=
+      Libc().dylib.lookupFunction<_c_strsignal, _dart_strsignal>('strsignal');
   return _strsignal(
     __sig,
   );
@@ -672,7 +703,8 @@ ffi.Pointer<ffi.Int8> stpncpy(
   ffi.Pointer<ffi.Int8> __src,
   int __n,
 ) {
-  _stpncpy ??= Libc().dylib.lookupFunction<_c_stpncpy, _dart_stpncpy>('stpncpy');
+  _stpncpy ??=
+      Libc().dylib.lookupFunction<_c_stpncpy, _dart_stpncpy>('stpncpy');
   return _stpncpy(
     __dest,
     __src,
@@ -729,10 +761,12 @@ class ArrayHelper___locale_struct___locales_level0 {
   final int level;
   final int _absoluteIndex;
   int get length => dimensions[level];
-  ArrayHelper___locale_struct___locales_level0(this._struct, this.dimensions, this.level, this._absoluteIndex);
+  ArrayHelper___locale_struct___locales_level0(
+      this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
-      throw RangeError('Dimension $level: index not in range 0..${length} exclusive.');
+      throw RangeError(
+          'Dimension $level: index not in range 0..${length} exclusive.');
     }
   }
 
@@ -825,10 +859,12 @@ class ArrayHelper___locale_struct___names_level0 {
   final int level;
   final int _absoluteIndex;
   int get length => dimensions[level];
-  ArrayHelper___locale_struct___names_level0(this._struct, this.dimensions, this.level, this._absoluteIndex);
+  ArrayHelper___locale_struct___names_level0(
+      this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
-      throw RangeError('Dimension $level: index not in range 0..${length} exclusive.');
+      throw RangeError(
+          'Dimension $level: index not in range 0..${length} exclusive.');
     }
   }
 
