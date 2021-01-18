@@ -16,7 +16,8 @@ ffi.Pointer<ffi.Int8> copyDartListToCBuff(List<int> buf) {
 /// Copies the passed [c_buf] to a Dart String frees
 /// the [c_buf] allocated memory and returns
 /// its contents of [c_buf] as a Dart String.
-String copyCBuffToDartString(ffi.Pointer<ffi.Int8> c_buf, {bool free = true}) {
+String copyCBuffToDartString<T extends ffi.NativeType>(ffi.Pointer<T> c_buf,
+    {bool free = true}) {
   var string = pffi.Utf8.fromUtf8(c_buf.cast());
 
   if (free) {
