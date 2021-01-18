@@ -5,6 +5,7 @@ import 'libc.dart';
 /// The error code set by various library functions.
 int errno() {
   ___errno_location ??= Libc()
+      .dylib
       .lookupFunction<_c___errno_location, _dart___errno_location>(
           '__errno_location');
   var errno = ___errno_location().value;
