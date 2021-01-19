@@ -5,7 +5,7 @@ import 'package:posix/posix.dart';
 import 'package:posix/src/string/string.dart';
 import 'package:posix/src/util/conversions.dart';
 
-import 'libc.dart';
+import '../libc.dart';
 
 /// Test for access to NAME using the real UID and real GID.
 int access(
@@ -1932,6 +1932,12 @@ const int F_TEST = 3;
 
 const int PATH_MAX = 4096;
 
+///////////////////////////////////////////////////////////////////////////
+///
+/// typedefs
+///
+///////////////////////////////////////////////////////////////////////////
+///
 typedef _c_access = ffi.Int32 Function(
   ffi.Pointer<ffi.Int8> name,
   ffi.Int32 __type,

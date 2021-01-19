@@ -60,4 +60,41 @@ I'm inclined to bring the api that we expose into the modern world.
 
 So I'm proposing that if an posix api returns an error that we throw a PosixException with a message and error code.
 
+# Adding additional functions
+
+The process of adding additional functions is:
+
+1) Install ffigen
+```
+dart pub global activate ffigen
+```
+
+2) Run the ffigen setup.
+
+ The paths may be different on your system. Search for clang-c/Index.h
+
+```
+sudo apt-get install libclang-dev
+dart pub run ffigen:setup -I/usr/lib/llvm-11/include -L/usr/lib/llvm-11/lib
+```
+
+3) find the required posix header file
+
+4) use ffigen to create the initial dart file from the header.
+ 
+    - add your header file to ffigen.yaml
+
+5) Run ffigen
+ 
+ 
+ ```
+ dart pub run ffigen  --config ffigen.yaml
+ ```
+
+ 
+6) convert each method to take/return dart types.
+
+
+
+
 

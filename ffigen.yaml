@@ -1,5 +1,5 @@
 name: 'posix'
-descriptions: 'Bindings to all posix apis'
+description: 'Bindings to all posix apis'
 
 output: 'lib/src/posix_bindings.dart'
 
@@ -7,13 +7,15 @@ output: 'lib/src/posix_bindings.dart'
 headers: 
   entry-points:
       - '/usr/include/unistd.h'
-
+      - '/usr/include/pwd.h'
 
 array-workaround: true      
 
 comments:
     style: any
     length: full
+
+dart-bool: true
 
 use-supported-typedefs: true  
 

@@ -1,9 +1,12 @@
 import 'dart:ffi' as ffi;
 
-import 'package:posix/src/unistd/libc.dart';
+import '../libc.dart';
 
 import '../util/conversions.dart';
 
+/// Exposes a collection of C string and memory functions such
+/// as 'strcpy'.
+///
 /// Copy N bytes of SRC to DEST.
 ffi.Pointer<ffi.Void> memcpy(
   ffi.Pointer<ffi.Void> __dest,

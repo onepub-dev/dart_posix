@@ -1,6 +1,6 @@
 import 'dart:ffi' as ffi;
 
-import 'libc.dart';
+import '../libc.dart';
 
 /// The error code set by various library functions.
 int errno() {
@@ -11,6 +11,17 @@ int errno() {
   var errno = ___errno_location().value;
 
   return errno;
+}
+
+/// Clear the errno by setting it to 0.
+/// You should do this before calling a function that
+/// may set errno.
+void clear_errno() {
+  ___errno_location ??= Libc()
+      .dylib
+      .lookupFunction<_c___errno_location, _dart___errno_location>(
+          '__errno_location');
+  ___errno_location().value = 0;
 }
 
 _dart___errno_location ___errno_location;
