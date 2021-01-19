@@ -1,3 +1,6 @@
+# 1.2.0
+Added grp.h to allow access to posix groups.
+
 # 1.1.0
 Added passwd methods to library.
 Applied consistent naming convention to entry points that expose native types.
