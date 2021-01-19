@@ -8,6 +8,7 @@ headers:
   entry-points:
       - '/usr/include/unistd.h'
       - '/usr/include/pwd.h'
+      - '/usr/include/grp.h'
 
 array-workaround: true      
 

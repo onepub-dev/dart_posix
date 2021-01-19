@@ -9,4 +9,5 @@ export 'src/posix_exception.dart';
 export 'src/unistd/unistd.dart';
 export 'src/unistd/errno.dart';
 export 'src/pwd.dart';
+export 'src/grp.dart';
 export 'src/wrapper.dart';

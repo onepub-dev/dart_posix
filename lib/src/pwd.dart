@@ -107,8 +107,9 @@ _dart_getpwuid _getpwuid;
 /// This function is a possible cancellation point and therefore not
 /// marked with __THROW.
 Passwd getpwnam(String username) {
-  var c_name = Utf8.toUtf8(username);
   clear_errno();
+  var c_name = Utf8.toUtf8(username);
+  
 
   _getpwnam ??=
       Libc().dylib.lookupFunction<_c_getpwnam, _dart_getpwnam>('getpwnam');
@@ -224,7 +225,7 @@ class Passwd {
 
   /// Hashed passphrase, if shadow database
   /// not in use (see shadow.h).
-  String passwd;
+  String password;
 
   /// User ID.
   int uid;
@@ -253,7 +254,7 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> _pw_passwd, String error) {
   final passwd = Passwd();
 
   passwd.username = copyCBuffToDartString(_pw_passwd.ref.pw_name, free: false);
-  passwd.passwd = copyCBuffToDartString(_pw_passwd.ref.pw_passwd, free: false);
+  passwd.password = copyCBuffToDartString(_pw_passwd.ref.pw_passwd, free: false);
   passwd.user_info =
       copyCBuffToDartString(_pw_passwd.ref.pw_gecos, free: false);
   passwd.uid = _pw_passwd.ref.pw_uid;

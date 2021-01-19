@@ -1,3 +1,7 @@
+# 1.1.0
+Added passwd methods to library.
+Applied consistent naming convention to entry points that expose native types.
+
 # 1.0.0
 testing for setuid/setgid
 Added dart wrappers for a number of posix methods so users don't need to play with ffi internals.
