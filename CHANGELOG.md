@@ -1,3 +1,6 @@
+# 1.3.0
+Fixed chmod. Now throws an exception if an error is returned rather then returning -1;
+
 # 1.2.0
 Added grp.h to allow access to posix groups.
 
