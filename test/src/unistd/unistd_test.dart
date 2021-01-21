@@ -24,4 +24,8 @@ void main() {
     var parent = ProcessHelper().getParentPID(pid);
     expect(getppid(), equals(parent));
   });
+
+  test('chown', () {
+    chown('/tmp', 1000, 1000);
+  });
 }

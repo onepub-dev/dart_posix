@@ -311,12 +311,20 @@ int pause() {
 _dart_pause _pause;
 
 /// Change the owner and group of FILE.
-int chown(
+///
+/// If the owner or group is specified as -1, then that ID is not
+/// changed.
+///
+/// If the call fails a [PosixException] is thrown with the value of
+/// errno.
+void chown(
   String filename,
   int owner,
   int group,
 ) {
-  var c_filename = Utf8.toUtf8(filename).cast();
+  var c_filename = Utf8.toUtf8(filename);
+
+  clear_errno();
 
   _chown ??= Libc().dylib.lookupFunction<_c_chown, _dart_chown>('chown');
   var results = _chown(
@@ -324,9 +332,12 @@ int chown(
     owner,
     group,
   );
-
   free(c_filename);
-  return results;
+
+  if (results != 0) {
+    final error = errno();
+    throw PosixException('chmod failed error: ${strerror(error)}', error);
+  }
 }
 
 _dart_chown _chown;
@@ -2081,13 +2092,13 @@ typedef _c_pause = ffi.Int32 Function();
 typedef _dart_pause = int Function();
 
 typedef _c_chown = ffi.Int32 Function(
-  ffi.Pointer<ffi.Int8> file,
+  ffi.Pointer<Utf8> file,
   ffi.Uint32 owner,
   ffi.Uint32 group,
 );
 
 typedef _dart_chown = int Function(
-  ffi.Pointer<ffi.Int8> file,
+  ffi.Pointer<Utf8> file,
   int owner,
   int group,
 );
