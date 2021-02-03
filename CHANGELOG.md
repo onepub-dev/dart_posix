@@ -1,3 +1,6 @@
+# 1.3.1
+Added method to check if posix is supported.
+
 # 1.3.0
 Fixed chmod. Now throws an exception if an error is returned rather then returning -1;
 
