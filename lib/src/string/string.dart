@@ -953,8 +953,6 @@ class ArrayHelper___locale_struct___names_level0 {
   }
 }
 
-
-
 typedef _c_memcpy = ffi.Pointer<ffi.Void> Function(
   ffi.Pointer<ffi.Void> __dest,
   ffi.Pointer<ffi.Void> __src,

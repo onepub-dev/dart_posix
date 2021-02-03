@@ -1,3 +1,7 @@
+# 1.3.2
+improved getlogin errors. 
+Fixed bugs where we were comparing c null to the dart null which is not the same thing.
+
 # 1.3.1
 Added method to check if posix is supported.
 
