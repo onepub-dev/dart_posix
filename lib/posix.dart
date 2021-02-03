@@ -11,6 +11,7 @@ export 'src/unistd/errno.dart';
 export 'src/pwd.dart';
 export 'src/grp.dart';
 export 'src/wrapper.dart';
+export 'src/string/string.dart' ;
 
 import 'src/libc.dart';
 

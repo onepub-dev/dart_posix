@@ -1,6 +1,8 @@
 import 'dart:ffi' as ffi;
 import 'dart:io' show Platform;
 
+const int NULL = 0;
+
 class Libc {
   static final Libc _self = Libc._internal();
 

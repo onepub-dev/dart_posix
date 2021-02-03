@@ -19,7 +19,7 @@ String getcwd() {
     c_buf,
   );
 
-  if (result == null) {
+  if (result == ffi.nullptr) {
     var error = copyCBuffToDartString(c_buf);
     throw PosixException(error, -1);
   }

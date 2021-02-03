@@ -248,7 +248,7 @@ class Passwd {
 }
 
 Passwd _buildPasswd(ffi.Pointer<_passwd> _pw_passwd, String error) {
-  if (_pw_passwd == null) throw PosixException(error, errno());
+  if (_pw_passwd == ffi.nullptr) throw PosixException(error, errno());
 
   final passwd = Passwd();
 

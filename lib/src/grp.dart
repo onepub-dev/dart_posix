@@ -273,7 +273,7 @@ class Group {
 }
 
 Group _buildGroup(ffi.Pointer<group> _gr_group, String error) {
-  if (_gr_group == null) throw PosixException(error, errno());
+  if (_gr_group == ffi.nullptr) throw PosixException(error, errno());
 
   final group = Group();
 

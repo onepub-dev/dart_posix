@@ -726,7 +726,7 @@ String confstr(
       Libc().dylib.lookupFunction<_c_confstr, _dart_confstr>('confstr');
   var len = _confstr(
     name,
-    null,
+    ffi.nullptr,
     0,
   );
 
@@ -1048,7 +1048,7 @@ ffi.Pointer<ffi.Int8> native_ttyname(
     fd,
   );
 
-  if (c_name == null) {
+  if (c_name == ffi.nullptr) {
     _throwIfErrno('ttyname', -1);
   }
 
@@ -1356,19 +1356,60 @@ String getlogin() {
       Libc().dylib.lookupFunction<_c_getlogin, _dart_getlogin>('getlogin');
   var c_name = _getlogin();
 
-  if (c_name == null) {
+  if (c_name == ffi.nullptr) {
     // may be there is no login name or possibly an error occured.
 
     var error = errno();
 
     if (error != 0) {
-      throw PosixException('Call to getlogin() failed', error);
+      throw PosixException('Call to getlogin() failed', error,
+          posixError: _getLogin_error(error));
     }
   }
   // c_name points to static memory so we don't need to free it.
-  var name = c_name == null ? null : Utf8.fromUtf8(c_name.cast());
+  var name = c_name == ffi.nullptr ? null : Utf8.fromUtf8(c_name.cast());
 
   return name;
+}
+
+String _getLogin_error(int error) {
+  String message;
+
+  switch (error) {
+    case EMFILE:
+      message =
+          'The per-process limit on the number of open file descriptors has been reached.';
+      break;
+
+    case ENFILE:
+      message =
+          'The system-wide limit on the total number of open files has been reached.';
+      break;
+
+    case ENXIO:
+      message = 'The calling process has no controlling terminal.';
+      break;
+    case ERANGE:
+      message =
+          "(getlogin_r) The length of the username, including the terminating null byte ('\0'), is larger than bufsize.";
+      break;
+
+    case ENOENT:
+      message = 'There was no corresponding entry in the utmp-file.';
+      break;
+
+    case ENOMEM:
+      message = 'Insufficient memory to allocate passwd structure.';
+      break;
+
+    case ENOTTY:
+      message = "Standard input didn't refer to a terminal.  (See BUGS.)";
+      break;
+
+    default:
+      message = strerror(error);
+  }
+  return message;
 }
 
 _dart_getlogin _getlogin;
@@ -1428,8 +1469,8 @@ void _throwIfErrno<T>(String method, int result,
     [ffi.Pointer<ffi.NativeType> toFree1,
     ffi.Pointer<ffi.NativeType> toFree2]) {
   if (result == -1) {
-    if (toFree1 != null) free(toFree1);
-    if (toFree2 != null) free(toFree2);
+    if (toFree1 != ffi.nullptr) free(toFree1);
+    if (toFree2 != ffi.nullptr) free(toFree2);
 
     var error = errno();
 
@@ -1442,8 +1483,8 @@ void _throwIfError<T>(String method, int error,
     [ffi.Pointer<ffi.NativeType> toFree1,
     ffi.Pointer<ffi.NativeType> toFree2]) {
   if (error != 0) {
-    if (toFree1 != null) free(toFree1);
-    if (toFree2 != null) free(toFree2);
+    if (toFree1 != ffi.nullptr) free(toFree1);
+    if (toFree2 != ffi.nullptr) free(toFree2);
     throw PosixException('An error occured calling $method', error);
   }
 }
@@ -1910,8 +1951,6 @@ int native_getentropy(
 }
 
 _dart_getentropy _getentropy;
-
-const int NULL = 0;
 
 const int R_OK = 4;
 
