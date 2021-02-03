@@ -11,3 +11,11 @@ export 'src/unistd/errno.dart';
 export 'src/pwd.dart';
 export 'src/grp.dart';
 export 'src/wrapper.dart';
+
+import 'src/libc.dart';
+
+/// Returns true if posix is supported on this platform.
+///
+/// Internally we check to see if the required shared library (.so, .dylib, .dll)
+/// is available.
+bool get isPosixSupported => Libc().isPosixSupported;

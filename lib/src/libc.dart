@@ -15,6 +15,12 @@ class Libc {
     dylib = ffi.DynamicLibrary.open(path);
   }
 
+  /// Returns true if posix is supported on this platform.
+  ///
+  /// Internally we check to see if the required shared library (.so, .dylib, .dll)
+  /// is available.
+  bool get isPosixSupported => dylib != null;
+
   ffi.Pointer<T> lookup<T extends ffi.NativeType>(String funcname) =>
       dylib.lookup(funcname);
 
