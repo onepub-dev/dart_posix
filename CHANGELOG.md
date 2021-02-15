@@ -1,3 +1,6 @@
+# 1.3.3
+Updated empty structs to use Opaque
+
 # 1.3.2
 improved getlogin errors. 
 Fixed bugs where we were comparing c null to the dart null which is not the same thing.
