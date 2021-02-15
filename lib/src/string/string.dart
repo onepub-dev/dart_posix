@@ -717,7 +717,7 @@ ffi.Pointer<ffi.Int8> stpncpy(
 
 _dart_stpncpy _stpncpy;
 
-class __locale_data extends ffi.Opaque {}
+class __locale_data extends ffi.Struct {}
 
 class __locale_struct extends ffi.Struct {
   ffi.Pointer<__locale_data> _unique___locales_item_0;

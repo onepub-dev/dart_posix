@@ -7,7 +7,7 @@ import 'package:posix/src/util/conversions.dart';
 
 import 'libc.dart';
 
-class _IO_FILE extends ffi.Opaque {}
+class _IO_FILE extends ffi.Struct {}
 
 /// Rewind the group-file stream.
 ///
