@@ -235,7 +235,7 @@ _dart_pipe _pipe;
 int alarm(
   int seconds,
 ) {
-  // TODO look at setting errno before we call this method.
+  clear_errno();
   _alarm ??= Libc().dylib.lookupFunction<_c_alarm, _dart_alarm>('alarm');
   return _alarm(
     seconds,
