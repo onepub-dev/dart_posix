@@ -1,3 +1,6 @@
+# 1.3.4
+reverted Opaque to Struct as not supported under 2.10.
+
 # 1.3.3
 Updated empty structs to use Opaque
 
