@@ -1,10 +1,12 @@
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart' as pffi;
+import 'package:ffi/ffi.dart';
 
-/// You MUST free the returned buffer.
+/// Copies a dart list of integers into a c buffer.
+/// You MUST free the returned buffer by calling [free];
 ffi.Pointer<ffi.Int8> copyDartListToCBuff(List<int> buf) {
-  var c_buf = pffi.allocate<ffi.Int8>(count: buf.length);
+  var c_buf = pffi.malloc.allocate<ffi.Int8>(buf.length);
 
   for (var i = 0; i < buf.length; i++) {
     c_buf[i] = buf.indexOf(i);
@@ -26,12 +28,12 @@ List<String> copyCStringListToDartList(
       break;
     }
 
-    list.add(pffi.Utf8.fromUtf8(_value.cast()).toString());
+    list.add(_value.cast<Utf8>().toDartString());
     count += 1;
   }
 
   if (free) {
-    pffi.free(c_string_list);
+    pffi.malloc.free(c_string_list);
   }
   return list;
 }
@@ -41,10 +43,10 @@ List<String> copyCStringListToDartList(
 /// its contents of [c_buf] as a Dart String.
 String copyCBuffToDartString<T extends ffi.NativeType>(ffi.Pointer<T> c_buf,
     {bool free = true}) {
-  var string = pffi.Utf8.fromUtf8(c_buf.cast());
+  var string = c_buf.cast<Utf8>().toDartString();
 
   if (free) {
-    pffi.free(c_buf);
+    pffi.malloc.free(c_buf);
   }
 
   return string;

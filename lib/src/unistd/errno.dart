@@ -8,7 +8,7 @@ int errno() {
       .dylib
       .lookupFunction<_c___errno_location, _dart___errno_location>(
           '__errno_location');
-  var errno = ___errno_location().value;
+  var errno = ___errno_location!().value;
 
   return errno;
 }
@@ -21,10 +21,10 @@ void clear_errno() {
       .dylib
       .lookupFunction<_c___errno_location, _dart___errno_location>(
           '__errno_location');
-  ___errno_location().value = 0;
+  ___errno_location!().value = 0;
 }
 
-_dart___errno_location ___errno_location;
+_dart___errno_location? ___errno_location;
 
 const int EPERM = 1;
 

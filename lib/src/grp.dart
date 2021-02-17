@@ -7,7 +7,7 @@ import 'package:posix/src/util/conversions.dart';
 
 import 'libc.dart';
 
-class _IO_FILE extends ffi.Struct {}
+class _IO_FILE extends ffi.Opaque {}
 
 /// Rewind the group-file stream.
 ///
@@ -17,10 +17,10 @@ void setgrent() {
   clear_errno();
   _setgrent ??=
       Libc().dylib.lookupFunction<_c_setgrent, _dart_setgrent>('setgrent');
-  return _setgrent();
+  _setgrent!();
 }
 
-_dart_setgrent _setgrent;
+_dart_setgrent? _setgrent;
 
 /// Close the group-file stream.
 ///
@@ -30,10 +30,10 @@ void endgrent() {
   clear_errno();
   _endgrent ??=
       Libc().dylib.lookupFunction<_c_endgrent, _dart_endgrent>('endgrent');
-  return _endgrent();
+  _endgrent!();
 }
 
-_dart_endgrent _endgrent;
+_dart_endgrent? _endgrent;
 
 /// Read an entry from the group-file stream, opening it if necessary.
 ///
@@ -43,11 +43,11 @@ Group getgrent() {
   clear_errno();
   _getgrent ??=
       Libc().dylib.lookupFunction<_c_getgrent, _dart_getgrent>('getgrent');
-  return _buildGroup(_getgrent(),
+  return _buildGroup(_getgrent!(),
       'Error occured attempting to get the next group entry from the group database stream');
 }
 
-_dart_getgrent _getgrent;
+_dart_getgrent? _getgrent;
 
 /// Read a group entry from STREAM.
 ///
@@ -62,11 +62,11 @@ Group native_fgetgrent(
   _fgetgrent ??=
       Libc().dylib.lookupFunction<_c_fgetgrent, _dart_fgetgrent>('fgetgrent');
 
-  return _buildGroup(_fgetgrent(__stream),
+  return _buildGroup(_fgetgrent!(__stream),
       'Error occured attempting to get the next group entry from the group database stream');
 }
 
-_dart_fgetgrent _fgetgrent;
+_dart_fgetgrent? _fgetgrent;
 
 /// Search for an entry with a matching group ID.
 ///
@@ -79,13 +79,13 @@ Group getgrgid(
   _getgrgid ??=
       Libc().dylib.lookupFunction<_c_getgrgid, _dart_getgrgid>('getgrgid');
   return _buildGroup(
-      _getgrgid(
+      _getgrgid!(
         gid,
       ),
       'Error occured attempting to get the next group entry for gid: $gid');
 }
 
-_dart_getgrgid _getgrgid;
+_dart_getgrgid? _getgrgid;
 
 /// Search for an entry with a matching group name.
 ///
@@ -96,22 +96,22 @@ Group getgrnam(
 ) {
   clear_errno();
 
-  var c_name = Utf8.toUtf8(group);
+  var c_name = group.toNativeUtf8();
 
   _getgrnam ??=
       Libc().dylib.lookupFunction<_c_getgrnam, _dart_getgrnam>('getgrnam');
   final _group = _buildGroup(
-      _getgrnam(
+      _getgrnam!(
         c_name,
       ),
       'Error occured attempting to get the next group entry for group: $group');
 
-  free(c_name);
+  malloc.free(c_name);
 
   return _group;
 }
 
-_dart_getgrnam _getgrnam;
+_dart_getgrnam? _getgrnam;
 
 // /// Search for an entry with a matching group ID.
 // ///
@@ -268,6 +268,12 @@ class Group {
 
   List<String> members;
 
+  Group(
+      {required this.name,
+      required this.password,
+      required this.gid,
+      required this.members});
+
   @override
   String toString() => 'group: $name gid: $gid members: ${members.join(', ')}';
 }
@@ -275,31 +281,29 @@ class Group {
 Group _buildGroup(ffi.Pointer<group> _gr_group, String error) {
   if (_gr_group == ffi.nullptr) throw PosixException(error, errno());
 
-  final group = Group();
-
-  group.name = copyCBuffToDartString(_gr_group.ref.gr_name, free: false);
-  group.password = copyCBuffToDartString(_gr_group.ref.gr_passwd, free: false);
-  group.gid = _gr_group.ref.gr_gid;
-  group.members = copyCStringListToDartList(_gr_group.ref.gr_mem, free: false);
+  var name = copyCBuffToDartString(_gr_group.ref.gr_name!, free: false);
+  var password = copyCBuffToDartString(_gr_group.ref.gr_passwd!, free: false);
+  var gid = _gr_group.ref.gr_gid;
+  var members = copyCStringListToDartList(_gr_group.ref.gr_mem!, free: false);
 
   /// We don't own the pointer so no need to free it.
   /// free(_gr_group);
-  return group;
+  return Group(name: name, password: password, gid: gid!, members: members);
 }
 
 class group extends ffi.Struct {
   /// Group name.
-  ffi.Pointer<ffi.Int8> gr_name;
+  ffi.Pointer<ffi.Int8>? gr_name;
 
   /// Password.
-  ffi.Pointer<ffi.Int8> gr_passwd;
+  ffi.Pointer<ffi.Int8>? gr_passwd;
 
   /// Group ID.
   @ffi.Uint32()
-  int gr_gid;
+  int? gr_gid;
 
   /// Member list.
-  ffi.Pointer<ffi.Pointer<ffi.Int8>> gr_mem;
+  ffi.Pointer<ffi.Pointer<ffi.Int8>>? gr_mem;
 }
 
 typedef _c_setgrent = ffi.Void Function();

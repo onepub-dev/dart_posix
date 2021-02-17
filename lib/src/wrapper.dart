@@ -13,7 +13,7 @@ import '../posix.dart';
 /// Gets the absolute pathname of the current working directory.
 /// If an error occurs a a [PosixException] is thrown with the error.
 String getcwd() {
-  var c_buf = allocate<ffi.Int8>(count: PATH_MAX);
+  var c_buf = malloc.allocate<ffi.Int8>(PATH_MAX);
 
   var result = native_getwd(
     c_buf,
@@ -53,5 +53,5 @@ String ttyname(
 ) {
   var c_name = native_ttyname(fd);
 
-  return Utf8.fromUtf8(c_name.cast());
+  return c_name.cast<Utf8>().toDartString();
 }

@@ -13,10 +13,10 @@ import 'libc.dart';
 void setpwent() {
   _setpwent ??=
       Libc().dylib.lookupFunction<_c_setpwent, _dart_setpwent>('setpwent');
-  return _setpwent();
+  return _setpwent!();
 }
 
-_dart_setpwent _setpwent;
+_dart_setpwent? _setpwent;
 
 /// Close the user database stream.
 ///
@@ -25,10 +25,10 @@ _dart_setpwent _setpwent;
 void endpwent() {
   _endpwent ??=
       Libc().dylib.lookupFunction<_c_endpwent, _dart_endpwent>('endpwent');
-  return _endpwent();
+  return _endpwent!();
 }
 
-_dart_endpwent _endpwent;
+_dart_endpwent? _endpwent;
 
 /// Read an entry from the user database stream, opening it if necessary.
 ///
@@ -37,11 +37,11 @@ _dart_endpwent _endpwent;
 Passwd getpwent() {
   _getpwent ??=
       Libc().dylib.lookupFunction<_c_getpwent, _dart_getpwent>('getpwent');
-  return _buildPasswd(_getpwent(),
+  return _buildPasswd(_getpwent!(),
       'Error occured attempting to read the next entry from the user database stream');
 }
 
-_dart_getpwent _getpwent;
+_dart_getpwent? _getpwent;
 
 // /// Read a user database entry from STREAM.
 // ///
@@ -94,13 +94,13 @@ Passwd getpwuid(
   _getpwuid ??=
       Libc().dylib.lookupFunction<_c_getpwuid, _dart_getpwuid>('getpwuid');
   return _buildPasswd(
-      _getpwuid(
+      _getpwuid!(
         uid,
       ),
       'Error occured attempting to Passwd for uid: $uid');
 }
 
-_dart_getpwuid _getpwuid;
+_dart_getpwuid? _getpwuid;
 
 /// Retrieve the user database entry for the given username.
 ///
@@ -108,22 +108,22 @@ _dart_getpwuid _getpwuid;
 /// marked with __THROW.
 Passwd getpwnam(String username) {
   clear_errno();
-  var c_name = Utf8.toUtf8(username);
+  var c_name = username.toNativeUtf8();
 
   _getpwnam ??=
       Libc().dylib.lookupFunction<_c_getpwnam, _dart_getpwnam>('getpwnam');
   final passwd = _buildPasswd(
-      _getpwnam(
+      _getpwnam!(
         c_name,
       ),
       'Error occured attempting to Passwd for username: $username');
 
-  free(c_name);
+  malloc.free(c_name);
 
   return passwd;
 }
 
-_dart_getpwnam _getpwnam;
+_dart_getpwnam? _getpwnam;
 
 // /// This function is not part of POSIX and therefore no official
 // /// cancellation point.  But due to similarity with an POSIX interface
@@ -241,6 +241,15 @@ class Passwd {
   /// Shell program - pw_shell in posix
   String shellPathTo;
 
+  Passwd(
+      {required this.username,
+      required this.password,
+      required this.uid,
+      required this.gid,
+      required this.user_info,
+      required this.homePathTo,
+      required this.shellPathTo});
+
   @override
   String toString() {
     return 'username: $username uid: $uid gid: $gid home: $homePathTo shell: $shellPathTo';
@@ -250,49 +259,57 @@ class Passwd {
 Passwd _buildPasswd(ffi.Pointer<_passwd> _pw_passwd, String error) {
   if (_pw_passwd == ffi.nullptr) throw PosixException(error, errno());
 
-  final passwd = Passwd();
+  var username = copyCBuffToDartString(_pw_passwd.ref.pw_name!, free: false);
+  var password = copyCBuffToDartString(_pw_passwd.ref.pw_passwd!, free: false);
 
-  passwd.username = copyCBuffToDartString(_pw_passwd.ref.pw_name, free: false);
-  passwd.password =
-      copyCBuffToDartString(_pw_passwd.ref.pw_passwd, free: false);
-  passwd.user_info =
-      copyCBuffToDartString(_pw_passwd.ref.pw_gecos, free: false);
-  passwd.uid = _pw_passwd.ref.pw_uid;
-  passwd.gid = _pw_passwd.ref.pw_gid;
-  passwd.homePathTo = copyCBuffToDartString(_pw_passwd.ref.pw_dir, free: false);
-  passwd.shellPathTo =
-      copyCBuffToDartString(_pw_passwd.ref.pw_shell, free: false);
+  var user_info = copyCBuffToDartString(_pw_passwd.ref.pw_gecos!, free: false);
+
+  var uid = _pw_passwd.ref.pw_uid;
+  var gid = _pw_passwd.ref.pw_gid;
+
+  var homePathTo = copyCBuffToDartString(_pw_passwd.ref.pw_dir!, free: false);
+
+  var shellPathTo =
+      copyCBuffToDartString(_pw_passwd.ref.pw_shell!, free: false);
 
   /// We don't own the pointer so no need to free it.
   /// free(_pw_passwd);
-  return passwd;
+
+  return Passwd(
+      username: username,
+      password: password,
+      user_info: user_info,
+      uid: uid!,
+      gid: gid!,
+      homePathTo: homePathTo,
+      shellPathTo: shellPathTo);
 }
 
 /// A record in the user database.
 class _passwd extends ffi.Struct {
   /// Username.
-  ffi.Pointer<ffi.Int8> pw_name;
+  ffi.Pointer<ffi.Int8>? pw_name;
 
   /// Hashed passphrase, if shadow database
   /// not in use (see shadow.h).
-  ffi.Pointer<ffi.Int8> pw_passwd;
+  ffi.Pointer<ffi.Int8>? pw_passwd;
 
   /// User ID.
   @ffi.Uint32()
-  int pw_uid;
+  int? pw_uid;
 
   /// Group ID.
   @ffi.Uint32()
-  int pw_gid;
+  int? pw_gid;
 
   /// Real name.
-  ffi.Pointer<ffi.Int8> pw_gecos;
+  ffi.Pointer<ffi.Int8>? pw_gecos;
 
   /// Home directory.
-  ffi.Pointer<ffi.Int8> pw_dir;
+  ffi.Pointer<ffi.Int8>? pw_dir;
 
   /// Shell program.
-  ffi.Pointer<ffi.Int8> pw_shell;
+  ffi.Pointer<ffi.Int8>? pw_shell;
 }
 
 // class _IO_FILE extends ffi.Struct {}
