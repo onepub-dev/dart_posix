@@ -37,7 +37,7 @@ class Libc {
   ffi.Pointer<T> lookup<T extends ffi.NativeType>(String funcname) {
     if (_dylib != null) {
       try {
-        return  _dylib!.lookup(funcname);
+        return _dylib!.lookup(funcname);
       } on ArgumentError catch (_) {
         throw PosixException(
             'The $funcname is not supported by posix on this platform.', 1);

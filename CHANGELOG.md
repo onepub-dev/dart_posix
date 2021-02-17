@@ -1,3 +1,7 @@
+# 2.0.0-nullsafety.1
+removed dcli as a dependency to avoid circular dependecies.
+First nullsafety release.
+
 # 1.3.4
 reverted Opaque to Struct as not supported under 2.10.
 
