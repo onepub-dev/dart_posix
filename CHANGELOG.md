@@ -1,3 +1,6 @@
+# 2.0.0
+First stable nnbd release.
+
 # 2.0.0-nullsafety.1
 removed dcli as a dependency to avoid circular dependecies.
 First nullsafety release.
