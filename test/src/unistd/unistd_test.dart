@@ -25,7 +25,8 @@ void main() {
     expect(getppid(), isNot(equals(pid)));
   });
 
+  /// This test requires sudo to run
   test('chown', () {
     chown('/tmp', 1000, 1000);
-  });
+  }, skip: true, tags: ['sudo']);
 }
