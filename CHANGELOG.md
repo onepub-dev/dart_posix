@@ -1,3 +1,6 @@
+# 2.1.0
+Added stat function.
+
 # 2.0.0
 First stable nnbd release.
 
