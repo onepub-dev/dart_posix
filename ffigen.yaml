@@ -9,6 +9,7 @@ headers:
       - '/usr/include/unistd.h'
       - '/usr/include/pwd.h'
       - '/usr/include/grp.h'
+      - '/usr/include/x86_64-linux-gnu/sys/stat.h'
 
 array-workaround: true      
 
