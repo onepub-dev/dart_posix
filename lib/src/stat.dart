@@ -63,6 +63,7 @@ class Stat {
   Stat._fromNativeStat(_stat_struct _stat)
       : deviceId = _stat.st_dev,
         inode = _stat.st_ino,
+        mode = Mode.fromInt(_stat.st_mode),
         nlink = _stat.st_nlink,
         uid = _stat.st_uid,
         gid = _stat.st_gid,
