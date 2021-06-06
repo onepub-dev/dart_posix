@@ -1,3 +1,6 @@
+# 2.1.1
+Added simplified library with method getUserNameByUid
+
 # 2.1.0
 Added stat function.
 

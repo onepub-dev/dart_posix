@@ -12,6 +12,7 @@ export 'src/pwd.dart';
 export 'src/grp.dart';
 export 'src/wrapper.dart';
 export 'src/string/string.dart';
+export 'src/stat.dart';
 
 import 'src/libc.dart';
 
