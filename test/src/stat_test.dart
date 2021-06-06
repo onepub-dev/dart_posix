@@ -10,8 +10,7 @@ void main() {
 
     print('$testFile');
     var struct = stat(testFile);
-
-    var line = 'stat --format="%d,%i,%h,%u,%g,%s,%B,%b,%X,%Y,%Z" $testFile '
+    var line = 'stat --format="%d,%i,%h,%u,%g,%s,%B,%b,%X,%Y,%Z,%A" $testFile '
         .firstLine!;
 
     var parts = line.split(',');
@@ -26,6 +25,29 @@ void main() {
     var lastAccess = parts[8];
     var lastModified = parts[9];
     var lastStatusChange = parts[10];
+    var mode = parts[11];
+    var userMode = mode[0];
+    var groupMode = mode[1];
+    var otherMode = mode[2];
+
+    // rwx
+    expect(otherMode, equals(6));
+    expect(groupMode, equals(6));
+    expect(userMode, equals(4));
+
+    expect(struct.mode, isNotNull);
+
+    expect(struct.mode.isOwnerReadable, isTrue);
+    expect(struct.mode.isOwnerWritable, isTrue);
+    expect(struct.mode.isOwnerExecutable, isFalse);
+
+    expect(struct.mode.isOtherReadable, isTrue);
+    expect(struct.mode.isOtherWritable, isTrue);
+    expect(struct.mode.isOtherExecutable, isFalse);
+
+    expect(struct.mode.isGroupReadable, isTrue);
+    expect(struct.mode.isGroupWritable, isFalse);
+    expect(struct.mode.isGroupExecutable, isFalse);
 
     expect('${struct.deviceId}', equals(deviceId));
     expect('${struct.inode}', equals(inode));

@@ -139,9 +139,9 @@ class Mode {
   bool get isLink => _mode & S_IFLNK == 1;
   bool get isSocket => _mode & S_IFSOCK == 1;
 
-  bool get isUserReadable => _mode & S_IRUSR == 1;
-  bool get isUserWritable => _mode & S_IWUSR == 1;
-  bool get isUserExecutable => _mode & S_IXUSR == 1;
+  bool get isOwnerReadable => _mode & S_IRUSR == 1;
+  bool get isOwnerWritable => _mode & S_IWUSR == 1;
+  bool get isOwnerExecutable => _mode & S_IXUSR == 1;
 
   bool get isGroupReadable => _mode & S_IRGRP == 1;
   bool get isGroupWritable => _mode & S_IWGRP == 1;
