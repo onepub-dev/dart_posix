@@ -1,3 +1,6 @@
+# 2.1.2
+Added missing export for simplified.dart
+
 # 2.1.1
 Added simplified library with method getUserNameByUid
 

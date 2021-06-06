@@ -13,6 +13,7 @@ export 'src/grp.dart';
 export 'src/wrapper.dart';
 export 'src/string/string.dart';
 export 'src/stat.dart';
+export 'src/simplified.dart';
 
 import 'src/libc.dart';
 
