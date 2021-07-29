@@ -10,3 +10,4 @@ doc/api/
 test/src/unistd/test.txt
 test/src/unistd/test2.txt
 test/src/unistd/test3.txt
+.failed_tracker
