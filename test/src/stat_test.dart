@@ -10,7 +10,7 @@ void main() {
 
     print('$testFile');
     var struct = stat(testFile);
-    var line = 'stat --format="%d,%i,%h,%u,%g,%s,%B,%b,%X,%Y,%Z,%A" $testFile '
+    var line = 'stat --format="%d,%i,%h,%u,%g,%s,%B,%b,%X,%Y,%Z,%a" $testFile '
         .firstLine!;
 
     var parts = line.split(',');
@@ -31,9 +31,9 @@ void main() {
     var otherMode = mode[2];
 
     // rwx
-    expect(otherMode, equals(6));
-    expect(groupMode, equals(6));
-    expect(userMode, equals(4));
+    expect(userMode, equals('6'));
+    expect(groupMode, equals('6'));
+    expect(otherMode, equals('4'));
 
     expect(struct.mode, isNotNull);
 
