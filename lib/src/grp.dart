@@ -293,17 +293,17 @@ Group _buildGroup(ffi.Pointer<group> _gr_group, String error) {
 
 class group extends ffi.Struct {
   /// Group name.
-  ffi.Pointer<ffi.Int8>? gr_name;
+  external ffi.Pointer<ffi.Int8>? gr_name;
 
   /// Password.
-  ffi.Pointer<ffi.Int8>? gr_passwd;
+  external ffi.Pointer<ffi.Int8>? gr_passwd;
 
   /// Group ID.
   @ffi.Uint32()
-  int? gr_gid;
+  external int? gr_gid;
 
   /// Member list.
-  ffi.Pointer<ffi.Pointer<ffi.Int8>>? gr_mem;
+  external ffi.Pointer<ffi.Pointer<ffi.Int8>>? gr_mem;
 }
 
 typedef _c_setgrent = ffi.Void Function();

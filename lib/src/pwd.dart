@@ -288,28 +288,28 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> _pw_passwd, String error) {
 /// A record in the user database.
 class _passwd extends ffi.Struct {
   /// Username.
-  ffi.Pointer<ffi.Int8>? pw_name;
+  external ffi.Pointer<ffi.Int8>? pw_name;
 
   /// Hashed passphrase, if shadow database
   /// not in use (see shadow.h).
-  ffi.Pointer<ffi.Int8>? pw_passwd;
+  external ffi.Pointer<ffi.Int8>? pw_passwd;
 
   /// User ID.
   @ffi.Uint32()
-  int? pw_uid;
+  external int? pw_uid;
 
   /// Group ID.
   @ffi.Uint32()
-  int? pw_gid;
+  external int? pw_gid;
 
   /// Real name.
-  ffi.Pointer<ffi.Int8>? pw_gecos;
+  external ffi.Pointer<ffi.Int8>? pw_gecos;
 
   /// Home directory.
-  ffi.Pointer<ffi.Int8>? pw_dir;
+  external ffi.Pointer<ffi.Int8>? pw_dir;
 
   /// Shell program.
-  ffi.Pointer<ffi.Int8>? pw_shell;
+  external ffi.Pointer<ffi.Int8>? pw_shell;
 }
 
 // class _IO_FILE extends ffi.Struct {}

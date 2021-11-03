@@ -720,37 +720,37 @@ _dart_stpncpy? _stpncpy;
 class __locale_data extends ffi.Opaque {}
 
 class __locale_struct extends ffi.Struct {
-  ffi.Pointer<__locale_data>? _unique___locales_item_0;
-  ffi.Pointer<__locale_data>? _unique___locales_item_1;
-  ffi.Pointer<__locale_data>? _unique___locales_item_2;
-  ffi.Pointer<__locale_data>? _unique___locales_item_3;
-  ffi.Pointer<__locale_data>? _unique___locales_item_4;
-  ffi.Pointer<__locale_data>? _unique___locales_item_5;
-  ffi.Pointer<__locale_data>? _unique___locales_item_6;
-  ffi.Pointer<__locale_data>? _unique___locales_item_7;
-  ffi.Pointer<__locale_data>? _unique___locales_item_8;
-  ffi.Pointer<__locale_data>? _unique___locales_item_9;
-  ffi.Pointer<__locale_data>? _unique___locales_item_10;
-  ffi.Pointer<__locale_data>? _unique___locales_item_11;
-  ffi.Pointer<__locale_data>? _unique___locales_item_12;
+  external ffi.Pointer<__locale_data>? _unique___locales_item_0;
+  external ffi.Pointer<__locale_data>? _unique___locales_item_1;
+  external ffi.Pointer<__locale_data>? _unique___locales_item_2;
+  external ffi.Pointer<__locale_data>? _unique___locales_item_3;
+  external ffi.Pointer<__locale_data>? _unique___locales_item_4;
+  external ffi.Pointer<__locale_data>? _unique___locales_item_5;
+  external ffi.Pointer<__locale_data>? _unique___locales_item_6;
+  external ffi.Pointer<__locale_data>? _unique___locales_item_7;
+  external ffi.Pointer<__locale_data>? _unique___locales_item_8;
+  external ffi.Pointer<__locale_data>? _unique___locales_item_9;
+  external ffi.Pointer<__locale_data>? _unique___locales_item_10;
+  external ffi.Pointer<__locale_data>? _unique___locales_item_11;
+  external ffi.Pointer<__locale_data>? _unique___locales_item_12;
 
   /// Helper for array `__locales`.
   ArrayHelper___locale_struct___locales_level0 get locales =>
       ArrayHelper___locale_struct___locales_level0(this, [13], 0, 0);
 
-  ffi.Pointer<ffi.Int8>? _unique___names_item_0;
-  ffi.Pointer<ffi.Int8>? _unique___names_item_1;
-  ffi.Pointer<ffi.Int8>? _unique___names_item_2;
-  ffi.Pointer<ffi.Int8>? _unique___names_item_3;
-  ffi.Pointer<ffi.Int8>? _unique___names_item_4;
-  ffi.Pointer<ffi.Int8>? _unique___names_item_5;
-  ffi.Pointer<ffi.Int8>? _unique___names_item_6;
-  ffi.Pointer<ffi.Int8>? _unique___names_item_7;
-  ffi.Pointer<ffi.Int8>? _unique___names_item_8;
-  ffi.Pointer<ffi.Int8>? _unique___names_item_9;
-  ffi.Pointer<ffi.Int8>? _unique___names_item_10;
-  ffi.Pointer<ffi.Int8>? _unique___names_item_11;
-  ffi.Pointer<ffi.Int8>? _unique___names_item_12;
+  external ffi.Pointer<ffi.Int8>? _unique___names_item_0;
+  external ffi.Pointer<ffi.Int8>? _unique___names_item_1;
+  external ffi.Pointer<ffi.Int8>? _unique___names_item_2;
+  external ffi.Pointer<ffi.Int8>? _unique___names_item_3;
+  external ffi.Pointer<ffi.Int8>? _unique___names_item_4;
+  external ffi.Pointer<ffi.Int8>? _unique___names_item_5;
+  external ffi.Pointer<ffi.Int8>? _unique___names_item_6;
+  external ffi.Pointer<ffi.Int8>? _unique___names_item_7;
+  external ffi.Pointer<ffi.Int8>? _unique___names_item_8;
+  external ffi.Pointer<ffi.Int8>? _unique___names_item_9;
+  external ffi.Pointer<ffi.Int8>? _unique___names_item_10;
+  external ffi.Pointer<ffi.Int8>? _unique___names_item_11;
+  external ffi.Pointer<ffi.Int8>? _unique___names_item_12;
 
   /// Helper for array `__names`.
   ArrayHelper___locale_struct___names_level0 get names =>
