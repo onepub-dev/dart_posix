@@ -1,3 +1,9 @@
+# 2.2.0
+- added external statements to Struct members as required by the latest version of ffi.
+- Fixes for the stat test.
+- renamed stat mode functions isUserXXX to isOwnerXXX. Add unit tests for same.
+- stat.dart added missing initialisation for mode.
+
 # 2.1.2
 Added missing export for simplified.dart
 

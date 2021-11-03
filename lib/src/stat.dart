@@ -139,21 +139,21 @@ class Mode {
   bool get isLink => _mode & S_IFLNK == 1;
   bool get isSocket => _mode & S_IFSOCK == 1;
 
-  bool get isOwnerReadable => _mode & S_IRUSR == 1;
-  bool get isOwnerWritable => _mode & S_IWUSR == 1;
-  bool get isOwnerExecutable => _mode & S_IXUSR == 1;
+  bool get isOwnerReadable => _mode & S_IRUSR == S_IRUSR;
+  bool get isOwnerWritable => _mode & S_IWUSR == S_IWUSR;
+  bool get isOwnerExecutable => _mode & S_IXUSR == S_IXUSR;
 
-  bool get isGroupReadable => _mode & S_IRGRP == 1;
-  bool get isGroupWritable => _mode & S_IWGRP == 1;
-  bool get isGroupExecutable => _mode & S_IXGRP == 1;
+  bool get isGroupReadable => _mode & S_IRGRP == S_IRGRP;
+  bool get isGroupWritable => _mode & S_IWGRP == S_IWGRP;
+  bool get isGroupExecutable => _mode & S_IXGRP == S_IXGRP;
 
-  bool get isOtherReadable => _mode & S_IROTH == 1;
-  bool get isOtherWritable => _mode & S_IWOTH == 1;
-  bool get isOtherExecutable => _mode & S_IXOTH == 1;
+  bool get isOtherReadable => _mode & S_IROTH == S_IROTH;
+  bool get isOtherWritable => _mode & S_IWOTH == S_IWOTH;
+  bool get isOtherExecutable => _mode & S_IXOTH == S_IXOTH;
 
-  bool get isSticky => _mode & S_ISVTX == 1;
-  bool get isSetUserID => _mode & S_ISUID == 1;
-  bool get isSetGroupID => _mode & S_ISGID == 1;
+  bool get isSticky => _mode & S_ISVTX == S_ISVTX;
+  bool get isSetUserID => _mode & S_ISUID == S_ISUID;
+  bool get isSetGroupID => _mode & S_ISGID == S_ISGID;
 }
 
 typedef _c_stat_1 = ffi.Int32 Function(

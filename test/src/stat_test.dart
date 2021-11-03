@@ -41,13 +41,13 @@ void main() {
     expect(struct.mode.isOwnerWritable, isTrue);
     expect(struct.mode.isOwnerExecutable, isFalse);
 
-    expect(struct.mode.isOtherReadable, isTrue);
-    expect(struct.mode.isOtherWritable, isTrue);
-    expect(struct.mode.isOtherExecutable, isFalse);
-
     expect(struct.mode.isGroupReadable, isTrue);
-    expect(struct.mode.isGroupWritable, isFalse);
+    expect(struct.mode.isGroupWritable, isTrue);
     expect(struct.mode.isGroupExecutable, isFalse);
+
+    expect(struct.mode.isOtherReadable, isTrue);
+    expect(struct.mode.isOtherWritable, isFalse);
+    expect(struct.mode.isOtherExecutable, isFalse);
 
     expect('${struct.deviceId}', equals(deviceId));
     expect('${struct.inode}', equals(inode));
