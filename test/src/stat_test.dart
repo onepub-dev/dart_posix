@@ -65,6 +65,36 @@ void main() {
     /// report 512 even if the system block size is something else.
     /// expect('${struct.blockSize}', equals(blockSize));
   });
+
+  test('memory corruption ...', () async {
+    var tempDir = dcli.createTempDir();
+    var testFile = dcli.join(tempDir, 'test.txt');
+    dcli.touch(testFile, create: true);
+
+    print('$testFile');
+
+    for (var i = 0; i < 1000; i++) {
+      var struct = stat(testFile);
+
+      expect(struct.mode, isNotNull);
+
+      expect(struct.mode.isOwnerReadable, isTrue);
+      expect(struct.mode.isOwnerWritable, isTrue);
+      expect(struct.mode.isOwnerExecutable, isFalse);
+
+      expect(struct.mode.isGroupReadable, isTrue);
+      expect(struct.mode.isGroupWritable, isTrue);
+      expect(struct.mode.isGroupExecutable, isFalse);
+
+      expect(struct.mode.isOtherReadable, isTrue);
+      expect(struct.mode.isOtherWritable, isFalse);
+      expect(struct.mode.isOtherExecutable, isFalse);
+    }
+
+    /// we don't check the blocksize as the stat command appears to always
+    /// report 512 even if the system block size is something else.
+    /// expect('${struct.blockSize}', equals(blockSize));
+  });
 }
 
 DateTime toDateTime(String secondsSinceEpoc) =>

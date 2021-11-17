@@ -1469,8 +1469,8 @@ void _throwIfErrno<T>(String method, int result,
     [ffi.Pointer<ffi.NativeType>? toFree1,
     ffi.Pointer<ffi.NativeType>? toFree2]) {
   if (result == -1) {
-    if (toFree1 != ffi.nullptr) malloc.free(toFree1!);
-    if (toFree2 != ffi.nullptr) malloc.free(toFree2!);
+    if (toFree1 != null && toFree1 != ffi.nullptr) malloc.free(toFree1);
+    if (toFree2 != null && toFree2 != ffi.nullptr) malloc.free(toFree2);
 
     var error = errno();
 
@@ -1483,8 +1483,8 @@ void _throwIfError<T>(String method, int error,
     [ffi.Pointer<ffi.NativeType>? toFree1,
     ffi.Pointer<ffi.NativeType>? toFree2]) {
   if (error != 0) {
-    if (toFree1 != ffi.nullptr) malloc.free(toFree1!);
-    if (toFree2 != ffi.nullptr) malloc.free(toFree2!);
+    if (toFree1 != null && toFree1 != ffi.nullptr) malloc.free(toFree1);
+    if (toFree2 != null && toFree2 != ffi.nullptr) malloc.free(toFree2);
     throw PosixException('An error occured calling $method', error);
   }
 }
