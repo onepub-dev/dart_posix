@@ -1,3 +1,6 @@
+# 2.2.1
+- fixed an invalid null check in throwIfErrno
+
 # 2.2.0
 - added external statements to Struct members as required by the latest version of ffi.
 - Fixes for the stat test.
