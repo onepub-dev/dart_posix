@@ -37,7 +37,7 @@ Fixed bugs where we were comparing c null to the dart null which is not the same
 Added method to check if posix is supported.
 
 # 1.3.0
-Fixed chmod. Now throws an exception if an error is returned rather then returning -1;
+Fixed chown. Now throws an exception if an error is returned rather then returning -1;
 
 # 1.2.0
 Added grp.h to allow access to posix groups.
