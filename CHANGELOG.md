@@ -1,3 +1,7 @@
+# 2.2.2
+- Added chmod.
+- upgraded to dcli 1.14.1
+
 # 2.2.1
 - fixed an invalid null check in throwIfErrno
 
