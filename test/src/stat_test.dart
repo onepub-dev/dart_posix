@@ -1,71 +1,102 @@
+import 'dart:convert';
+
 import 'package:dcli/dcli.dart' as dcli;
-import 'package:posix/src/stat.dart';
+import 'package:posix/posix.dart' show lstat, stat, Mode, Stat;
 import 'package:test/test.dart';
 
 void main() {
-  test('stat ...', () async {
-    var tempDir = dcli.createTempDir();
-    var testFile = dcli.join(tempDir, 'test.txt');
-    dcli.touch(testFile, create: true);
+    group('stat:', () {
+      late final String scratch;
 
-    print('$testFile');
-    var struct = stat(testFile);
-    var line = 'stat --format="%d,%i,%h,%u,%g,%s,%B,%b,%X,%Y,%Z,%a" $testFile '
-        .firstLine!;
+      setUpAll(() async {
+        scratch = _runScript('mytest', 'setup').first;
+      });
 
-    var parts = line.split(',');
-    var deviceId = parts[0];
-    var inode = parts[1];
-    var nlink = parts[2];
-    var uid = parts[3];
-    var gid = parts[4];
-    var size = parts[5];
-    // var blockSize = parts[6];
-    var blocks = parts[7];
-    var lastAccess = parts[8];
-    var lastModified = parts[9];
-    var lastStatusChange = parts[10];
-    var mode = parts[11];
-    var userMode = mode[0];
-    var groupMode = mode[1];
-    var otherMode = mode[2];
+      tearDownAll(() async {
+        _runScript('mytest', 'teardown');
+      });
 
-    // rwx
-    expect(userMode, equals('6'));
-    expect(groupMode, equals('6'));
-    expect(otherMode, equals('4'));
+      Stat basicCheck(String path) =>
+        _basicCheck(path.startsWith('/') ? path : '$scratch/$path');
 
-    expect(struct.mode, isNotNull);
+      test('file', () {
+        final struct = basicCheck('test_file');
 
-    expect(struct.mode.isOwnerReadable, isTrue);
-    expect(struct.mode.isOwnerWritable, isTrue);
-    expect(struct.mode.isOwnerExecutable, isFalse);
+        expect(struct.mode.isFile, true);
+        expect(struct.mode.isDirectory, false);
 
-    expect(struct.mode.isGroupReadable, isTrue);
-    expect(struct.mode.isGroupWritable, isTrue);
-    expect(struct.mode.isGroupExecutable, isFalse);
+        expect(struct.nlink, 3, reason: 'nlink should be 3');
+      });
 
-    expect(struct.mode.isOtherReadable, isTrue);
-    expect(struct.mode.isOtherWritable, isFalse);
-    expect(struct.mode.isOtherExecutable, isFalse);
+      test('directory', () {
+        final struct = basicCheck('test_dir');
 
-    expect('${struct.deviceId}', equals(deviceId));
-    expect('${struct.inode}', equals(inode));
-    expect('${struct.nlink}', equals(nlink));
-    expect('${struct.uid}', equals(uid));
-    expect('${struct.gid}', equals(gid));
-    expect('${struct.size}', equals(size));
+        expect(struct.mode.isFile, false);
+        expect(struct.mode.isDirectory, true);
+      });
 
-    expect('${struct.blocks}', equals(blocks));
-    expect(struct.lastAccess, equals(toDateTime(lastAccess)));
-    expect(struct.lastModified, equals(toDateTime(lastModified)));
-    expect(struct.lastStatusChange, equals(toDateTime(lastStatusChange)));
+      test('character device (/dev/tty)', () {
+        final struct = basicCheck('/dev/tty');
 
-    /// we don't check the blocksize as the stat command appears to always
-    /// report 512 even if the system block size is something else.
-    /// expect('${struct.blockSize}', equals(blockSize));
-  });
+        expect(struct.mode.isFile, false);
+        expect(struct.mode.isDirectory, false);
+        expect(struct.mode.isCharacterDevice, true);
+
+        expect(struct.uid, 0, reason: 'should be owned by root(?)');
+      });
+    });
 }
 
-DateTime toDateTime(String secondsSinceEpoc) =>
-    DateTime.fromMillisecondsSinceEpoch(int.parse(secondsSinceEpoc) * 1000);
+Stat _basicCheck(String path) {
+  // Load the data from the actual system call
+  final sys = lstat(path);
+
+  // Get information for the same path from the command line
+  final cli = _fromMap(jsonDecode(_runScript('mystat', '"$path"').join('\n')));
+
+  expect(sys.deviceId, cli.deviceId, reason: 'deviceId');
+  expect(sys.inode, cli.inode, reason: 'inode');
+  expect(sys.mode, cli.mode, reason: 'mode');
+  expect(sys.nlink, cli.nlink, reason: 'nlink');
+  expect(sys.uid, cli.uid, reason: 'uid');
+  expect(sys.gid, cli.gid, reason: 'gid');
+  expect(sys.rdev, cli.rdev, reason: 'rdev');
+  expect(sys.size, cli.size, reason: 'size');
+  expect(sys.blocks, cli.blocks, reason: 'blocks');
+
+  // check dates
+  // The simple `mystat` script returns times rounded down
+  // to the nearest second, so we can't check anything more precise.
+  //
+  expect(_inSeconds(sys.lastAccess), cli.lastAccess, reason: 'lastAccess');
+  expect(_inSeconds(sys.lastModified), cli.lastModified, reason: 'lastModified');
+  expect(_inSeconds(sys.lastStatusChange), cli.lastStatusChange, reason: 'lastStatusChange');
+
+  return sys;
+}
+
+Stat _fromMap(Map<String, dynamic> map) =>
+  Stat(
+    deviceId: map['deviceId'],
+    inode: map['inode'],
+    mode: Mode.fromString(map['mode']),
+    nlink: map['nlink'],
+    uid: map['uid'],
+    gid: map['gid'],
+    rdev: map['rdev'],
+    size: map['size'],
+    blockSize: map['blockSize'],
+    blocks: map['blocks'],
+    lastAccess: _fromSeconds(map['lastAccess']),
+    lastModified: _fromSeconds(map['lastModified']),
+    lastStatusChange: _fromSeconds(map['lastStatusChange']),
+  );
+
+DateTime _fromSeconds(int seconds) =>
+  DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
+
+DateTime _inSeconds(DateTime real) =>
+  DateTime(real.year, real.month, real.day, real.hour, real.minute, real.second);
+
+List<String> _runScript(String name, String args) =>
+  'test/scripts/$name $args'.toList();

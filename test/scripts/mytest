@@ -1,0 +1,87 @@
+#!/bin/bash
+
+usage() {
+    echo "Usage: $0 setup|teardown" >&2
+    exit 1
+}
+
+setup_file() {
+    local name='test_file'
+    # text file 30 bytes
+    echo '123456789' >${name}
+    echo 'This is a' >>${name}
+    echo 'text file' >>${name}
+
+    # odd permissions
+    # r-Srw--wx
+    chmod 4463 ${name}
+
+    # access time
+    # 03:03 03 Mar 2021
+    touch -a -t 202103030303 ${name}
+
+    # modified time
+    # 13:14 12 Nov 2021
+    touch -m -t 202111121314 ${name}
+
+    # three links
+    ln ${name} ${name}_2
+    ln ${name} ${name}_3
+}
+
+setup_dir() {
+    local name='test_dir'
+    mkdir ${name}
+
+    # odd permissions
+    # r-x---rwxt
+    chmod 1507 ${name}
+}
+
+setup_link() {
+    local name='test_link'
+    echo '123456789' >${name}_target
+    ln -s ${name}_target ${name}
+}
+
+setup_fifo() {
+    local name='test_fifo'
+    mkfifo ${name}
+}
+
+setup() {
+    rm -rf "${scratch}"
+    mkdir -p "${scratch}" || {
+        echo "$0: can't create scratch directory '${scratch}'" >&2
+        exit 1
+    }
+    cd "${scratch}"
+
+    # Stop umask interfering with permissions
+    umask 0
+
+    setup_file
+    setup_dir
+    setup_link
+    setup_fifo
+}
+
+teardown() {
+    rm -rf "${scratch}"
+}
+
+[ $# -eq 1 ] || usage
+scratch=$(cd $(dirname $0)/.. ; pwd -L)/scratch
+case "$1" in
+    setup)
+        setup
+        ;;
+    teardown)
+        teardown
+        ;;
+    *)
+        usage
+        ;;
+esac
+echo ${scratch}
+exit 0
