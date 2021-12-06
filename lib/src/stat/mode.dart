@@ -1,41 +1,38 @@
 import '../posix_exception.dart';
 
 class Mode {
-  final int _mode;
-
-  Mode.fromInt(this._mode);
+  Mode.fromInt(this.mode);
 
   Mode.fromString(String mode)
-    : _mode = _fromString(mode);
+    : mode = _fromString(mode);
 
-  bool get isFile => _mode & S_IFREG == S_IFREG;
-  bool get isDirectory => _mode & S_IFDIR == S_IFDIR;
-  bool get isCharacterDevice => _mode & S_IFCHR == S_IFCHR;
-  bool get isBlockDevice => _mode & S_IFBLK == S_IFBLK;
-  bool get isNamedPipe => _mode & S_IFIFO == S_IFIFO;
-  bool get isLink => _mode & S_IFLNK == S_IFLNK;
-  bool get isSocket => _mode & S_IFSOCK == S_IFSOCK;
+  bool get isFile => mode & S_IFMT == S_IFREG;
+  bool get isDirectory => mode & S_IFMT == S_IFDIR;
+  bool get isCharacterDevice => mode & S_IFMT == S_IFCHR;
+  bool get isBlockDevice => mode & S_IFMT == S_IFBLK;
+  bool get isNamedPipe => mode & S_IFMT == S_IFIFO;
+  bool get isLink => mode & S_IFMT == S_IFLNK;
+  bool get isSocket => mode & S_IFMT == S_IFSOCK;
 
-  bool get isOwnerReadable => _mode & S_IRUSR == S_IRUSR;
-  bool get isOwnerWritable => _mode & S_IWUSR == S_IWUSR;
-  bool get isOwnerExecutable => _mode & S_IXUSR == S_IXUSR;
+  bool get isOwnerReadable => mode & S_IRUSR == S_IRUSR;
+  bool get isOwnerWritable => mode & S_IWUSR == S_IWUSR;
+  bool get isOwnerExecutable => mode & S_IXUSR == S_IXUSR;
 
-  bool get isGroupReadable => _mode & S_IRGRP == S_IRGRP;
-  bool get isGroupWritable => _mode & S_IWGRP == S_IWGRP;
-  bool get isGroupExecutable => _mode & S_IXGRP == S_IXGRP;
+  bool get isGroupReadable => mode & S_IRGRP == S_IRGRP;
+  bool get isGroupWritable => mode & S_IWGRP == S_IWGRP;
+  bool get isGroupExecutable => mode & S_IXGRP == S_IXGRP;
 
-  bool get isOtherReadable => _mode & S_IROTH == S_IROTH;
-  bool get isOtherWritable => _mode & S_IWOTH == S_IWOTH;
-  bool get isOtherExecutable => _mode & S_IXOTH == S_IXOTH;
+  bool get isOtherReadable => mode & S_IROTH == S_IROTH;
+  bool get isOtherWritable => mode & S_IWOTH == S_IWOTH;
+  bool get isOtherExecutable => mode & S_IXOTH == S_IXOTH;
 
-  bool get isSticky => _mode & S_ISVTX == S_ISVTX;
-  bool get isSetUserID => _mode & S_ISUID == S_ISUID;
-  bool get isSetGroupID => _mode & S_ISGID == S_ISGID;
+  bool get isSticky => mode & S_ISVTX == S_ISVTX;
+  bool get isSetUserID => mode & S_ISUID == S_ISUID;
+  bool get isSetGroupID => mode & S_ISGID == S_ISGID;
 
-  dynamic toJson({
-    bool asString = false,
-  }) =>
-    asString ? toString() : _mode;
+  final int mode;
+
+  int get perms => mode & ~S_IFMT;
 
   @override
   String toString() {
@@ -82,7 +79,7 @@ class Mode {
 
   @override
   bool operator ==(Object other) =>
-    other is Mode && other._mode == _mode;
+    other is Mode && other.mode == mode;
 
   static int _fromString(String smode) {
     if (smode.length < 10) {
@@ -189,54 +186,30 @@ class Mode {
   }
 }
 
-const int S_IFMT = 61440;
+const int S_IFMT   = 0xF000;
+const int S_IFIFO  = 0x1000;
+const int S_IFCHR  = 0x2000;
+const int S_IFDIR  = 0x4000;
+const int S_IFBLK  = 0x6000;
+const int S_IFREG  = 0x8000;
+const int S_IFLNK  = 0xA000;
+const int S_IFSOCK = 0xC000;
 
-const int S_IFDIR = 16384;
+const int S_ISUID  = 0x0800;
+const int S_ISGID  = 0x0400;
+const int S_ISVTX  = 0x0200;
 
-const int S_IFCHR = 8192;
+const int S_IRWXU  = 0x01C0;
+const int S_IRUSR  = 0x0100;
+const int S_IWUSR  = 0x0080;
+const int S_IXUSR  = 0x0040;
 
-const int S_IFBLK = 24576;
+const int S_IRWXG  = 0x0038;
+const int S_IRGRP  = 0x0020;
+const int S_IWGRP  = 0x0010;
+const int S_IXGRP  = 0x0008;
 
-const int S_IFREG = 32768;
-
-const int S_IFIFO = 4096;
-
-const int S_IFLNK = 40960;
-
-const int S_IFSOCK = 49152;
-
-const int S_ISUID = 2048;
-
-const int S_ISGID = 1024;
-
-const int S_ISVTX = 512;
-
-const int S_IRUSR = 256;
-
-const int S_IWUSR = 128;
-
-const int S_IXUSR = 64;
-
-const int S_IRWXU = 448;
-
-const int S_IREAD = 256;
-
-const int S_IWRITE = 128;
-
-const int S_IEXEC = 64;
-
-const int S_IRGRP = 32;
-
-const int S_IWGRP = 16;
-
-const int S_IXGRP = 8;
-
-const int S_IRWXG = 56;
-
-const int S_IROTH = 4;
-
-const int S_IWOTH = 2;
-
-const int S_IXOTH = 1;
-
-const int S_IRWXO = 7;
+const int S_IRWXO  = 0x0007;
+const int S_IROTH  = 0x0004;
+const int S_IWOTH  = 0x0002;
+const int S_IXOTH  = 0x0001;

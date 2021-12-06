@@ -1,30 +1,17 @@
 import 'dart:ffi' as ffi;
+import 'dart:io';
 
 import '../libc.dart';
 
 /// The error code set by various library functions.
-int errno() {
-  ___errno_location ??= Libc()
-      .dylib
-      .lookupFunction<_c___errno_location, _dart___errno_location>(
-          '__errno_location');
-  var errno = ___errno_location!().value;
-
-  return errno;
-}
+int errno() =>
+  _func().value;
 
 /// Clear the errno by setting it to 0.
 /// You should do this before calling a function that
 /// may set errno.
-void clear_errno() {
-  ___errno_location ??= Libc()
-      .dylib
-      .lookupFunction<_c___errno_location, _dart___errno_location>(
-          '__errno_location');
-  ___errno_location!().value = 0;
-}
-
-_dart___errno_location? ___errno_location;
+void clear_errno() =>
+  _func().value = 0;
 
 const int EPERM = 1;
 
@@ -294,6 +281,10 @@ const int EHWPOISON = 133;
 
 const int ENOTSUP = 95;
 
-typedef _c___errno_location = ffi.Pointer<ffi.Int32> Function();
+typedef _c_func = ffi.Pointer<ffi.Int32> Function();
 
-typedef _dart___errno_location = ffi.Pointer<ffi.Int32> Function();
+typedef _dart_func = ffi.Pointer<ffi.Int32> Function();
+
+final _name = Platform.isMacOS ? '__error' : '__errno_location';
+
+late final _func = Libc().dylib.lookupFunction<_c_func, _dart_func>(_name);

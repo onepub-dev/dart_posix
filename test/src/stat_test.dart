@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dcli/dcli.dart' as dcli;
-import 'package:posix/posix.dart' show lstat, stat, Mode, Stat;
+import 'package:posix/posix.dart' hide group;
 import 'package:test/test.dart';
 
 void main() {
@@ -16,67 +16,145 @@ void main() {
         _runScript('mytest', 'teardown');
       });
 
-      Stat basicCheck(String path) =>
-        _basicCheck(path.startsWith('/') ? path : '$scratch/$path');
+      String _scratchPath(String path) =>
+        '$scratch/$path';
+
+      test('missing', () {
+        final path = _scratchPath('missing_file');
+        bool succeeded;
+        try {
+          lstat(path);
+          succeeded = true;
+
+        }
+        on PosixException {
+          succeeded = false;
+        }
+        expect(succeeded, false);
+      });
 
       test('file', () {
-        final struct = basicCheck('test_file');
+        final path = _scratchPath('test_file');
+        final actual = lstat(path);
+        final expected = _getExpected(path);
 
-        expect(struct.mode.isFile, true);
-        expect(struct.mode.isDirectory, false);
+        _checkAgrees(actual, expected);
 
-        expect(struct.nlink, 3, reason: 'nlink should be 3');
+        _checkType(actual, isFile: true);
+
+        expect(actual.size, 30, reason: 'size: should be 30 (or 33 on windows??)');
+        expect(actual.mode.toString(), '-r-Srw--wx', reason: 'mode: should be odd!');
+        expect(actual.nlink, 3, reason: 'nlink: should be 3');
       });
 
       test('directory', () {
-        final struct = basicCheck('test_dir');
+        final path = _scratchPath('test_dir');
+        final actual = lstat(path);
+        final expected = _getExpected(path);
 
-        expect(struct.mode.isFile, false);
-        expect(struct.mode.isDirectory, true);
+        _checkAgrees(actual, expected);
+
+        _checkType(actual, isDirectory: true);
+      });
+
+      test('link - lstat', () {
+        final path = _scratchPath('test_link');
+        final actual = lstat(path);
+        final expected = _getExpected(path);
+
+        _checkAgrees(actual, expected);
+
+        _checkType(actual, isLink: true);
+
+        expect(actual.size, 16, reason: 'size: should be 16');
+      });
+
+      test('link - stat', () {
+        final path = _scratchPath('test_link');
+        final actual = stat(path);
+        final expected = _getExpected(_scratchPath('test_link_target'));
+
+        _checkAgrees(actual, expected);
+
+        _checkType(actual, isFile: true);
+
+        expect(actual.size, 10, reason: 'size: should be 10');
+      });
+
+      test('namedPipe', () {
+        final path = _scratchPath('test_fifo');
+        final actual = stat(path);
+        final expected = _getExpected(path);
+
+        _checkAgrees(actual, expected);
+
+        _checkType(actual, isNamedPipe: true);
       });
 
       test('character device (/dev/tty)', () {
-        final struct = basicCheck('/dev/tty');
+        final path = '/dev/tty';
+        final actual = lstat(path);
+        final expected = _getExpected(path);
 
-        expect(struct.mode.isFile, false);
-        expect(struct.mode.isDirectory, false);
-        expect(struct.mode.isCharacterDevice, true);
+        _checkAgrees(actual, expected);
 
-        expect(struct.uid, 0, reason: 'should be owned by root(?)');
+        _checkType(actual, isCharacterDevice: true);
+
+        expect(actual.uid, 0, reason: 'uid: should be owned by root(?)');
+        expect(actual.size, 0, reason: 'size: should be 0');
       });
     });
 }
 
-Stat _basicCheck(String path) {
-  // Load the data from the actual system call
-  final sys = lstat(path);
-
-  // Get information for the same path from the command line
-  final cli = _fromMap(jsonDecode(_runScript('mystat', '"$path"').join('\n')));
-
-  expect(sys.deviceId, cli.deviceId, reason: 'deviceId');
-  expect(sys.inode, cli.inode, reason: 'inode');
-  expect(sys.mode, cli.mode, reason: 'mode');
-  expect(sys.nlink, cli.nlink, reason: 'nlink');
-  expect(sys.uid, cli.uid, reason: 'uid');
-  expect(sys.gid, cli.gid, reason: 'gid');
-  expect(sys.rdev, cli.rdev, reason: 'rdev');
-  expect(sys.size, cli.size, reason: 'size');
-  expect(sys.blocks, cli.blocks, reason: 'blocks');
+void _checkAgrees(Stat actual, Stat expected) {
+  expect(actual.deviceId, expected.deviceId, reason: 'deviceId');
+  expect(actual.inode, expected.inode, reason: 'inode');
+  expect(actual.mode, expected.mode, reason: 'mode');
+  expect(actual.nlink, expected.nlink, reason: 'nlink');
+  expect(actual.uid, expected.uid, reason: 'uid');
+  expect(actual.gid, expected.gid, reason: 'gid');
+  expect(actual.rdev, expected.rdev, reason: 'rdev');
+  expect(actual.size, expected.size, reason: 'size');
+  expect(actual.blocks, expected.blocks, reason: 'blocks');
 
   // check dates
   // The simple `mystat` script returns times rounded down
   // to the nearest second, so we can't check anything more precise.
   //
-  expect(_inSeconds(sys.lastAccess), cli.lastAccess, reason: 'lastAccess');
-  expect(_inSeconds(sys.lastModified), cli.lastModified, reason: 'lastModified');
-  expect(_inSeconds(sys.lastStatusChange), cli.lastStatusChange, reason: 'lastStatusChange');
+  DateTime rounded(DateTime real) =>
+    DateTime(real.year, real.month, real.day, real.hour, real.minute, real.second);
 
-  return sys;
+  expect(rounded(actual.lastAccess), expected.lastAccess, reason: 'lastAccess');
+  expect(rounded(actual.lastModified), expected.lastModified, reason: 'lastModified');
+  expect(rounded(actual.lastStatusChange), expected.lastStatusChange, reason: 'lastStatusChange');
 }
 
-Stat _fromMap(Map<String, dynamic> map) =>
-  Stat(
+void _checkType(Stat actual, {
+  bool isFile = false,
+  bool isDirectory = false,
+  bool isCharacterDevice = false,
+  bool isBlockDevice = false,
+  bool isNamedPipe = false,
+  bool isLink = false,
+  bool isSocket = false,
+}) {
+  expect(actual.mode.isFile, isFile, reason: 'isFile');
+  expect(actual.mode.isDirectory, isDirectory, reason: 'isDirectory');
+  expect(actual.mode.isCharacterDevice, isCharacterDevice, reason: 'isCharacterDevice');
+  expect(actual.mode.isBlockDevice, isBlockDevice, reason: 'isBlockDevice');
+  expect(actual.mode.isNamedPipe, isNamedPipe, reason: 'isNamedPipe');
+  expect(actual.mode.isLink, isLink, reason: 'isLink');
+  expect(actual.mode.isSocket, isSocket, reason: 'isSocket');
+}
+
+Stat _getExpected(String path) {
+  final json = _runScript('mystat', '"$path"').join('\n');
+  final map = jsonDecode(json);
+
+  DateTime fromSeconds(int seconds) =>
+    DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
+
+  return Stat(
     deviceId: map['deviceId'],
     inode: map['inode'],
     mode: Mode.fromString(map['mode']),
@@ -87,16 +165,11 @@ Stat _fromMap(Map<String, dynamic> map) =>
     size: map['size'],
     blockSize: map['blockSize'],
     blocks: map['blocks'],
-    lastAccess: _fromSeconds(map['lastAccess']),
-    lastModified: _fromSeconds(map['lastModified']),
-    lastStatusChange: _fromSeconds(map['lastStatusChange']),
+    lastAccess: fromSeconds(map['lastAccess']),
+    lastModified: fromSeconds(map['lastModified']),
+    lastStatusChange: fromSeconds(map['lastStatusChange']),
   );
-
-DateTime _fromSeconds(int seconds) =>
-  DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
-
-DateTime _inSeconds(DateTime real) =>
-  DateTime(real.year, real.month, real.day, real.hour, real.minute, real.second);
+}
 
 List<String> _runScript(String name, String args) =>
   'test/scripts/$name $args'.toList();

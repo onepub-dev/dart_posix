@@ -2925,6 +2925,13 @@ class mac_posix {
   late final _dart_setgroupent _setgroupent =
       _setgroupent_ptr.asFunction<_dart_setgroupent>();
 
+  ffi.Pointer<ffi.Int32> __error() {
+    return ___error();
+  }
+
+  late final ___error_ptr = _lookup<ffi.NativeFunction<_c___error>>('__error');
+  late final _dart___error ___error = ___error_ptr.asFunction<_dart___error>();
+
   /// [XSI]
   int chmod(
     ffi.Pointer<ffi.Int8> arg0,
@@ -65520,6 +65527,222 @@ const int _PASSWORD_CHGNOW = -1;
 
 const String _PATH_GROUP = '/etc/group';
 
+const int EPERM = 1;
+
+const int ENOENT = 2;
+
+const int ESRCH = 3;
+
+const int EINTR = 4;
+
+const int EIO = 5;
+
+const int ENXIO = 6;
+
+const int E2BIG = 7;
+
+const int ENOEXEC = 8;
+
+const int EBADF = 9;
+
+const int ECHILD = 10;
+
+const int EDEADLK = 11;
+
+const int ENOMEM = 12;
+
+const int EACCES = 13;
+
+const int EFAULT = 14;
+
+const int ENOTBLK = 15;
+
+const int EBUSY = 16;
+
+const int EEXIST = 17;
+
+const int EXDEV = 18;
+
+const int ENODEV = 19;
+
+const int ENOTDIR = 20;
+
+const int EISDIR = 21;
+
+const int EINVAL = 22;
+
+const int ENFILE = 23;
+
+const int EMFILE = 24;
+
+const int ENOTTY = 25;
+
+const int ETXTBSY = 26;
+
+const int EFBIG = 27;
+
+const int ENOSPC = 28;
+
+const int ESPIPE = 29;
+
+const int EROFS = 30;
+
+const int EMLINK = 31;
+
+const int EPIPE = 32;
+
+const int EDOM = 33;
+
+const int ERANGE = 34;
+
+const int EAGAIN = 35;
+
+const int EWOULDBLOCK = 35;
+
+const int EINPROGRESS = 36;
+
+const int EALREADY = 37;
+
+const int ENOTSOCK = 38;
+
+const int EDESTADDRREQ = 39;
+
+const int EMSGSIZE = 40;
+
+const int EPROTOTYPE = 41;
+
+const int ENOPROTOOPT = 42;
+
+const int EPROTONOSUPPORT = 43;
+
+const int ESOCKTNOSUPPORT = 44;
+
+const int ENOTSUP = 45;
+
+const int EPFNOSUPPORT = 46;
+
+const int EAFNOSUPPORT = 47;
+
+const int EADDRINUSE = 48;
+
+const int EADDRNOTAVAIL = 49;
+
+const int ENETDOWN = 50;
+
+const int ENETUNREACH = 51;
+
+const int ENETRESET = 52;
+
+const int ECONNABORTED = 53;
+
+const int ECONNRESET = 54;
+
+const int ENOBUFS = 55;
+
+const int EISCONN = 56;
+
+const int ENOTCONN = 57;
+
+const int ESHUTDOWN = 58;
+
+const int ETOOMANYREFS = 59;
+
+const int ETIMEDOUT = 60;
+
+const int ECONNREFUSED = 61;
+
+const int ELOOP = 62;
+
+const int ENAMETOOLONG = 63;
+
+const int EHOSTDOWN = 64;
+
+const int EHOSTUNREACH = 65;
+
+const int ENOTEMPTY = 66;
+
+const int EPROCLIM = 67;
+
+const int EUSERS = 68;
+
+const int EDQUOT = 69;
+
+const int ESTALE = 70;
+
+const int EREMOTE = 71;
+
+const int EBADRPC = 72;
+
+const int ERPCMISMATCH = 73;
+
+const int EPROGUNAVAIL = 74;
+
+const int EPROGMISMATCH = 75;
+
+const int EPROCUNAVAIL = 76;
+
+const int ENOLCK = 77;
+
+const int ENOSYS = 78;
+
+const int EFTYPE = 79;
+
+const int EAUTH = 80;
+
+const int ENEEDAUTH = 81;
+
+const int EPWROFF = 82;
+
+const int EDEVERR = 83;
+
+const int EOVERFLOW = 84;
+
+const int EBADEXEC = 85;
+
+const int EBADARCH = 86;
+
+const int ESHLIBVERS = 87;
+
+const int EBADMACHO = 88;
+
+const int ECANCELED = 89;
+
+const int EIDRM = 90;
+
+const int ENOMSG = 91;
+
+const int EILSEQ = 92;
+
+const int ENOATTR = 93;
+
+const int EBADMSG = 94;
+
+const int EMULTIHOP = 95;
+
+const int ENODATA = 96;
+
+const int ENOLINK = 97;
+
+const int ENOSR = 98;
+
+const int ENOSTR = 99;
+
+const int EPROTO = 100;
+
+const int ETIME = 101;
+
+const int EOPNOTSUPP = 102;
+
+const int ENOPOLICY = 103;
+
+const int ENOTRECOVERABLE = 104;
+
+const int EOWNERDEAD = 105;
+
+const int EQFULL = 106;
+
+const int ELAST = 106;
+
 const int S_IFMT = 61440;
 
 const int S_IFIFO = 4096;
@@ -67649,6 +67872,10 @@ typedef _c_setgroupent = ffi.Int32 Function(
 typedef _dart_setgroupent = int Function(
   int arg0,
 );
+
+typedef _c___error = ffi.Pointer<ffi.Int32> Function();
+
+typedef _dart___error = ffi.Pointer<ffi.Int32> Function();
 
 typedef _c_chmod = ffi.Int32 Function(
   ffi.Pointer<ffi.Int8> arg0,

@@ -40,7 +40,7 @@ abstract class stat_call<T extends ffi.Struct> {
     malloc.free(file_ptr);
     if (result != 0) {
       malloc.free(stat_ptr);
-      throw 'yikes!';
+      throw PosixException('$name call failed', errno());
     }
 
     final stat = copy(stat_ptr);
