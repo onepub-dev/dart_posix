@@ -1,7 +1,7 @@
-name: 'posix'
-description: 'Bindings to all posix apis'
+name: 'linux_posix'
+description: 'Linux bindings to all posix apis'
 
-output: 'lib/src/posix_bindings.dart'
+output: 'lib/src/bindings/linux.dart'
 
 
 headers: 
@@ -28,4 +28,4 @@ preamble: |
 
 
 # to generate code run
-# pub run ffigen  --config ffigen.yaml
+# dart run ffigen --config ffigen/linux.yaml
