@@ -5,23 +5,23 @@ import 'package:ffi/ffi.dart';
 import '../../posix.dart';
 import '../libc.dart';
 
-import 'base.dart';
 import 'mode.dart';
+import 'os.dart';
 import 'stat.dart';
 
-late final mac_lstat = _stat_call('lstat\$INODE64');
-late final mac_stat = _stat_call('stat\$INODE64');
+late final mac_lstat = MacStatCall('lstat\$INODE64');
+late final mac_stat = MacStatCall('stat\$INODE64');
 
-class _stat_call extends stat_call<_stat_struct> {
-  _stat_call(String name) : super(name);
-
-  @override
-  ffi.Pointer<_stat_struct> alloc() =>
-    malloc(ffi.sizeOf<_stat_struct>());
+class MacStatCall extends OsStatCall<MacStatStruct> {
+  MacStatCall(String name) : super(name);
 
   @override
-  Stat copy(ffi.Pointer<_stat_struct> os) {
-    final ref = os.ref;
+  ffi.Pointer<MacStatStruct> newBuffer() =>
+    malloc(ffi.sizeOf<MacStatStruct>());
+
+  @override
+  Stat toStat(ffi.Pointer<MacStatStruct> ptr) {
+    final ref = ptr.ref;
     return Stat(
       deviceId: ref.st_dev,
       inode: ref.st_ino,
@@ -40,14 +40,11 @@ class _stat_call extends stat_call<_stat_struct> {
   }
 
   @override
-  dart_func<_stat_struct> lookup(String name) =>
-    Libc().dylib.lookupFunction<
-      c_func<_stat_struct>,
-      dart_func<_stat_struct>
-    >(name);
+  OsStatCall_dart<MacStatStruct> lookupSystemCall(String name) =>
+    Libc().dylib.lookupFunction<OsStatCall_c<MacStatStruct>, OsStatCall_dart<MacStatStruct>>(name);
 }
 
-class _stat_struct extends ffi.Struct {
+class MacStatStruct extends ffi.Struct {
   @ffi.Uint32()
   external int st_dev;
 
@@ -69,13 +66,13 @@ class _stat_struct extends ffi.Struct {
   @ffi.Int32()
   external int st_rdev;
 
-  external _timespec_struct st_atimespec;
+  external MacTimespecStruct st_atimespec;
 
-  external _timespec_struct st_mtimespec;
+  external MacTimespecStruct st_mtimespec;
 
-  external _timespec_struct st_ctimespec;
+  external MacTimespecStruct st_ctimespec;
 
-  external _timespec_struct st_birthtimespec;
+  external MacTimespecStruct st_birthtimespec;
 
   @ffi.Int64()
   external int st_size;
@@ -103,7 +100,7 @@ class _stat_struct extends ffi.Struct {
   external int _unique_st_qspare_item_1;
 }
 
-class _timespec_struct extends ffi.Struct {
+class MacTimespecStruct extends ffi.Struct {
   @ffi.Int64()
   external int tv_sec;
 

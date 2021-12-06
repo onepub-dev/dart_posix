@@ -5,23 +5,23 @@ import 'package:ffi/ffi.dart';
 import '../../posix.dart';
 import '../libc.dart';
 
-import 'base.dart';
 import 'mode.dart';
+import 'os.dart';
 import 'stat.dart';
 
-late final linux_lstat = _stat_call('__xlstat');
-late final linux_stat = _stat_call('__lstat');
+late final linux_lstat = LinuxStatCall('__xlstat');
+late final linux_stat = LinuxStatCall('__lstat');
 
-class _stat_call extends stat_call<_stat_struct> {
-  _stat_call(String name) : super(name);
-
-  @override
-  ffi.Pointer<_stat_struct> alloc() =>
-    malloc(ffi.sizeOf<_stat_struct>());
+class LinuxStatCall extends OsStatCall<LinuxStatStruct> {
+  LinuxStatCall(String sysCallName) : super(sysCallName);
 
   @override
-  Stat copy(ffi.Pointer<_stat_struct> os) {
-    final ref = os.ref;
+  ffi.Pointer<LinuxStatStruct> newBuffer() =>
+    malloc(ffi.sizeOf<LinuxStatStruct>());
+
+  @override
+  Stat toStat(ffi.Pointer<LinuxStatStruct> ptr) {
+    final ref = ptr.ref;
     return Stat(
       deviceId: ref.st_dev,
       inode: ref.st_ino,
@@ -40,13 +40,10 @@ class _stat_call extends stat_call<_stat_struct> {
   }
 
   @override
-  dart_func<_stat_struct> lookup(String name) =>
-    Libc().dylib.lookupFunction<
-      c_func<_stat_struct>,
-      dart_func<_stat_struct>
-    >(name);
+  OsStatCall_dart<LinuxStatStruct> lookupSystemCall(String name) =>
+    Libc().dylib.lookupFunction<OsStatCall_c<LinuxStatStruct>, OsStatCall_dart<LinuxStatStruct>>(name);
 }
-class _stat_struct extends ffi.Struct {
+class LinuxStatStruct extends ffi.Struct {
   @ffi.Uint64()
   external int st_dev;
 
@@ -80,11 +77,11 @@ class _stat_struct extends ffi.Struct {
   @ffi.Int64()
   external int st_blocks;
 
-  external _timespec_struct st_atim;
+  external LinuxTimespecStruct st_atim;
 
-  external _timespec_struct st_mtim;
+  external LinuxTimespecStruct st_mtim;
 
-  external _timespec_struct st_ctim;
+  external LinuxTimespecStruct st_ctim;
 
   @ffi.Int64()
   // ignore: unused_field
@@ -97,7 +94,7 @@ class _stat_struct extends ffi.Struct {
   external int _unique___glibc_reserved_item_2;
 }
 
-class _timespec_struct extends ffi.Struct {
+class LinuxTimespecStruct extends ffi.Struct {
   @ffi.Int64()
   external int tv_sec;
 
