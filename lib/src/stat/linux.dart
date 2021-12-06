@@ -9,8 +9,8 @@ import 'mode.dart';
 import 'os.dart';
 import 'stat.dart';
 
-late final linux_lstat = LinuxStatCall('__xlstat');
-late final linux_stat = LinuxStatCall('__lstat');
+late final linux_lstat = LinuxStatCall('__lxstat');
+late final linux_stat = LinuxStatCall('__xstat');
 
 class LinuxStatCall extends OsStatCall<LinuxStatStruct> {
   LinuxStatCall(String sysCallName) : super(sysCallName);
