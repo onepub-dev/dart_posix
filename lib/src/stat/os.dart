@@ -19,7 +19,8 @@ abstract class OsStatCall {
   }
 
   DateTime fromSeconds(int seconds, [int nanoseconds = 0]) =>
-    DateTime.fromMicrosecondsSinceEpoch(seconds * 1000000 + nanoseconds ~/ 1000);
+      DateTime.fromMicrosecondsSinceEpoch(
+          seconds * 1000000 + nanoseconds ~/ 1000);
 
   Stat sysCall(ffi.Pointer<Utf8> pathToFile_ptr);
 }

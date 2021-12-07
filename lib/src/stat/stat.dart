@@ -5,14 +5,10 @@ import 'mac.dart';
 import 'mode.dart';
 
 Stat lstat(String pathToFile) =>
-  Platform.isMacOS
-    ? mac_lstat(pathToFile)
-    : linux_lstat(pathToFile);
+    Platform.isMacOS ? mac_lstat(pathToFile) : linux_lstat(pathToFile);
 
 Stat stat(String pathToFile) =>
-  Platform.isMacOS
-    ? mac_stat(pathToFile)
-    : linux_stat(pathToFile);
+    Platform.isMacOS ? mac_stat(pathToFile) : linux_stat(pathToFile);
 
 class Stat {
   Stat({
@@ -80,18 +76,18 @@ class Stat {
 
   @override
   bool operator ==(Object other) =>
-    other is Stat
-      && other.deviceId == deviceId
-      && other.inode == inode
-      && other.mode == mode
-      && other.nlink == nlink
-      && other.uid == uid
-      && other.gid == gid
-      && other.rdev == rdev
-      && other.size == size
-      && other.blockSize == blockSize
-      && other.blocks == blocks
-      && other.lastAccess == lastAccess
-      && other.lastModified == lastModified
-      && other.lastStatusChange == lastStatusChange;
+      other is Stat &&
+      other.deviceId == deviceId &&
+      other.inode == inode &&
+      other.mode == mode &&
+      other.nlink == nlink &&
+      other.uid == uid &&
+      other.gid == gid &&
+      other.rdev == rdev &&
+      other.size == size &&
+      other.blockSize == blockSize &&
+      other.blocks == blocks &&
+      other.lastAccess == lastAccess &&
+      other.lastModified == lastModified &&
+      other.lastStatusChange == lastStatusChange;
 }

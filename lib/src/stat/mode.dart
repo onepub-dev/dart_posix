@@ -3,8 +3,7 @@ import '../posix_exception.dart';
 class Mode {
   Mode.fromInt(this.mode);
 
-  Mode.fromString(String mode)
-    : mode = _fromString(mode);
+  Mode.fromString(String mode) : mode = _fromString(mode);
 
   bool get isFile => mode & S_IFMT == S_IFREG;
   bool get isDirectory => mode & S_IFMT == S_IFDIR;
@@ -59,31 +58,42 @@ class Mode {
     smode += isOwnerReadable ? 'r' : '-';
     smode += isOwnerWritable ? 'w' : '-';
     smode += isOwnerExecutable
-      ? isSetUserID ? 's' : 'x'
-      : isSetUserID ? 'S' : '-';
+        ? isSetUserID
+            ? 's'
+            : 'x'
+        : isSetUserID
+            ? 'S'
+            : '-';
 
     smode += isGroupReadable ? 'r' : '-';
     smode += isGroupWritable ? 'w' : '-';
     smode += isGroupExecutable
-      ? isSetGroupID ? 's' : 'x'
-      : isSetGroupID ? 'S' : '-';
+        ? isSetGroupID
+            ? 's'
+            : 'x'
+        : isSetGroupID
+            ? 'S'
+            : '-';
 
     smode += isOtherReadable ? 'r' : '-';
     smode += isOtherWritable ? 'w' : '-';
     smode += isOtherExecutable
-      ? isSticky ? 't' : 'x'
-      : isSticky ? 'T' : '-';
+        ? isSticky
+            ? 't'
+            : 'x'
+        : isSticky
+            ? 'T'
+            : '-';
 
     return smode;
   }
 
   @override
-  bool operator ==(Object other) =>
-    other is Mode && other.mode == mode;
+  bool operator ==(Object other) => other is Mode && other.mode == mode;
 
   static int _fromString(String smode) {
     if (smode.length < 10) {
-        throw PosixException('Mode string too short', 0);
+      throw PosixException('Mode string too short', 0);
     }
 
     var imode = 0;
@@ -104,21 +114,21 @@ class Mode {
     } else if (char == 's') {
       imode |= S_IFSOCK;
     } else {
-        throw PosixException('Bad file type $char', 0);
+      throw PosixException('Bad file type $char', 0);
     }
 
     char = smode[1];
     if (char == 'r') {
       imode |= S_IRUSR;
     } else if (char != '-') {
-        throw PosixException('Bad owner read permission $char', 0);
+      throw PosixException('Bad owner read permission $char', 0);
     }
 
     char = smode[2];
     if (char == 'w') {
       imode |= S_IWUSR;
     } else if (char != '-') {
-        throw PosixException('Bad owner write permission $char', 0);
+      throw PosixException('Bad owner write permission $char', 0);
     }
 
     char = smode[3];
@@ -129,21 +139,21 @@ class Mode {
     } else if (char == 'x') {
       imode |= S_IXUSR;
     } else if (char != '-') {
-        throw PosixException('Bad owner execute permission $char', 0);
+      throw PosixException('Bad owner execute permission $char', 0);
     }
 
     char = smode[4];
     if (char == 'r') {
       imode |= S_IRGRP;
     } else if (char != '-') {
-        throw PosixException('Bad group read permission $char', 0);
+      throw PosixException('Bad group read permission $char', 0);
     }
 
     char = smode[5];
     if (char == 'w') {
       imode |= S_IWGRP;
     } else if (char != '-') {
-        throw PosixException('Bad group write permission $char', 0);
+      throw PosixException('Bad group write permission $char', 0);
     }
 
     char = smode[6];
@@ -154,21 +164,21 @@ class Mode {
     } else if (char == 'x') {
       imode |= S_IXGRP;
     } else if (char != '-') {
-        throw PosixException('Bad group execute permission $char', 0);
+      throw PosixException('Bad group execute permission $char', 0);
     }
 
     char = smode[7];
     if (char == 'r') {
       imode |= S_IROTH;
     } else if (char != '-') {
-        throw PosixException('Bad other read permission $char', 0);
+      throw PosixException('Bad other read permission $char', 0);
     }
 
     char = smode[8];
     if (char == 'w') {
       imode |= S_IWOTH;
     } else if (char != '-') {
-        throw PosixException('Bad other write permission $char', 0);
+      throw PosixException('Bad other write permission $char', 0);
     }
 
     char = smode[9];
@@ -179,37 +189,37 @@ class Mode {
     } else if (char == 'x') {
       imode |= S_IXOTH;
     } else if (char != '-') {
-        throw PosixException('Bad other execute permission $char', 0);
+      throw PosixException('Bad other execute permission $char', 0);
     }
 
     return imode;
   }
 }
 
-const int S_IFMT   = 0xF000;
-const int S_IFIFO  = 0x1000;
-const int S_IFCHR  = 0x2000;
-const int S_IFDIR  = 0x4000;
-const int S_IFBLK  = 0x6000;
-const int S_IFREG  = 0x8000;
-const int S_IFLNK  = 0xA000;
+const int S_IFMT = 0xF000;
+const int S_IFIFO = 0x1000;
+const int S_IFCHR = 0x2000;
+const int S_IFDIR = 0x4000;
+const int S_IFBLK = 0x6000;
+const int S_IFREG = 0x8000;
+const int S_IFLNK = 0xA000;
 const int S_IFSOCK = 0xC000;
 
-const int S_ISUID  = 0x0800;
-const int S_ISGID  = 0x0400;
-const int S_ISVTX  = 0x0200;
+const int S_ISUID = 0x0800;
+const int S_ISGID = 0x0400;
+const int S_ISVTX = 0x0200;
 
-const int S_IRWXU  = 0x01C0;
-const int S_IRUSR  = 0x0100;
-const int S_IWUSR  = 0x0080;
-const int S_IXUSR  = 0x0040;
+const int S_IRWXU = 0x01C0;
+const int S_IRUSR = 0x0100;
+const int S_IWUSR = 0x0080;
+const int S_IXUSR = 0x0040;
 
-const int S_IRWXG  = 0x0038;
-const int S_IRGRP  = 0x0020;
-const int S_IWGRP  = 0x0010;
-const int S_IXGRP  = 0x0008;
+const int S_IRWXG = 0x0038;
+const int S_IRGRP = 0x0020;
+const int S_IWGRP = 0x0010;
+const int S_IXGRP = 0x0008;
 
-const int S_IRWXO  = 0x0007;
-const int S_IROTH  = 0x0004;
-const int S_IWOTH  = 0x0002;
-const int S_IXOTH  = 0x0001;
+const int S_IRWXO = 0x0007;
+const int S_IROTH = 0x0004;
+const int S_IWOTH = 0x0002;
+const int S_IXOTH = 0x0001;

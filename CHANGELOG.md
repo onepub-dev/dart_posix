@@ -1,3 +1,10 @@
+# 2.2.3
+Thanks to https://github.com/ab36245 for the contribution.
+- Fixed stat command on macos 
+- Split stat into separate files for simplicity
+- Separate ffigen files for linux and mac
+- Changed generic ffigen to linux-specific
+
 # 2.2.2
 - Added chmod.
 - upgraded to dcli 1.14.1

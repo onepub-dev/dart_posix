@@ -28,42 +28,38 @@ class MacStatCall extends OsStatCall {
     return stat;
   }
 
-  late final _call = 
-    Libc().dylib.lookupFunction<MacStatCall_c, MacStatCall_dart>(name);
+  late final _call =
+      Libc().dylib.lookupFunction<MacStatCall_c, MacStatCall_dart>(name);
 
-  ffi.Pointer<MacStatStruct> _alloc() =>
-    malloc(ffi.sizeOf<MacStatStruct>());
+  ffi.Pointer<MacStatStruct> _alloc() => malloc(ffi.sizeOf<MacStatStruct>());
 
-  Stat _copy(MacStatStruct ref) =>
-    Stat(
-      deviceId: ref.st_dev,
-      inode: ref.st_ino,
-      mode: Mode.fromInt(ref.st_mode),
-      nlink: ref.st_nlink,
-      uid: ref.st_uid,
-      gid: ref.st_gid,
-      rdev: ref.st_rdev,
-      size: ref.st_size,
-      blockSize: ref.st_blksize,
-      blocks: ref.st_blocks,
-      lastAccess: fromSeconds(ref.st_atimespec.tv_sec, ref.st_atimespec.tv_nsec),
-      lastModified: fromSeconds(ref.st_mtimespec.tv_sec, ref.st_mtimespec.tv_nsec),
-      lastStatusChange: fromSeconds(ref.st_ctimespec.tv_sec, ref.st_ctimespec.tv_nsec),
-    );
+  Stat _copy(MacStatStruct ref) => Stat(
+        deviceId: ref.st_dev,
+        inode: ref.st_ino,
+        mode: Mode.fromInt(ref.st_mode),
+        nlink: ref.st_nlink,
+        uid: ref.st_uid,
+        gid: ref.st_gid,
+        rdev: ref.st_rdev,
+        size: ref.st_size,
+        blockSize: ref.st_blksize,
+        blocks: ref.st_blocks,
+        lastAccess:
+            fromSeconds(ref.st_atimespec.tv_sec, ref.st_atimespec.tv_nsec),
+        lastModified:
+            fromSeconds(ref.st_mtimespec.tv_sec, ref.st_mtimespec.tv_nsec),
+        lastStatusChange:
+            fromSeconds(ref.st_ctimespec.tv_sec, ref.st_ctimespec.tv_nsec),
+      );
 
-  void _free(ffi.Pointer<MacStatStruct> ptr) =>
-    malloc.free(ptr);
+  void _free(ffi.Pointer<MacStatStruct> ptr) => malloc.free(ptr);
 }
 
 typedef MacStatCall_c = ffi.Int32 Function(
-  ffi.Pointer<Utf8>,
-  ffi.Pointer<MacStatStruct>
-);
+    ffi.Pointer<Utf8>, ffi.Pointer<MacStatStruct>);
 
 typedef MacStatCall_dart = int Function(
-  ffi.Pointer<Utf8>,
-  ffi.Pointer<MacStatStruct>
-);
+    ffi.Pointer<Utf8>, ffi.Pointer<MacStatStruct>);
 
 class MacStatStruct extends ffi.Struct {
   @ffi.Uint32()

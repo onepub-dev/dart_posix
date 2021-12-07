@@ -4,14 +4,12 @@ import 'dart:io';
 import '../libc.dart';
 
 /// The error code set by various library functions.
-int errno() =>
-  _func().value;
+int errno() => _func().value;
 
 /// Clear the errno by setting it to 0.
 /// You should do this before calling a function that
 /// may set errno.
-void clear_errno() =>
-  _func().value = 0;
+void clear_errno() => _func().value = 0;
 
 const int EPERM = 1;
 

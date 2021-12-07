@@ -16,9 +16,7 @@ void main() {
       try {
         lstat(path);
         succeeded = true;
-
-      }
-      on PosixException {
+      } on PosixException {
         succeeded = false;
       }
       expect(succeeded, false);
@@ -27,11 +25,9 @@ void main() {
     test('file', () {
       dcli.withTempDir((temp) {
         dcli.withTempFile((path) {
-          File(path).writeAsStringSync(
-            '123456789\n'
-            'This is a\n'
-            'text file\n'
-          );
+          File(path).writeAsStringSync('123456789\n'
+              'This is a\n'
+              'text file\n');
           //dcli.chmod(0x933, path);  // 0x933 == 04463
           'chmod 4463 $path'.toList();
           'ln $path $temp/test_file_2.txt'.toList();
@@ -41,8 +37,10 @@ void main() {
           final expected = _getExpected(path);
           _checkAgrees(actual, expected);
           _checkType(actual, isFile: true);
-          expect(actual.size, 30, reason: 'size: should be 30 (or 33 on windows??)');
-          expect(actual.mode.toString(), '-r-Srw--wx', reason: 'mode: should be odd!');
+          expect(actual.size, 30,
+              reason: 'size: should be 30 (or 33 on windows??)');
+          expect(actual.mode.toString(), '-r-Srw--wx',
+              reason: 'mode: should be odd!');
           expect(actual.nlink, 3, reason: 'nlink: should be 3');
         });
       });
@@ -60,11 +58,9 @@ void main() {
     test('link - lstat', () {
       dcli.withTempDir((temp) {
         dcli.withTempFile((file) {
-          File(file).writeAsStringSync(
-            'Not a lot\n'
-            'going on \n'
-            'with this\n'
-          );
+          File(file).writeAsStringSync('Not a lot\n'
+              'going on \n'
+              'with this\n');
           //dcli.chmod(0x933, file);  // 0x933 == 04463
           'chmod 4463 $file'.toList();
           final link = dcli.join(temp, 'test_link');
@@ -74,7 +70,8 @@ void main() {
           final expected = _getExpected(link);
           _checkAgrees(actual, expected);
           _checkType(actual, isLink: true);
-          expect(actual.size, file.length, reason: 'size: should be ${file.length}');
+          expect(actual.size, file.length,
+              reason: 'size: should be ${file.length}');
         });
       });
     });
@@ -82,11 +79,9 @@ void main() {
     test('link - stat', () {
       dcli.withTempDir((temp) {
         dcli.withTempFile((file) {
-          File(file).writeAsStringSync(
-            'Not a lot\n'
-            'going on \n'
-            'with this\n'
-          );
+          File(file).writeAsStringSync('Not a lot\n'
+              'going on \n'
+              'with this\n');
           //dcli.chmod(0x933, file);  // 0x933 == 04463
           'chmod 4463 $file'.toList();
           final link = dcli.join(temp, 'test_link');
@@ -134,11 +129,11 @@ void main() {
           var struct = stat(testFile);
 
           expect(struct.mode, isNotNull);
-  
+
           expect(struct.mode.isOwnerReadable, isTrue);
           expect(struct.mode.isOwnerWritable, isTrue);
           expect(struct.mode.isOwnerExecutable, isFalse);
-  
+
           expect(struct.mode.isGroupReadable, isTrue);
           expect(struct.mode.isGroupWritable, isTrue);
           expect(struct.mode.isGroupExecutable, isFalse);
@@ -167,15 +162,18 @@ void _checkAgrees(Stat actual, Stat expected) {
   // The simple `mystat` script returns times rounded down
   // to the nearest second, so we can't check anything more precise.
   //
-  DateTime rounded(DateTime real) =>
-    DateTime(real.year, real.month, real.day, real.hour, real.minute, real.second);
+  DateTime rounded(DateTime real) => DateTime(
+      real.year, real.month, real.day, real.hour, real.minute, real.second);
 
   expect(rounded(actual.lastAccess), expected.lastAccess, reason: 'lastAccess');
-  expect(rounded(actual.lastModified), expected.lastModified, reason: 'lastModified');
-  expect(rounded(actual.lastStatusChange), expected.lastStatusChange, reason: 'lastStatusChange');
+  expect(rounded(actual.lastModified), expected.lastModified,
+      reason: 'lastModified');
+  expect(rounded(actual.lastStatusChange), expected.lastStatusChange,
+      reason: 'lastStatusChange');
 }
 
-void _checkType(Stat actual, {
+void _checkType(
+  Stat actual, {
   bool isFile = false,
   bool isDirectory = false,
   bool isCharacterDevice = false,
@@ -186,7 +184,8 @@ void _checkType(Stat actual, {
 }) {
   expect(actual.mode.isFile, isFile, reason: 'isFile');
   expect(actual.mode.isDirectory, isDirectory, reason: 'isDirectory');
-  expect(actual.mode.isCharacterDevice, isCharacterDevice, reason: 'isCharacterDevice');
+  expect(actual.mode.isCharacterDevice, isCharacterDevice,
+      reason: 'isCharacterDevice');
   expect(actual.mode.isBlockDevice, isBlockDevice, reason: 'isBlockDevice');
   expect(actual.mode.isNamedPipe, isNamedPipe, reason: 'isNamedPipe');
   expect(actual.mode.isLink, isLink, reason: 'isLink');
@@ -198,7 +197,7 @@ Stat _getExpected(String path) {
   final map = jsonDecode(json);
 
   DateTime fromSeconds(int seconds) =>
-    DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
+      DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
 
   return Stat(
     deviceId: map['deviceId'],
@@ -218,4 +217,4 @@ Stat _getExpected(String path) {
 }
 
 List<String> _runScript(String name, String args) =>
-  'test/scripts/$name $args'.toList();
+    'test/scripts/$name $args'.toList();

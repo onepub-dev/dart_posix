@@ -28,44 +28,36 @@ class LinuxStatCall extends OsStatCall {
     return stat;
   }
 
-  late final _call = 
-    Libc().dylib.lookupFunction<LinuxStatCall_c, LinuxStatCall_dart>(name);
+  late final _call =
+      Libc().dylib.lookupFunction<LinuxStatCall_c, LinuxStatCall_dart>(name);
 
   ffi.Pointer<LinuxStatStruct> _alloc() =>
-    malloc(ffi.sizeOf<LinuxStatStruct>());
+      malloc(ffi.sizeOf<LinuxStatStruct>());
 
-  Stat _copy(LinuxStatStruct ref) =>
-    Stat(
-      deviceId: ref.st_dev,
-      inode: ref.st_ino,
-      mode: Mode.fromInt(ref.st_mode),
-      nlink: ref.st_nlink,
-      uid: ref.st_uid,
-      gid: ref.st_gid,
-      rdev: ref.st_rdev,
-      size: ref.st_size,
-      blockSize: ref.st_blksize,
-      blocks: ref.st_blocks,
-      lastAccess: fromSeconds(ref.st_atim.tv_sec, ref.st_atim.tv_nsec),
-      lastModified: fromSeconds(ref.st_mtim.tv_sec, ref.st_mtim.tv_nsec),
-      lastStatusChange: fromSeconds(ref.st_ctim.tv_sec, ref.st_ctim.tv_nsec),
-    );
+  Stat _copy(LinuxStatStruct ref) => Stat(
+        deviceId: ref.st_dev,
+        inode: ref.st_ino,
+        mode: Mode.fromInt(ref.st_mode),
+        nlink: ref.st_nlink,
+        uid: ref.st_uid,
+        gid: ref.st_gid,
+        rdev: ref.st_rdev,
+        size: ref.st_size,
+        blockSize: ref.st_blksize,
+        blocks: ref.st_blocks,
+        lastAccess: fromSeconds(ref.st_atim.tv_sec, ref.st_atim.tv_nsec),
+        lastModified: fromSeconds(ref.st_mtim.tv_sec, ref.st_mtim.tv_nsec),
+        lastStatusChange: fromSeconds(ref.st_ctim.tv_sec, ref.st_ctim.tv_nsec),
+      );
 
-  void _free(ffi.Pointer<LinuxStatStruct> ptr) =>
-    malloc.free(ptr);
+  void _free(ffi.Pointer<LinuxStatStruct> ptr) => malloc.free(ptr);
 }
 
 typedef LinuxStatCall_c = ffi.Int32 Function(
-  ffi.Int32,
-  ffi.Pointer<Utf8>,
-  ffi.Pointer<LinuxStatStruct>
-);
+    ffi.Int32, ffi.Pointer<Utf8>, ffi.Pointer<LinuxStatStruct>);
 
 typedef LinuxStatCall_dart = int Function(
-  int,
-  ffi.Pointer<Utf8>,
-  ffi.Pointer<LinuxStatStruct>
-);
+    int, ffi.Pointer<Utf8>, ffi.Pointer<LinuxStatStruct>);
 
 class LinuxStatStruct extends ffi.Struct {
   @ffi.Uint64()
