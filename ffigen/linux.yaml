@@ -4,12 +4,16 @@ description: 'Linux bindings to all posix apis'
 output: 'lib/src/bindings/linux.dart'
 
 
+llvm-path:
+  - '/usr/lib/llvm-11/lib/libclang-11.so'
+
 headers: 
   entry-points:
       - '/usr/include/unistd.h'
       - '/usr/include/pwd.h'
       - '/usr/include/grp.h'
       - '/usr/include/x86_64-linux-gnu/sys/stat.h'
+      - '/usr/lib/llvm-11/include'
 
 array-workaround: true      
 

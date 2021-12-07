@@ -2,7 +2,6 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 import 'package:posix/posix.dart';
-import 'package:posix/src/string/string.dart';
 import 'package:posix/src/util/conversions.dart';
 
 import '../libc.dart';
@@ -336,11 +335,42 @@ void chown(
 
   if (results != 0) {
     final error = errno();
-    throw PosixException('chmod failed error: ${strerror(error)}', error);
+    throw PosixException('chown failed error: ${strerror(error)}', error);
   }
 }
 
 _dart_chown? _chown;
+
+/// Change the permission of [filename].
+///
+/// Pass in the [permission] as an octal string e.g. 777
+/// to change the file permissions.
+///
+/// If the call fails a [PosixException] is thrown with the value of
+/// errno.
+void chmod(
+  String filename,
+  String permissions,
+) {
+  var _permissions = int.parse(permissions, radix: 8);
+  var c_filename = filename.toNativeUtf8();
+
+  clear_errno();
+
+  _chmod ??= Libc().dylib.lookupFunction<_c_chmod, _dart_chmod>('chmod');
+  var results = _chmod!(
+    c_filename,
+    _permissions,
+  );
+  malloc.free(c_filename);
+
+  if (results != 0) {
+    final error = errno();
+    throw PosixException('chown failed error: ${strerror(error)}', error);
+  }
+}
+
+_dart_chmod? _chmod;
 
 /// Change the owner and group of the file that FD is open on.
 int fchown(
@@ -1469,8 +1499,8 @@ void _throwIfErrno<T>(String method, int result,
     [ffi.Pointer<ffi.NativeType>? toFree1,
     ffi.Pointer<ffi.NativeType>? toFree2]) {
   if (result == -1) {
-    if (toFree1 != ffi.nullptr) malloc.free(toFree1!);
-    if (toFree2 != ffi.nullptr) malloc.free(toFree2!);
+    if (toFree1 != null && toFree1 != ffi.nullptr) malloc.free(toFree1);
+    if (toFree2 != null && toFree2 != ffi.nullptr) malloc.free(toFree2);
 
     var error = errno();
 
@@ -1483,8 +1513,8 @@ void _throwIfError<T>(String method, int error,
     [ffi.Pointer<ffi.NativeType>? toFree1,
     ffi.Pointer<ffi.NativeType>? toFree2]) {
   if (error != 0) {
-    if (toFree1 != ffi.nullptr) malloc.free(toFree1!);
-    if (toFree2 != ffi.nullptr) malloc.free(toFree2!);
+    if (toFree1 != null && toFree1 != ffi.nullptr) malloc.free(toFree1);
+    if (toFree2 != null && toFree2 != ffi.nullptr) malloc.free(toFree2);
     throw PosixException('An error occured calling $method', error);
   }
 }
@@ -2141,6 +2171,15 @@ typedef _dart_chown = int Function(
   ffi.Pointer<Utf8> file,
   int owner,
   int group,
+);
+
+typedef _c_chmod = ffi.Int32 Function(
+  ffi.Pointer<Utf8> file,
+  ffi.Uint32 permissions,
+);
+typedef _dart_chmod = int Function(
+  ffi.Pointer<Utf8> file,
+  int permissions,
 );
 
 typedef _c_fchown = ffi.Int32 Function(

@@ -1,3 +1,10 @@
+# 2.2.2
+- Added chmod.
+- upgraded to dcli 1.14.1
+
+# 2.2.1
+- fixed an invalid null check in throwIfErrno
+
 # 2.2.0
 - added external statements to Struct members as required by the latest version of ffi.
 - Fixes for the stat test.
@@ -34,7 +41,7 @@ Fixed bugs where we were comparing c null to the dart null which is not the same
 Added method to check if posix is supported.
 
 # 1.3.0
-Fixed chmod. Now throws an exception if an error is returned rather then returning -1;
+Fixed chown. Now throws an exception if an error is returned rather then returning -1;
 
 # 1.2.0
 Added grp.h to allow access to posix groups.
