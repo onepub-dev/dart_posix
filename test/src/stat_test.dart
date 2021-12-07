@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dcli/dcli.dart' as dcli;
+//import 'package:dcli/posix.dart' as dcli;
+
 import 'package:posix/posix.dart' hide group;
 import 'package:test/test.dart';
 
@@ -30,6 +32,7 @@ void main() {
             'This is a\n'
             'text file\n'
           );
+          //dcli.chmod(0x933, path);  // 0x933 == 04463
           'chmod 4463 $path'.toList();
           'ln $path $temp/test_file_2.txt'.toList();
           'ln $path $temp/test_file_3.txt'.toList();
@@ -62,9 +65,10 @@ void main() {
             'going on \n'
             'with this\n'
           );
+          //dcli.chmod(0x933, file);  // 0x933 == 04463
           'chmod 4463 $file'.toList();
           final link = dcli.join(temp, 'test_link');
-          'ln -s $file $link'.toList();
+          dcli.symlink(file, link);
 
           final actual = lstat(link);
           final expected = _getExpected(link);
@@ -83,9 +87,10 @@ void main() {
             'going on \n'
             'with this\n'
           );
+          //dcli.chmod(0x933, file);  // 0x933 == 04463
           'chmod 4463 $file'.toList();
           final link = dcli.join(temp, 'test_link');
-          'ln -s $file $link'.toList();
+          dcli.symlink(file, link);
 
           final actual = stat(link);
           final expected = _getExpected(file);
@@ -123,6 +128,7 @@ void main() {
       dcli.withTempDir((temp) {
         final testFile = dcli.join(temp, 'test.txt');
         dcli.touch(testFile, create: true);
+        //dcli.chmod(0x1B4, testFile); // 0x1B4 = 0664
         'chmod 664 $testFile'.toList();
         for (var i = 0; i < 1000; i++) {
           var struct = stat(testFile);
