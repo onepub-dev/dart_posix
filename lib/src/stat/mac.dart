@@ -12,17 +12,30 @@ import 'stat.dart';
 late final mac_lstat = MacStatCall('lstat\$INODE64');
 late final mac_stat = MacStatCall('stat\$INODE64');
 
-class MacStatCall extends OsStatCall<MacStatStruct> {
+class MacStatCall extends OsStatCall {
   MacStatCall(String name) : super(name);
 
   @override
-  ffi.Pointer<MacStatStruct> newBuffer() =>
+  Stat sysCall(ffi.Pointer<Utf8> pathToFile_ptr) {
+    final buffer_ptr = _alloc();
+    final result = _call(pathToFile_ptr, buffer_ptr);
+    if (result != 0) {
+      _free(buffer_ptr);
+      throw PosixException('$name call failed', errno());
+    }
+    final stat = _copy(buffer_ptr.ref);
+    _free(buffer_ptr);
+    return stat;
+  }
+
+  late final _call = 
+    Libc().dylib.lookupFunction<MacStatCall_c, MacStatCall_dart>(name);
+
+  ffi.Pointer<MacStatStruct> _alloc() =>
     malloc(ffi.sizeOf<MacStatStruct>());
 
-  @override
-  Stat toStat(ffi.Pointer<MacStatStruct> ptr) {
-    final ref = ptr.ref;
-    return Stat(
+  Stat _copy(MacStatStruct ref) =>
+    Stat(
       deviceId: ref.st_dev,
       inode: ref.st_ino,
       mode: Mode.fromInt(ref.st_mode),
@@ -37,12 +50,20 @@ class MacStatCall extends OsStatCall<MacStatStruct> {
       lastModified: fromSeconds(ref.st_mtimespec.tv_sec, ref.st_mtimespec.tv_nsec),
       lastStatusChange: fromSeconds(ref.st_ctimespec.tv_sec, ref.st_ctimespec.tv_nsec),
     );
-  }
 
-  @override
-  OsStatCall_dart<MacStatStruct> lookupSystemCall(String name) =>
-    Libc().dylib.lookupFunction<OsStatCall_c<MacStatStruct>, OsStatCall_dart<MacStatStruct>>(name);
+  void _free(ffi.Pointer<MacStatStruct> ptr) =>
+    malloc.free(ptr);
 }
+
+typedef MacStatCall_c = ffi.Int32 Function(
+  ffi.Pointer<Utf8>,
+  ffi.Pointer<MacStatStruct>
+);
+
+typedef MacStatCall_dart = int Function(
+  ffi.Pointer<Utf8>,
+  ffi.Pointer<MacStatStruct>
+);
 
 class MacStatStruct extends ffi.Struct {
   @ffi.Uint32()

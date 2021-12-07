@@ -12,17 +12,30 @@ import 'stat.dart';
 late final linux_lstat = LinuxStatCall('__lxstat');
 late final linux_stat = LinuxStatCall('__xstat');
 
-class LinuxStatCall extends OsStatCall<LinuxStatStruct> {
-  LinuxStatCall(String sysCallName) : super(sysCallName);
+class LinuxStatCall extends OsStatCall {
+  LinuxStatCall(String name) : super(name);
 
   @override
-  ffi.Pointer<LinuxStatStruct> newBuffer() =>
+  Stat sysCall(ffi.Pointer<Utf8> pathToFile_ptr) {
+    final buffer_ptr = _alloc();
+    final result = _call(1, pathToFile_ptr, buffer_ptr);
+    if (result != 0) {
+      _free(buffer_ptr);
+      throw PosixException('$name call failed', errno());
+    }
+    final stat = _copy(buffer_ptr.ref);
+    _free(buffer_ptr);
+    return stat;
+  }
+
+  late final _call = 
+    Libc().dylib.lookupFunction<LinuxStatCall_c, LinuxStatCall_dart>(name);
+
+  ffi.Pointer<LinuxStatStruct> _alloc() =>
     malloc(ffi.sizeOf<LinuxStatStruct>());
 
-  @override
-  Stat toStat(ffi.Pointer<LinuxStatStruct> ptr) {
-    final ref = ptr.ref;
-    return Stat(
+  Stat _copy(LinuxStatStruct ref) =>
+    Stat(
       deviceId: ref.st_dev,
       inode: ref.st_ino,
       mode: Mode.fromInt(ref.st_mode),
@@ -37,12 +50,23 @@ class LinuxStatCall extends OsStatCall<LinuxStatStruct> {
       lastModified: fromSeconds(ref.st_mtim.tv_sec, ref.st_mtim.tv_nsec),
       lastStatusChange: fromSeconds(ref.st_ctim.tv_sec, ref.st_ctim.tv_nsec),
     );
-  }
 
-  @override
-  OsStatCall_dart<LinuxStatStruct> lookupSystemCall(String name) =>
-    Libc().dylib.lookupFunction<OsStatCall_c<LinuxStatStruct>, OsStatCall_dart<LinuxStatStruct>>(name);
+  void _free(ffi.Pointer<LinuxStatStruct> ptr) =>
+    malloc.free(ptr);
 }
+
+typedef LinuxStatCall_c = ffi.Int32 Function(
+  ffi.Int32,
+  ffi.Pointer<Utf8>,
+  ffi.Pointer<LinuxStatStruct>
+);
+
+typedef LinuxStatCall_dart = int Function(
+  int,
+  ffi.Pointer<Utf8>,
+  ffi.Pointer<LinuxStatStruct>
+);
+
 class LinuxStatStruct extends ffi.Struct {
   @ffi.Uint64()
   external int st_dev;
