@@ -23,88 +23,89 @@ void main() {
     });
 
     test('file', () {
-      final temp = dcli.createTempDir();
-      final path = dcli.join(temp, 'test_file.txt');
-      File(path).writeAsStringSync(
-        '123456789\n'
-        'This is a\n'
-        'text file\n'
-      );
-      'chmod 4463 $path'.toList();
-      'ln $path $temp/test_file_2.txt'.toList();
-      'ln $path $temp/test_file_3.txt'.toList();
+      dcli.withTempDir((temp) {
+        dcli.withTempFile((path) {
+          File(path).writeAsStringSync(
+            '123456789\n'
+            'This is a\n'
+            'text file\n'
+          );
+          'chmod 4463 $path'.toList();
+          'ln $path $temp/test_file_2.txt'.toList();
+          'ln $path $temp/test_file_3.txt'.toList();
 
-      final actual = lstat(path);
-      final expected = _getExpected(path);
-      _checkAgrees(actual, expected);
-      _checkType(actual, isFile: true);
-      expect(actual.size, 30, reason: 'size: should be 30 (or 33 on windows??)');
-      expect(actual.mode.toString(), '-r-Srw--wx', reason: 'mode: should be odd!');
-      expect(actual.nlink, 3, reason: 'nlink: should be 3');
-
-      /// we don't check the blocksize as the stat command appears to always
-      /// report 512 even if the system block size is something else.
-      /// expect('${struct.blockSize}', equals(blockSize));
+          final actual = lstat(path);
+          final expected = _getExpected(path);
+          _checkAgrees(actual, expected);
+          _checkType(actual, isFile: true);
+          expect(actual.size, 30, reason: 'size: should be 30 (or 33 on windows??)');
+          expect(actual.mode.toString(), '-r-Srw--wx', reason: 'mode: should be odd!');
+          expect(actual.nlink, 3, reason: 'nlink: should be 3');
+        });
+      });
     });
 
     test('directory', () {
-      final temp = dcli.createTempDir();
-      final path = dcli.join(temp, 'test_dir');
-      dcli.createDir(path);
-
-      final actual = lstat(path);
-      final expected = _getExpected(path);
-      _checkAgrees(actual, expected);
-      _checkType(actual, isDirectory: true);
+      dcli.withTempDir((temp) {
+        final actual = lstat(temp);
+        final expected = _getExpected(temp);
+        _checkAgrees(actual, expected);
+        _checkType(actual, isDirectory: true);
+      });
     });
 
     test('link - lstat', () {
-      final temp = dcli.createTempDir();
-      final file = dcli.join(temp, 'test_file.txt');
-      File(file).writeAsStringSync(
-        'Not a lot\n'
-        'going on \n'
-        'with this\n'
-      );
-      'chmod 4463 $file'.toList();
-      final link = dcli.join(temp, 'test_link');
-      'ln -s $file $link'.toList();
+      dcli.withTempDir((temp) {
+        dcli.withTempFile((file) {
+          File(file).writeAsStringSync(
+            'Not a lot\n'
+            'going on \n'
+            'with this\n'
+          );
+          'chmod 4463 $file'.toList();
+          final link = dcli.join(temp, 'test_link');
+          'ln -s $file $link'.toList();
 
-      final actual = lstat(link);
-      final expected = _getExpected(link);
-      _checkAgrees(actual, expected);
-      _checkType(actual, isLink: true);
-      expect(actual.size, file.length, reason: 'size: should be ${file.length}');
+          final actual = lstat(link);
+          final expected = _getExpected(link);
+          _checkAgrees(actual, expected);
+          _checkType(actual, isLink: true);
+          expect(actual.size, file.length, reason: 'size: should be ${file.length}');
+        });
+      });
     });
 
     test('link - stat', () {
-      final temp = dcli.createTempDir();
-      final file = dcli.join(temp, 'test_file.txt');
-      File(file).writeAsStringSync(
-        'Not a lot\n'
-        'going on \n'
-        'with this\n'
-      );
-      'chmod 4463 $file'.toList();
-      final link = dcli.join(temp, 'test_link');
-      'ln -s $file $link'.toList();
+      dcli.withTempDir((temp) {
+        dcli.withTempFile((file) {
+          File(file).writeAsStringSync(
+            'Not a lot\n'
+            'going on \n'
+            'with this\n'
+          );
+          'chmod 4463 $file'.toList();
+          final link = dcli.join(temp, 'test_link');
+          'ln -s $file $link'.toList();
 
-      final actual = stat(link);
-      final expected = _getExpected(file);
-      _checkAgrees(actual, expected);
-      _checkType(actual, isFile: true);
-      expect(actual.size, 30, reason: 'size: should be 30');
+          final actual = stat(link);
+          final expected = _getExpected(file);
+          _checkAgrees(actual, expected);
+          _checkType(actual, isFile: true);
+          expect(actual.size, 30, reason: 'size: should be 30');
+        });
+      });
     });
 
     test('named pipe', () {
-      final temp = dcli.createTempDir();
-      final path = dcli.join(temp, 'test_fifo');
-      'mkfifo $path'.toList();
+      dcli.withTempDir((temp) {
+        final path = dcli.join(temp, 'test_fifo');
+        'mkfifo $path'.toList();
 
-      final actual = stat(path);
-      final expected = _getExpected(path);
-      _checkAgrees(actual, expected);
-      _checkType(actual, isNamedPipe: true);
+        final actual = stat(path);
+        final expected = _getExpected(path);
+        _checkAgrees(actual, expected);
+        _checkType(actual, isNamedPipe: true);
+      });
     });
 
     test('character device (/dev/tty)', () {
@@ -112,7 +113,6 @@ void main() {
 
       final actual = lstat(path);
       final expected = _getExpected(path);
-
       _checkAgrees(actual, expected);
       _checkType(actual, isCharacterDevice: true);
       expect(actual.uid, 0, reason: 'uid: should be owned by root(?)');
@@ -120,29 +120,28 @@ void main() {
     });
 
     test('memory corruption ...', () async {
-      var tempDir = dcli.createTempDir();
-      var testFile = dcli.join(tempDir, 'test.txt');
-      dcli.touch(testFile, create: true);
+      dcli.withTempDir((temp) {
+        final testFile = dcli.join(temp, 'test.txt');
+        dcli.touch(testFile, create: true);
+        'chmod 664 $testFile'.toList();
+        for (var i = 0; i < 1000; i++) {
+          var struct = stat(testFile);
 
-      print('$testFile');
-
-      for (var i = 0; i < 1000; i++) {
-        var struct = stat(testFile);
-
-        expect(struct.mode, isNotNull);
+          expect(struct.mode, isNotNull);
   
-        expect(struct.mode.isOwnerReadable, isTrue);
-        expect(struct.mode.isOwnerWritable, isTrue);
-        expect(struct.mode.isOwnerExecutable, isFalse);
+          expect(struct.mode.isOwnerReadable, isTrue);
+          expect(struct.mode.isOwnerWritable, isTrue);
+          expect(struct.mode.isOwnerExecutable, isFalse);
   
-        expect(struct.mode.isGroupReadable, isTrue);
-        expect(struct.mode.isGroupWritable, isTrue);
-        expect(struct.mode.isGroupExecutable, isFalse);
+          expect(struct.mode.isGroupReadable, isTrue);
+          expect(struct.mode.isGroupWritable, isTrue);
+          expect(struct.mode.isGroupExecutable, isFalse);
 
-        expect(struct.mode.isOtherReadable, isTrue);
-        expect(struct.mode.isOtherWritable, isFalse);
-        expect(struct.mode.isOtherExecutable, isFalse);
-      }
+          expect(struct.mode.isOtherReadable, isTrue);
+          expect(struct.mode.isOtherWritable, isFalse);
+          expect(struct.mode.isOtherExecutable, isFalse);
+        }
+      });
     });
   });
 }
