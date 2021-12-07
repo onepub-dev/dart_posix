@@ -14,7 +14,6 @@ abstract class OsStatCall {
     try {
       return sysCall(pathToFile_ptr);
     } finally {
-      print('in call: freeing pathToFile_ptr');
       malloc.free(pathToFile_ptr);
     }
   }
