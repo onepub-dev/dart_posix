@@ -1,0 +1,140 @@
+#!/bin/bash
+
+# A portable (but inflexible) stat command
+#
+# Tested on
+#   - Linux
+#   - MacOS
+
+inode() {
+    set x $(ls -di $name)
+    echo "$2"
+}
+
+mode() {
+    set x $(ls -dl $name)
+    echo "$2" | cut -c 1-10     # Exclude any other (non-standard) characters
+}
+
+nlink() {
+    set x $(ls -dl $name)
+    echo "$3"
+}
+
+case $(uname -s) in
+    Darwin)
+        _stat() {
+            stat -f "%$1" $name
+        }
+
+        blocks() {
+            _stat b
+        }
+
+        blockSize() {
+            # I think this is right but haven't found a way to get it
+            # from the command line
+            echo '4096'
+        }
+
+        deviceId() {
+            _stat d
+        }
+
+        gid() {
+            _stat g
+        }
+
+        lastAccess() {
+            _stat a
+        }
+
+        lastModified() {
+            _stat m
+        }
+
+        lastStatusChange() {
+            _stat c
+        }
+
+        rdev() {
+            _stat r
+        }
+
+        size() {
+            _stat z
+        }
+
+        uid() {
+            _stat u
+        }
+        ;;
+
+    *)
+        _stat() {
+            stat --format "%$1" $name
+        }
+
+        blocks() {
+            _stat b
+        }
+
+        blockSize() {
+            _stat B
+        }
+
+        deviceId() {
+            _stat d
+        }
+
+        gid() {
+            _stat g
+        }
+
+        lastAccess() {
+            _stat X
+        }
+
+        lastModified() {
+            _stat Y
+        }
+
+        lastStatusChange() {
+            _stat Z
+        }
+
+        rdev() {
+            local major=$(_stat t)
+            local minor=$(_stat T)
+            echo $(expr $((16#$major)) \* 256 + $((16#$minor)))
+        }
+
+        size() {
+            _stat s
+        }
+
+        uid() {
+            _stat u
+        }
+        ;;
+esac
+
+for name
+do
+    echo '{'
+#    echo '  "name": "'$name'",'
+    echo '  "deviceId": '$(deviceId)','
+    echo '  "inode": '$(inode)','
+    echo '  "mode": "'$(mode)'",'
+    echo '  "nlink": '$(nlink)','
+    echo '  "uid": '$(uid)','
+    echo '  "gid": '$(gid)','
+    echo '  "rdev": '$(rdev)','
+    echo '  "size": '$(size)','
+    echo '  "blockSize": '$(blockSize)','
+    echo '  "blocks": '$(blocks)','
+    echo '  "lastAccess": '$(lastAccess)','
+    echo '  "lastModified": '$(lastModified)','
+    echo '  "lastStatusChange": '$(lastStatusChange)
+    echo '}'
+done
