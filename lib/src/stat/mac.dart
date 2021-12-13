@@ -46,8 +46,7 @@ class MacStatCall extends OsStatCall {
         blocks: ref.blocks,
         lastAccess: fromSeconds(ref.atimespec.sec, ref.atimespec.nsec),
         lastModified: fromSeconds(ref.mtimespec.sec, ref.mtimespec.nsec),
-        lastStatusChange:
-            fromSeconds(ref.ctimespec.sec, ref.ctimespec.nsec),
+        lastStatusChange: fromSeconds(ref.ctimespec.sec, ref.ctimespec.nsec),
       );
 
   void _free(ffi.Pointer<MacStatStruct> ptr) => malloc.free(ptr);

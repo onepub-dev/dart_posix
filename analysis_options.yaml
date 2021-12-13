@@ -11,5 +11,7 @@ linter:
     non_constant_identifier_names: true
 
     
+analyzer:
+  exclude: test/*.dart    
 
 

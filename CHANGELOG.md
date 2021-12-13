@@ -1,3 +1,12 @@
+# 3.0.0
+- BREAKING: Changed Passwd field user_info to userInfo.
+- BREAKING: Renamed clear_errno to clearErrno
+- applied lint_hard with the objective of making the code more consistent. 
+- added additional simplifed names.
+- Implemented missing hashCode on a no. of classes.
+- commented out opaque thread as causing vc-code performance issues and looks like its not used.
+- split mac.dart into smaller 'part of ' files as vscode was having serious performance problems.
+
 # 2.2.3
 Thanks to https://github.com/ab36245 for the contribution.
 - Fixed stat command on macos 

@@ -1,5 +1,5 @@
 name: posix
-version: 2.2.3
+version: 3.0.0
 homepage: https://github.com/bsutton/dart_posix
 description: Exposes the POSIX api on OSx and Linux
 environment: 
@@ -9,7 +9,6 @@ dependencies:
   meta: ^1.7.0
   quiver: ^3.0.1+1
 dev_dependencies: 
-  dcli: ^1.14.1
   ffigen: ^4.1.2
   lint_hard: ^1.0.0
   test: ^1.16.2
