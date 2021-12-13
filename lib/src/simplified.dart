@@ -11,3 +11,25 @@ String getUserNameByUID(int uid) {
 
   return pwd.username;
 }
+
+/// Search for a Group with a matching group ID.
+///
+/// This is an wrapper for the posix [getgrgid] function.
+///
+/// If no Group is found for the group ID then a [PosixException]
+/// is thrown.
+Group getGroupGuid(
+  int gid,
+) =>
+    getgrgid(gid);
+
+/// Search for a Group with a matching group name.
+///
+/// This is an wrapper for the posix [getgrnam] function.
+///
+/// If a Group can't be found for [group] then a [PosixException]
+/// is thrown.
+Group getGroupName(
+  String group,
+) =>
+    getgrnam(group);
