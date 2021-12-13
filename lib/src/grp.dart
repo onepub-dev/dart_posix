@@ -1,11 +1,11 @@
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import 'package:posix/src/posix_exception.dart';
-import 'package:posix/src/unistd/errno.dart';
-import 'package:posix/src/util/conversions.dart';
 
 import 'libc.dart';
+import 'posix_exception.dart';
+import 'unistd/errno.dart';
+import 'util/conversions.dart';
 
 class _IO_FILE extends ffi.Opaque {}
 
@@ -14,9 +14,10 @@ class _IO_FILE extends ffi.Opaque {}
 /// This function is a possible cancellation point and therefore not
 /// marked with __THROW.
 void setgrent() {
-  clear_errno();
-  _setgrent ??=
-      Libc().dylib.lookupFunction<_c_setgrent, _dart_setgrent>('setgrent');
+  clearErrno();
+  _setgrent ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Void Function(), _dart_setgrent>('setgrent');
   _setgrent!();
 }
 
@@ -27,9 +28,10 @@ _dart_setgrent? _setgrent;
 /// This function is a possible cancellation point and therefore not
 /// marked with __THROW.
 void endgrent() {
-  clear_errno();
-  _endgrent ??=
-      Libc().dylib.lookupFunction<_c_endgrent, _dart_endgrent>('endgrent');
+  clearErrno();
+  _endgrent ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Void Function(), _dart_endgrent>('endgrent');
   _endgrent!();
 }
 
@@ -40,11 +42,15 @@ _dart_endgrent? _endgrent;
 /// This function is a possible cancellation point and therefore not
 /// marked with __THROW.
 Group getgrent() {
-  clear_errno();
-  _getgrent ??=
-      Libc().dylib.lookupFunction<_c_getgrent, _dart_getgrent>('getgrent');
-  return _buildGroup(_getgrent!(),
-      'Error occured attempting to get the next group entry from the group database stream');
+  clearErrno();
+  _getgrent ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Pointer<group> Function(), _dart_getgrent>(
+          'getgrent');
+  return _buildGroup(
+      _getgrent!(),
+      'Error occured attempting to get the next group entry from '
+      'the group database stream');
 }
 
 _dart_getgrent? _getgrent;
@@ -55,15 +61,19 @@ _dart_getgrent? _getgrent;
 /// cancellation point.  But due to similarity with an POSIX interface
 /// or due to the implementation it is a cancellation point and
 /// therefore not marked with __THROW.
+// ignore: non_constant_identifier_names
 Group native_fgetgrent(
   ffi.Pointer<_IO_FILE> __stream,
 ) {
-  clear_errno();
-  _fgetgrent ??=
-      Libc().dylib.lookupFunction<_c_fgetgrent, _dart_fgetgrent>('fgetgrent');
+  clearErrno();
+  _fgetgrent ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<group> Function(ffi.Pointer<_IO_FILE>),
+      _dart_fgetgrent>('fgetgrent');
 
-  return _buildGroup(_fgetgrent!(__stream),
-      'Error occured attempting to get the next group entry from the group database stream');
+  return _buildGroup(
+      _fgetgrent!(__stream),
+      'Error occured attempting to get the next group entry from the group'
+      ' database stream');
 }
 
 _dart_fgetgrent? _fgetgrent;
@@ -75,9 +85,11 @@ _dart_fgetgrent? _fgetgrent;
 Group getgrgid(
   int gid,
 ) {
-  clear_errno();
-  _getgrgid ??=
-      Libc().dylib.lookupFunction<_c_getgrgid, _dart_getgrgid>('getgrgid');
+  clearErrno();
+  _getgrgid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Pointer<group> Function(ffi.Uint32), _dart_getgrgid>(
+          'getgrgid');
   return _buildGroup(
       _getgrgid!(
         gid,
@@ -94,19 +106,20 @@ _dart_getgrgid? _getgrgid;
 Group getgrnam(
   String group,
 ) {
-  clear_errno();
+  clearErrno();
 
-  var c_name = group.toNativeUtf8();
+  final cName = group.toNativeUtf8();
 
   _getgrnam ??=
       Libc().dylib.lookupFunction<_c_getgrnam, _dart_getgrnam>('getgrnam');
+
   final _group = _buildGroup(
       _getgrnam!(
-        c_name,
+        cName,
       ),
       'Error occured attempting to get the next group entry for group: $group');
 
-  malloc.free(c_name);
+  malloc.free(cName);
 
   return _group;
 }
@@ -197,7 +210,8 @@ _dart_getgrnam? _getgrnam;
 //   ffi.Pointer<ffi.Uint32> __groups,
 // ) {
 //   _setgroups ??=
-//       Libc().dylib.lookupFunction<_c_setgroups, _dart_setgroups>('setgroups');
+//       Libc().dylib.lookupFunction<_c_setgroups,
+// _dart_setgroups>('setgroups');
 //   return _setgroups(
 //     __n,
 //     __groups,
@@ -257,6 +271,12 @@ _dart_getgrnam? _getgrnam;
 // _dart_initgroups _initgroups;
 
 class Group {
+  Group(
+      {required this.name,
+      required this.password,
+      required this.gid,
+      required this.members});
+
   /// Group name.
   String name;
 
@@ -268,23 +288,19 @@ class Group {
 
   List<String> members;
 
-  Group(
-      {required this.name,
-      required this.password,
-      required this.gid,
-      required this.members});
-
   @override
   String toString() => 'group: $name gid: $gid members: ${members.join(', ')}';
 }
 
-Group _buildGroup(ffi.Pointer<group> _gr_group, String error) {
-  if (_gr_group == ffi.nullptr) throw PosixException(error, errno());
+Group _buildGroup(ffi.Pointer<group> grGroup, String error) {
+  if (grGroup == ffi.nullptr) {
+    throw PosixException(error, errno());
+  }
 
-  var name = copyCBuffToDartString(_gr_group.ref.gr_name!, free: false);
-  var password = copyCBuffToDartString(_gr_group.ref.gr_passwd!, free: false);
-  var gid = _gr_group.ref.gr_gid;
-  var members = copyCStringListToDartList(_gr_group.ref.gr_mem!, free: false);
+  final name = copyCBuffToDartString(grGroup.ref.name!, free: false);
+  final password = copyCBuffToDartString(grGroup.ref.passwd!, free: false);
+  final gid = grGroup.ref.gid;
+  final members = copyCStringListToDartList(grGroup.ref.mem!, free: false);
 
   /// We don't own the pointer so no need to free it.
   /// free(_gr_group);
@@ -293,52 +309,38 @@ Group _buildGroup(ffi.Pointer<group> _gr_group, String error) {
 
 class group extends ffi.Struct {
   /// Group name.
-  external ffi.Pointer<ffi.Int8>? gr_name;
+  external ffi.Pointer<ffi.Int8>? name;
 
   /// Password.
-  external ffi.Pointer<ffi.Int8>? gr_passwd;
+  external ffi.Pointer<ffi.Int8>? passwd;
 
   /// Group ID.
   @ffi.Uint32()
-  external int? gr_gid;
+  external int? gid;
 
   /// Member list.
-  external ffi.Pointer<ffi.Pointer<ffi.Int8>>? gr_mem;
+  external ffi.Pointer<ffi.Pointer<ffi.Int8>>? mem;
 }
-
-typedef _c_setgrent = ffi.Void Function();
 
 typedef _dart_setgrent = void Function();
 
-typedef _c_endgrent = ffi.Void Function();
-
 typedef _dart_endgrent = void Function();
-
-typedef _c_getgrent = ffi.Pointer<group> Function();
 
 typedef _dart_getgrent = ffi.Pointer<group> Function();
 
-typedef _c_fgetgrent = ffi.Pointer<group> Function(
-  ffi.Pointer<_IO_FILE> __stream,
-);
-
 typedef _dart_fgetgrent = ffi.Pointer<group> Function(
   ffi.Pointer<_IO_FILE> __stream,
-);
-
-typedef _c_getgrgid = ffi.Pointer<group> Function(
-  ffi.Uint32 __gid,
 );
 
 typedef _dart_getgrgid = ffi.Pointer<group> Function(
   int __gid,
 );
 
-typedef _c_getgrnam = ffi.Pointer<group> Function(
+typedef _dart_getgrnam = ffi.Pointer<group> Function(
   ffi.Pointer<Utf8> __name,
 );
-
-typedef _dart_getgrnam = ffi.Pointer<group> Function(
+// ignore: avoid_private_typedef_functions
+typedef _c_getgrnam = ffi.Pointer<group> Function(
   ffi.Pointer<Utf8> __name,
 );
 
@@ -358,6 +360,7 @@ typedef _dart_getgrnam = ffi.Pointer<group> Function(
 //   ffi.Pointer<ffi.Pointer<group>> __result,
 // );
 
+// ignore: avoid_private_typedef_functions
 // typedef _c_getgrnam_r = ffi.Int32 Function(
 //   ffi.Pointer<ffi.Int8> __name,
 //   ffi.Pointer<group> __resultbuf,

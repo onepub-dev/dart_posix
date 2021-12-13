@@ -1,7 +1,8 @@
 import 'dart:io';
+
+import 'package:dcli/dcli.dart' show withTempFile;
 import 'package:posix/posix.dart';
 import 'package:test/test.dart';
-import 'package:dcli/dcli.dart' show withTempFile;
 
 void main() {
   test('getcwd ...', () async {
@@ -11,7 +12,7 @@ void main() {
 
   test('gethostname ...', () async {
     late String _hostname;
-    await Process.run('hostname', []).then((ProcessResult results) {
+    await Process.run('hostname', []).then((results) {
       _hostname = results.stdout.toString().split('\n')[0];
     });
 

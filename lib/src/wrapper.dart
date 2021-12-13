@@ -1,8 +1,9 @@
 import 'dart:ffi' as ffi;
+
 import 'package:ffi/ffi.dart';
-import 'package:posix/src/util/conversions.dart';
 
 import '../posix.dart';
+import 'util/conversions.dart';
 
 /// We provide a wrapper for each posix method that takes and return dart types.
 ///
@@ -13,24 +14,22 @@ import '../posix.dart';
 /// Gets the absolute pathname of the current working directory.
 /// If an error occurs a a [PosixException] is thrown with the error.
 String getcwd() {
-  var c_buf = malloc.allocate<ffi.Int8>(PATH_MAX);
+  final cBuf = malloc.allocate<ffi.Int8>(PATH_MAX);
 
-  var result = native_getwd(
-    c_buf,
+  final result = native_getwd(
+    cBuf,
   );
 
   if (result == ffi.nullptr) {
-    var error = copyCBuffToDartString(c_buf);
+    final error = copyCBuffToDartString(cBuf);
     throw PosixException(error, -1);
   }
 
-  return copyCBuffToDartString(c_buf);
+  return copyCBuffToDartString(cBuf);
 }
 
 /// Return the session ID of the given process.
-int getsid(int pid) {
-  return native_getsid(pid);
-}
+int getsid(int pid) => native_getsid(pid);
 
 /// Set the real group ID of the calling process to RGID,
 /// and the effective group ID of the calling process to EGID.
@@ -51,7 +50,7 @@ void setregid(
 String ttyname(
   int fd,
 ) {
-  var c_name = native_ttyname(fd);
+  final cName = native_ttyname(fd);
 
-  return c_name.cast<Utf8>().toDartString();
+  return cName.cast<Utf8>().toDartString();
 }

@@ -1,7 +1,12 @@
+// ignore_for_file: constant_identifier_names
+
+import 'package:meta/meta.dart';
+
 import '../posix_exception.dart';
 
+@immutable
 class Mode {
-  Mode.fromInt(this.mode);
+  const Mode.fromInt(this.mode);
 
   Mode.fromString(String mode) : mode = _fromString(mode);
 
@@ -90,6 +95,9 @@ class Mode {
 
   @override
   bool operator ==(Object other) => other is Mode && other.mode == mode;
+
+  @override
+  int get hashCode => mode.hashCode;
 
   static int _fromString(String smode) {
     if (smode.length < 10) {

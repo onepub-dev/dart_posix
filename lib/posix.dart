@@ -4,22 +4,22 @@
 // export 'src/libc/geteuid.dart';
 // export 'src/libc/getuid.dart';
 
-export 'src/posix_exception.dart';
+import 'src/libc.dart';
 
-export 'src/unistd/unistd.dart';
-export 'src/unistd/errno.dart';
-export 'src/pwd.dart';
 export 'src/grp.dart';
-export 'src/wrapper.dart';
-export 'src/string/string.dart';
+export 'src/posix_exception.dart';
+export 'src/pwd.dart';
+export 'src/simplified.dart';
 export 'src/stat/mode.dart';
 export 'src/stat/stat.dart';
-export 'src/simplified.dart';
-
-import 'src/libc.dart';
+export 'src/string/string.dart';
+export 'src/unistd/errno.dart';
+export 'src/unistd/unistd.dart';
+export 'src/wrapper.dart';
 
 /// Returns true if posix is supported on this platform.
 ///
-/// Internally we check to see if the required shared library (.so, .dylib, .dll)
+/// Internally we check to see if the required shared library
+/// (.so, .dylib, .dll)
 /// is available.
 bool get isPosixSupported => Libc().isPosixSupported;

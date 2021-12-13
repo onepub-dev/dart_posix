@@ -1,18 +1,19 @@
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import 'package:posix/posix.dart';
-import 'package:posix/src/util/conversions.dart';
 
+import '../posix.dart';
 import 'libc.dart';
+import 'util/conversions.dart';
 
 /// Rewind the user database stream.
 ///
 /// This function is a possible cancellation point and therefore not
 /// marked with __THROW.
 void setpwent() {
-  _setpwent ??=
-      Libc().dylib.lookupFunction<_c_setpwent, _dart_setpwent>('setpwent');
+  _setpwent ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Void Function(), _dart_setpwent>('setpwent');
   return _setpwent!();
 }
 
@@ -23,8 +24,9 @@ _dart_setpwent? _setpwent;
 /// This function is a possible cancellation point and therefore not
 /// marked with __THROW.
 void endpwent() {
-  _endpwent ??=
-      Libc().dylib.lookupFunction<_c_endpwent, _dart_endpwent>('endpwent');
+  _endpwent ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Void Function(), _dart_endpwent>('endpwent');
   return _endpwent!();
 }
 
@@ -35,10 +37,14 @@ _dart_endpwent? _endpwent;
 /// This function is a possible cancellation point and therefore not
 /// marked with __THROW.
 Passwd getpwent() {
-  _getpwent ??=
-      Libc().dylib.lookupFunction<_c_getpwent, _dart_getpwent>('getpwent');
-  return _buildPasswd(_getpwent!(),
-      'Error occured attempting to read the next entry from the user database stream');
+  _getpwent ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Pointer<_passwd> Function(), _dart_getpwent>(
+          'getpwent');
+  return _buildPasswd(
+      _getpwent!(),
+      'Error occured attempting to read the next entry from the user '
+      'database stream');
 }
 
 _dart_getpwent? _getpwent;
@@ -53,7 +59,8 @@ _dart_getpwent? _getpwent;
 //   ffi.Pointer<_IO_FILE> __stream,
 // ) {
 //   _fgetpwent ??=
-//       Libc().dylib.lookupFunction<_c_fgetpwent, _dart_fgetpwent>('fgetpwent');
+//       Libc().dylib.lookupFunction<_c_fgetpwent,
+// _dart_fgetpwent>('fgetpwent');
 //   ffi.Pointer<_passwd> _pw_passwd = _fgetpwent(
 //     __stream,
 //   );
@@ -91,8 +98,8 @@ _dart_getpwent? _getpwent;
 Passwd getpwuid(
   int uid,
 ) {
-  _getpwuid ??=
-      Libc().dylib.lookupFunction<_c_getpwuid, _dart_getpwuid>('getpwuid');
+  _getpwuid ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<_passwd> Function(ffi.Uint32), _dart_getpwuid>('getpwuid');
   return _buildPasswd(
       _getpwuid!(
         uid,
@@ -107,18 +114,19 @@ _dart_getpwuid? _getpwuid;
 /// This function is a possible cancellation point and therefore not
 /// marked with __THROW.
 Passwd getpwnam(String username) {
-  clear_errno();
-  var c_name = username.toNativeUtf8();
+  clearErrno();
+  final cName = username.toNativeUtf8();
 
-  _getpwnam ??=
-      Libc().dylib.lookupFunction<_c_getpwnam, _dart_getpwnam>('getpwnam');
+  _getpwnam ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<_passwd> Function(ffi.Pointer<Utf8>),
+      _dart_getpwnam>('getpwnam');
   final passwd = _buildPasswd(
       _getpwnam!(
-        c_name,
+        cName,
       ),
       'Error occured attempting to Passwd for username: $username');
 
-  malloc.free(c_name);
+  malloc.free(cName);
 
   return passwd;
 }
@@ -220,6 +228,14 @@ _dart_getpwnam? _getpwnam;
 
 /// Dart implemenation of posix passwd structure
 class Passwd {
+  Passwd(
+      {required this.username,
+      required this.password,
+      required this.uid,
+      required this.gid,
+      required this.userInfo,
+      required this.homePathTo,
+      required this.shellPathTo});
   String username;
 
   /// Hashed passphrase, if shadow database
@@ -232,8 +248,9 @@ class Passwd {
   /// Group ID.
   int gid;
 
-  /// Comma delimited set of fields about the user (name, phone, ...) = pw_gecos in posix.
-  String user_info;
+  /// Comma delimited set of fields about the user (name, phone, ...)
+  /// = pw_gecos in posix.
+  String userInfo;
 
   /// Home directory - pw_dir in posix
   String homePathTo;
@@ -241,36 +258,29 @@ class Passwd {
   /// Shell program - pw_shell in posix
   String shellPathTo;
 
-  Passwd(
-      {required this.username,
-      required this.password,
-      required this.uid,
-      required this.gid,
-      required this.user_info,
-      required this.homePathTo,
-      required this.shellPathTo});
-
   @override
-  String toString() {
-    return 'username: $username uid: $uid gid: $gid home: $homePathTo shell: $shellPathTo';
-  }
+  String toString() =>
+      'username: $username uid: $uid gid: $gid home: $homePathTo shell: '
+      '$shellPathTo';
 }
 
-Passwd _buildPasswd(ffi.Pointer<_passwd> _pw_passwd, String error) {
-  if (_pw_passwd == ffi.nullptr) throw PosixException(error, errno());
+Passwd _buildPasswd(ffi.Pointer<_passwd> pwPasswd, String error) {
+  if (pwPasswd == ffi.nullptr) {
+    throw PosixException(error, errno());
+  }
 
-  var username = copyCBuffToDartString(_pw_passwd.ref.pw_name!, free: false);
-  var password = copyCBuffToDartString(_pw_passwd.ref.pw_passwd!, free: false);
+  final username = copyCBuffToDartString(pwPasswd.ref.name!, free: false);
+  final password = copyCBuffToDartString(pwPasswd.ref.password!, free: false);
 
-  var user_info = copyCBuffToDartString(_pw_passwd.ref.pw_gecos!, free: false);
+  final userInfo = copyCBuffToDartString(pwPasswd.ref.gecos!, free: false);
 
-  var uid = _pw_passwd.ref.pw_uid;
-  var gid = _pw_passwd.ref.pw_gid;
+  final uid = pwPasswd.ref.uid;
+  final gid = pwPasswd.ref.gid;
 
-  var homePathTo = copyCBuffToDartString(_pw_passwd.ref.pw_dir!, free: false);
+  final homePathTo = copyCBuffToDartString(pwPasswd.ref.dir!, free: false);
 
-  var shellPathTo =
-      copyCBuffToDartString(_pw_passwd.ref.pw_shell!, free: false);
+  final shellPathTo =
+      copyCBuffToDartString(pwPasswd.ref.shell!, free: false);
 
   /// We don't own the pointer so no need to free it.
   /// free(_pw_passwd);
@@ -278,7 +288,7 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> _pw_passwd, String error) {
   return Passwd(
       username: username,
       password: password,
-      user_info: user_info,
+      userInfo: userInfo,
       uid: uid!,
       gid: gid!,
       homePathTo: homePathTo,
@@ -288,47 +298,35 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> _pw_passwd, String error) {
 /// A record in the user database.
 class _passwd extends ffi.Struct {
   /// Username.
-  external ffi.Pointer<ffi.Int8>? pw_name;
+  external ffi.Pointer<ffi.Int8>? name;
 
   /// Hashed passphrase, if shadow database
   /// not in use (see shadow.h).
-  external ffi.Pointer<ffi.Int8>? pw_passwd;
+  external ffi.Pointer<ffi.Int8>? password;
 
   /// User ID.
   @ffi.Uint32()
-  external int? pw_uid;
+  external int? uid;
 
   /// Group ID.
   @ffi.Uint32()
-  external int? pw_gid;
+  external int? gid;
 
   /// Real name.
-  external ffi.Pointer<ffi.Int8>? pw_gecos;
+  external ffi.Pointer<ffi.Int8>? gecos;
 
   /// Home directory.
-  external ffi.Pointer<ffi.Int8>? pw_dir;
+  external ffi.Pointer<ffi.Int8>? dir;
 
   /// Shell program.
-  external ffi.Pointer<ffi.Int8>? pw_shell;
+  external ffi.Pointer<ffi.Int8>? shell;
 }
 
 // class _IO_FILE extends ffi.Struct {}
 
-/////////////////////////////////////////////////////////////
-///
-/// typedefs
-///
-/////////////////////////////////////////////////////////////
-
-typedef _c_setpwent = ffi.Void Function();
-
 typedef _dart_setpwent = void Function();
 
-typedef _c_endpwent = ffi.Void Function();
-
 typedef _dart_endpwent = void Function();
-
-typedef _c_getpwent = ffi.Pointer<_passwd> Function();
 
 typedef _dart_getpwent = ffi.Pointer<_passwd> Function();
 
@@ -350,16 +348,8 @@ typedef _dart_getpwent = ffi.Pointer<_passwd> Function();
 //   ffi.Pointer<_IO_FILE> __f,
 // );
 
-typedef _c_getpwuid = ffi.Pointer<_passwd> Function(
-  ffi.Uint32 __uid,
-);
-
 typedef _dart_getpwuid = ffi.Pointer<_passwd> Function(
   int __uid,
-);
-
-typedef _c_getpwnam = ffi.Pointer<_passwd> Function(
-  ffi.Pointer<Utf8> __name,
 );
 
 typedef _dart_getpwnam = ffi.Pointer<_passwd> Function(

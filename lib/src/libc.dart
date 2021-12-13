@@ -1,11 +1,23 @@
 import 'dart:ffi' as ffi;
 import 'dart:io' show Platform;
 
-import 'package:posix/posix.dart';
+import '../posix.dart';
 
+// ignore: constant_identifier_names
 const int NULL = 0;
 
 class Libc {
+  factory Libc() => _self;
+  Libc._internal() {
+    var path = 'libc.so.6';
+    if (Platform.isMacOS) {
+      path = '/usr/lib/libSystem.dylib';
+    }
+    if (Platform.isWindows) {
+      path = r'primitives_library\Debug\primitives.dll';
+    }
+    _dylib = ffi.DynamicLibrary.open(path);
+  }
   static final Libc _self = Libc._internal();
 
   ffi.DynamicLibrary? _dylib;
@@ -17,18 +29,10 @@ class Libc {
     return _dylib!;
   }
 
-  factory Libc() => _self;
-
-  Libc._internal() {
-    var path = 'libc.so.6';
-    if (Platform.isMacOS) path = '/usr/lib/libSystem.dylib';
-    if (Platform.isWindows) path = r'primitives_library\Debug\primitives.dll';
-    _dylib = ffi.DynamicLibrary.open(path);
-  }
-
   /// Returns true if posix is supported on this platform.
   ///
-  /// Internally we check to see if the required shared library (.so, .dylib, .dll)
+  /// Internally we check to see if the required shared library
+  /// (.so, .dylib, .dll)
   /// is available.
   bool get isPosixSupported => _dylib != null;
 
@@ -38,17 +42,20 @@ class Libc {
     if (_dylib != null) {
       try {
         return _dylib!.lookup(funcname);
+        // ignore: avoid_catching_errors
       } on ArgumentError catch (_) {
         throw PosixException(
             'The $funcname is not supported by posix on this platform.', 1);
       }
     } else {
       throw PosixException(
-          'Posix is not supported on this platform as a result an attempt to call $funcname failed.',
+          'Posix is not supported on this platform as a result an attempt to '
+          'call $funcname failed.',
           1);
     }
   }
 
-  // F lookupFunction<T extends Function, F extends Function>(String symbolName) =>
+  // F lookupFunction<T extends Function, F extends Function>(String symbolName)
+  // =>
   //     dylib.lookupFunction(symbolName);
 }

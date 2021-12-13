@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:ffi' as ffi;
 import 'dart:io';
 
@@ -9,7 +11,7 @@ int errno() => _func().value;
 /// Clear the errno by setting it to 0.
 /// You should do this before calling a function that
 /// may set errno.
-void clear_errno() => _func().value = 0;
+void clearErrno() => _func().value = 0;
 
 const int EPERM = 1;
 
@@ -279,10 +281,8 @@ const int EHWPOISON = 133;
 
 const int ENOTSUP = 95;
 
-typedef _c_func = ffi.Pointer<ffi.Int32> Function();
-
-typedef _dart_func = ffi.Pointer<ffi.Int32> Function();
-
 final _name = Platform.isMacOS ? '__error' : '__errno_location';
 
-late final _func = Libc().dylib.lookupFunction<_c_func, _dart_func>(_name);
+late final _func = Libc().dylib.lookupFunction<
+    ffi.Pointer<ffi.Int32> Function(),
+    ffi.Pointer<ffi.Int32> Function()>(_name);

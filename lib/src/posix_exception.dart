@@ -1,6 +1,7 @@
-import 'package:posix/src/string/string.dart';
+import 'string/string.dart';
 
 class PosixException implements Exception {
+  PosixException(this.message, this.code, {this.posixError});
   String message;
 
   /// This should be the value returned by errno().
@@ -10,7 +11,6 @@ class PosixException implements Exception {
   /// standard error returned vi [sterror(errno)]. If not supplied then
   /// we call [strerror(errno)] to get the posix error description.
   String? posixError;
-  PosixException(this.message, this.code, {this.posixError});
 
   @override
   String toString() {

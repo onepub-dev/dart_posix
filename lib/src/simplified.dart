@@ -1,4 +1,4 @@
-import 'package:posix/posix.dart';
+import '../posix.dart';
 
 /// the simplified library provides a number of more obvious entry points
 /// for common operations.

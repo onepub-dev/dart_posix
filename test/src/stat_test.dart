@@ -109,7 +109,7 @@ void main() {
     });
 
     test('character device (/dev/tty)', () {
-      final path = '/dev/tty';
+      const path = '/dev/tty';
 
       final actual = lstat(path);
       final expected = _getExpected(path);
@@ -126,7 +126,7 @@ void main() {
         //dcli.chmod(0x1B4, testFile); // 0x1B4 = 0664
         'chmod 664 $testFile'.toList();
         for (var i = 0; i < 1000; i++) {
-          var struct = stat(testFile);
+          final struct = stat(testFile);
 
           expect(struct.mode, isNotNull);
 
@@ -194,25 +194,25 @@ void _checkType(
 
 Stat _getExpected(String path) {
   final json = _runScript('mystat', '"$path"').join('\n');
-  final map = jsonDecode(json);
+  final map = jsonDecode(json) as Map;
 
   DateTime fromSeconds(int seconds) =>
       DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
 
   return Stat(
-    deviceId: map['deviceId'],
-    inode: map['inode'],
-    mode: Mode.fromString(map['mode']),
-    nlink: map['nlink'],
-    uid: map['uid'],
-    gid: map['gid'],
-    rdev: map['rdev'],
-    size: map['size'],
-    blockSize: map['blockSize'],
-    blocks: map['blocks'],
-    lastAccess: fromSeconds(map['lastAccess']),
-    lastModified: fromSeconds(map['lastModified']),
-    lastStatusChange: fromSeconds(map['lastStatusChange']),
+    deviceId: map['deviceId'] as int,
+    inode: map['inode'] as int,
+    mode: Mode.fromString(map['mode'] as String),
+    nlink: map['nlink'] as int,
+    uid: map['uid'] as int,
+    gid: map['gid'] as int,
+    rdev: map['rdev'] as int,
+    size: map['size'] as int,
+    blockSize: map['blockSize'] as int,
+    blocks: map['blocks'] as int,
+    lastAccess: fromSeconds(map['lastAccess'] as int),
+    lastModified: fromSeconds(map['lastModified'] as int),
+    lastStatusChange: fromSeconds(map['lastStatusChange'] as int),
   );
 }
 

@@ -10,11 +10,11 @@ abstract class OsStatCall {
   final String name;
 
   Stat call(String pathToFile) {
-    final pathToFile_ptr = pathToFile.toNativeUtf8();
+    final pathToFilePtr = pathToFile.toNativeUtf8();
     try {
-      return sysCall(pathToFile_ptr);
+      return sysCall(pathToFilePtr);
     } finally {
-      malloc.free(pathToFile_ptr);
+      malloc.free(pathToFilePtr);
     }
   }
 
@@ -22,5 +22,5 @@ abstract class OsStatCall {
       DateTime.fromMicrosecondsSinceEpoch(
           seconds * 1000000 + nanoseconds ~/ 1000);
 
-  Stat sysCall(ffi.Pointer<Utf8> pathToFile_ptr);
+  Stat sysCall(ffi.Pointer<Utf8> pathToFilePtr);
 }

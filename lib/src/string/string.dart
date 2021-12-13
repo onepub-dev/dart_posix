@@ -13,7 +13,10 @@ ffi.Pointer<ffi.Void> memcpy(
   ffi.Pointer<ffi.Void> __src,
   int __n,
 ) {
-  _memcpy ??= Libc().dylib.lookupFunction<_c_memcpy, _dart_memcpy>('memcpy');
+  _memcpy ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Void> Function(
+          ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Uint64),
+      _dart_memcpy>('memcpy');
   return _memcpy!(
     __dest,
     __src,
@@ -30,8 +33,10 @@ ffi.Pointer<ffi.Void> memmove(
   ffi.Pointer<ffi.Void> __src,
   int __n,
 ) {
-  _memmove ??=
-      Libc().dylib.lookupFunction<_c_memmove, _dart_memmove>('memmove');
+  _memmove ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Void> Function(
+          ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Uint64),
+      _dart_memmove>('memmove');
   return _memmove!(
     __dest,
     __src,
@@ -47,8 +52,10 @@ ffi.Pointer<ffi.Void> memccpy(
   int __c,
   int __n,
 ) {
-  _memccpy ??=
-      Libc().dylib.lookupFunction<_c_memccpy, _dart_memccpy>('memccpy');
+  _memccpy ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Void> Function(
+          ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Int32, ffi.Uint64),
+      _dart_memccpy>('memccpy');
   return _memccpy!(
     __dest,
     __src,
@@ -65,7 +72,10 @@ ffi.Pointer<ffi.Void> memset(
   int __c,
   int __n,
 ) {
-  _memset ??= Libc().dylib.lookupFunction<_c_memset, _dart_memset>('memset');
+  _memset ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Void> Function(
+          ffi.Pointer<ffi.Void>, ffi.Int32, ffi.Uint64),
+      _dart_memset>('memset');
   return _memset!(
     __s,
     __c,
@@ -81,7 +91,10 @@ int memcmp(
   ffi.Pointer<ffi.Void> __s2,
   int __n,
 ) {
-  _memcmp ??= Libc().dylib.lookupFunction<_c_memcmp, _dart_memcmp>('memcmp');
+  _memcmp ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(
+          ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Uint64),
+      _dart_memcmp>('memcmp');
   return _memcmp!(
     __s1,
     __s2,
@@ -96,7 +109,10 @@ ffi.Pointer<ffi.Void> memchr(
   int __c,
   int __n,
 ) {
-  _memchr ??= Libc().dylib.lookupFunction<_c_memchr, _dart_memchr>('memchr');
+  _memchr ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Void> Function(
+          ffi.Pointer<ffi.Void>, ffi.Int32, ffi.Uint64),
+      _dart_memchr>('memchr');
   return _memchr!(
     __s,
     __c,
@@ -111,7 +127,10 @@ ffi.Pointer<ffi.Int8> strcpy(
   ffi.Pointer<ffi.Int8> __dest,
   ffi.Pointer<ffi.Int8> __src,
 ) {
-  _strcpy ??= Libc().dylib.lookupFunction<_c_strcpy, _dart_strcpy>('strcpy');
+  _strcpy ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>),
+      _dart_strcpy>('strcpy');
   return _strcpy!(
     __dest,
     __src,
@@ -126,8 +145,10 @@ ffi.Pointer<ffi.Int8> strncpy(
   ffi.Pointer<ffi.Int8> __src,
   int __n,
 ) {
-  _strncpy ??=
-      Libc().dylib.lookupFunction<_c_strncpy, _dart_strncpy>('strncpy');
+  _strncpy ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Uint64),
+      _dart_strncpy>('strncpy');
   return _strncpy!(
     __dest,
     __src,
@@ -142,7 +163,10 @@ ffi.Pointer<ffi.Int8> strcat(
   ffi.Pointer<ffi.Int8> __dest,
   ffi.Pointer<ffi.Int8> __src,
 ) {
-  _strcat ??= Libc().dylib.lookupFunction<_c_strcat, _dart_strcat>('strcat');
+  _strcat ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>),
+      _dart_strcat>('strcat');
   return _strcat!(
     __dest,
     __src,
@@ -157,8 +181,10 @@ ffi.Pointer<ffi.Int8> strncat(
   ffi.Pointer<ffi.Int8> __src,
   int __n,
 ) {
-  _strncat ??=
-      Libc().dylib.lookupFunction<_c_strncat, _dart_strncat>('strncat');
+  _strncat ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Uint64),
+      _dart_strncat>('strncat');
   return _strncat!(
     __dest,
     __src,
@@ -173,7 +199,9 @@ int strcmp(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
 ) {
-  _strcmp ??= Libc().dylib.lookupFunction<_c_strcmp, _dart_strcmp>('strcmp');
+  _strcmp ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>),
+      _dart_strcmp>('strcmp');
   return _strcmp!(
     __s1,
     __s2,
@@ -188,8 +216,10 @@ int strncmp(
   ffi.Pointer<ffi.Int8> __s2,
   int __n,
 ) {
-  _strncmp ??=
-      Libc().dylib.lookupFunction<_c_strncmp, _dart_strncmp>('strncmp');
+  _strncmp ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Uint64),
+      _dart_strncmp>('strncmp');
   return _strncmp!(
     __s1,
     __s2,
@@ -204,8 +234,9 @@ int strcoll(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
 ) {
-  _strcoll ??=
-      Libc().dylib.lookupFunction<_c_strcoll, _dart_strcoll>('strcoll');
+  _strcoll ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>),
+      _dart_strcoll>('strcoll');
   return _strcoll!(
     __s1,
     __s2,
@@ -220,8 +251,10 @@ int strxfrm(
   ffi.Pointer<ffi.Int8> __src,
   int __n,
 ) {
-  _strxfrm ??=
-      Libc().dylib.lookupFunction<_c_strxfrm, _dart_strxfrm>('strxfrm');
+  _strxfrm ??= Libc().dylib.lookupFunction<
+      ffi.Uint64 Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Uint64),
+      _dart_strxfrm>('strxfrm');
   return _strxfrm!(
     __dest,
     __src,
@@ -232,13 +265,16 @@ int strxfrm(
 _dart_strxfrm? _strxfrm;
 
 /// Compare the collated forms of S1 and S2, using sorting rules from L.
+// ignore: non_constant_identifier_names
 int strcoll_l(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
   ffi.Pointer<__locale_struct> __l,
 ) {
-  _strcoll_l ??=
-      Libc().dylib.lookupFunction<_c_strcoll_l, _dart_strcoll_l>('strcoll_l');
+  _strcoll_l ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
+          ffi.Pointer<__locale_struct>),
+      _dart_strcoll_l>('strcoll_l');
   return _strcoll_l!(
     __s1,
     __s2,
@@ -246,18 +282,22 @@ int strcoll_l(
   );
 }
 
+// ignore: non_constant_identifier_names
 _dart_strcoll_l? _strcoll_l;
 
 /// Put a transformation of SRC into no more than N bytes of DEST,
 /// using sorting rules from L.
+// ignore: non_constant_identifier_names
 int strxfrm_l(
   ffi.Pointer<ffi.Int8> __dest,
   ffi.Pointer<ffi.Int8> __src,
   int __n,
   ffi.Pointer<__locale_struct> __l,
 ) {
-  _strxfrm_l ??=
-      Libc().dylib.lookupFunction<_c_strxfrm_l, _dart_strxfrm_l>('strxfrm_l');
+  _strxfrm_l ??= Libc().dylib.lookupFunction<
+      ffi.Uint64 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
+          ffi.Uint64, ffi.Pointer<__locale_struct>),
+      _dart_strxfrm_l>('strxfrm_l');
   return _strxfrm_l!(
     __dest,
     __src,
@@ -266,13 +306,16 @@ int strxfrm_l(
   );
 }
 
+// ignore: non_constant_identifier_names
 _dart_strxfrm_l? _strxfrm_l;
 
 /// Duplicate S, returning an identical malloc'd string.
 ffi.Pointer<ffi.Int8> strdup(
   ffi.Pointer<ffi.Int8> __s,
 ) {
-  _strdup ??= Libc().dylib.lookupFunction<_c_strdup, _dart_strdup>('strdup');
+  _strdup ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>),
+      _dart_strdup>('strdup');
   return _strdup!(
     __s,
   );
@@ -284,8 +327,9 @@ ffi.Pointer<ffi.Int8> strndup(
   ffi.Pointer<ffi.Int8> __string,
   int __n,
 ) {
-  _strndup ??=
-      Libc().dylib.lookupFunction<_c_strndup, _dart_strndup>('strndup');
+  _strndup ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>, ffi.Uint64),
+      _dart_strndup>('strndup');
   return _strndup!(
     __string,
     __n,
@@ -298,7 +342,9 @@ ffi.Pointer<ffi.Int8> strchr(
   ffi.Pointer<ffi.Int8> __s,
   int __c,
 ) {
-  _strchr ??= Libc().dylib.lookupFunction<_c_strchr, _dart_strchr>('strchr');
+  _strchr ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>, ffi.Int32),
+      _dart_strchr>('strchr');
   return _strchr!(
     __s,
     __c,
@@ -311,8 +357,9 @@ ffi.Pointer<ffi.Int8> strrchr(
   ffi.Pointer<ffi.Int8> __s,
   int __c,
 ) {
-  _strrchr ??=
-      Libc().dylib.lookupFunction<_c_strrchr, _dart_strrchr>('strrchr');
+  _strrchr ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>, ffi.Int32),
+      _dart_strrchr>('strrchr');
   return _strrchr!(
     __s,
     __c,
@@ -327,8 +374,9 @@ int strcspn(
   ffi.Pointer<ffi.Int8> __s,
   ffi.Pointer<ffi.Int8> __reject,
 ) {
-  _strcspn ??=
-      Libc().dylib.lookupFunction<_c_strcspn, _dart_strcspn>('strcspn');
+  _strcspn ??= Libc().dylib.lookupFunction<
+      ffi.Uint64 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>),
+      _dart_strcspn>('strcspn');
   return _strcspn!(
     __s,
     __reject,
@@ -343,7 +391,9 @@ int strspn(
   ffi.Pointer<ffi.Int8> __s,
   ffi.Pointer<ffi.Int8> __accept,
 ) {
-  _strspn ??= Libc().dylib.lookupFunction<_c_strspn, _dart_strspn>('strspn');
+  _strspn ??= Libc().dylib.lookupFunction<
+      ffi.Uint64 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>),
+      _dart_strspn>('strspn');
   return _strspn!(
     __s,
     __accept,
@@ -356,8 +406,10 @@ ffi.Pointer<ffi.Int8> strpbrk(
   ffi.Pointer<ffi.Int8> __s,
   ffi.Pointer<ffi.Int8> __accept,
 ) {
-  _strpbrk ??=
-      Libc().dylib.lookupFunction<_c_strpbrk, _dart_strpbrk>('strpbrk');
+  _strpbrk ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>),
+      _dart_strpbrk>('strpbrk');
   return _strpbrk!(
     __s,
     __accept,
@@ -370,7 +422,10 @@ ffi.Pointer<ffi.Int8> strstr(
   ffi.Pointer<ffi.Int8> __haystack,
   ffi.Pointer<ffi.Int8> __needle,
 ) {
-  _strstr ??= Libc().dylib.lookupFunction<_c_strstr, _dart_strstr>('strstr');
+  _strstr ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>),
+      _dart_strstr>('strstr');
   return _strstr!(
     __haystack,
     __needle,
@@ -384,7 +439,10 @@ ffi.Pointer<ffi.Int8> strtok(
   ffi.Pointer<ffi.Int8> __s,
   ffi.Pointer<ffi.Int8> __delim,
 ) {
-  _strtok ??= Libc().dylib.lookupFunction<_c_strtok, _dart_strtok>('strtok');
+  _strtok ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>),
+      _dart_strtok>('strtok');
   return _strtok!(
     __s,
     __delim,
@@ -397,7 +455,10 @@ _dart_strtok? _strtok;
 int strlen(
   ffi.Pointer<ffi.Int8> __s,
 ) {
-  _strlen ??= Libc().dylib.lookupFunction<_c_strlen, _dart_strlen>('strlen');
+  _strlen ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Uint64 Function(ffi.Pointer<ffi.Int8>), _dart_strlen>(
+          'strlen');
   return _strlen!(
     __s,
   );
@@ -411,8 +472,9 @@ int strnlen(
   ffi.Pointer<ffi.Int8> __string,
   int __maxlen,
 ) {
-  _strnlen ??=
-      Libc().dylib.lookupFunction<_c_strnlen, _dart_strnlen>('strnlen');
+  _strnlen ??= Libc().dylib.lookupFunction<
+      ffi.Uint64 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64),
+      _dart_strnlen>('strnlen');
   return _strnlen!(
     __string,
     __maxlen,
@@ -425,9 +487,9 @@ _dart_strnlen? _strnlen;
 String strerror(
   int errnum,
 ) {
-  _strerror ??=
-      Libc().dylib.lookupFunction<_c_strerror, _dart_strerror>('strerror');
-  var result = _strerror!(
+  _strerror ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Void> Function(ffi.Int32), _dart_strerror>('strerror');
+  final result = _strerror!(
     errnum,
   );
 
@@ -436,14 +498,15 @@ String strerror(
 
 _dart_strerror? _strerror;
 
+// ignore: non_constant_identifier_names
 int strerror_r(
   int __errnum,
   ffi.Pointer<ffi.Int8> __buf,
   int __buflen,
 ) {
-  _strerror_r ??= Libc()
-      .dylib
-      .lookupFunction<_c_strerror_r, _dart_strerror_r>('strerror_r');
+  _strerror_r ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64),
+      _dart_strerror_r>('strerror_r');
   return _strerror_r!(
     __errnum,
     __buf,
@@ -451,22 +514,25 @@ int strerror_r(
   );
 }
 
+// ignore: non_constant_identifier_names
 _dart_strerror_r? _strerror_r;
 
 /// Translate error number to string according to the locale L.
+// ignore: non_constant_identifier_names
 ffi.Pointer<ffi.Int8> strerror_l(
   int __errnum,
   ffi.Pointer<__locale_struct> __l,
 ) {
-  _strerror_l ??= Libc()
-      .dylib
-      .lookupFunction<_c_strerror_l, _dart_strerror_l>('strerror_l');
+  _strerror_l ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(ffi.Int32, ffi.Pointer<__locale_struct>),
+      _dart_strerror_l>('strerror_l');
   return _strerror_l!(
     __errnum,
     __l,
   );
 }
 
+// ignore: non_constant_identifier_names
 _dart_strerror_l? _strerror_l;
 
 int bcmp(
@@ -474,7 +540,10 @@ int bcmp(
   ffi.Pointer<ffi.Void> __s2,
   int __n,
 ) {
-  _bcmp ??= Libc().dylib.lookupFunction<_c_bcmp, _dart_bcmp>('bcmp');
+  _bcmp ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(
+          ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Uint64),
+      _dart_bcmp>('bcmp');
   return _bcmp!(
     __s1,
     __s2,
@@ -489,7 +558,10 @@ void bcopy(
   ffi.Pointer<ffi.Void> __dest,
   int __n,
 ) {
-  _bcopy ??= Libc().dylib.lookupFunction<_c_bcopy, _dart_bcopy>('bcopy');
+  _bcopy ??= Libc().dylib.lookupFunction<
+      ffi.Void Function(
+          ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Uint64),
+      _dart_bcopy>('bcopy');
   return _bcopy!(
     __src,
     __dest,
@@ -503,7 +575,9 @@ void bzero(
   ffi.Pointer<ffi.Void> __s,
   int __n,
 ) {
-  _bzero ??= Libc().dylib.lookupFunction<_c_bzero, _dart_bzero>('bzero');
+  _bzero ??= Libc().dylib.lookupFunction<
+      ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Uint64),
+      _dart_bzero>('bzero');
   return _bzero!(
     __s,
     __n,
@@ -516,7 +590,9 @@ ffi.Pointer<ffi.Int8> index(
   ffi.Pointer<ffi.Int8> __s,
   int __c,
 ) {
-  _index ??= Libc().dylib.lookupFunction<_c_index, _dart_index>('index');
+  _index ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>, ffi.Int32),
+      _dart_index>('index');
   return _index!(
     __s,
     __c,
@@ -529,7 +605,9 @@ ffi.Pointer<ffi.Int8> rindex(
   ffi.Pointer<ffi.Int8> __s,
   int __c,
 ) {
-  _rindex ??= Libc().dylib.lookupFunction<_c_rindex, _dart_rindex>('rindex');
+  _rindex ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>, ffi.Int32),
+      _dart_rindex>('rindex');
   return _rindex!(
     __s,
     __c,
@@ -541,7 +619,9 @@ _dart_rindex? _rindex;
 int ffs(
   int __i,
 ) {
-  _ffs ??= Libc().dylib.lookupFunction<_c_ffs, _dart_ffs>('ffs');
+  _ffs ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32), _dart_ffs>('ffs');
   return _ffs!(
     __i,
   );
@@ -552,7 +632,9 @@ _dart_ffs? _ffs;
 int ffsl(
   int __l,
 ) {
-  _ffsl ??= Libc().dylib.lookupFunction<_c_ffsl, _dart_ffsl>('ffsl');
+  _ffsl ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int64), _dart_ffsl>('ffsl');
   return _ffsl!(
     __l,
   );
@@ -563,7 +645,9 @@ _dart_ffsl? _ffsl;
 int ffsll(
   int __ll,
 ) {
-  _ffsll ??= Libc().dylib.lookupFunction<_c_ffsll, _dart_ffsll>('ffsll');
+  _ffsll ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int64), _dart_ffsll>('ffsll');
   return _ffsll!(
     __ll,
   );
@@ -575,9 +659,9 @@ int strcasecmp(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
 ) {
-  _strcasecmp ??= Libc()
-      .dylib
-      .lookupFunction<_c_strcasecmp, _dart_strcasecmp>('strcasecmp');
+  _strcasecmp ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>),
+      _dart_strcasecmp>('strcasecmp');
   return _strcasecmp!(
     __s1,
     __s2,
@@ -591,9 +675,10 @@ int strncasecmp(
   ffi.Pointer<ffi.Int8> __s2,
   int __n,
 ) {
-  _strncasecmp ??= Libc()
-      .dylib
-      .lookupFunction<_c_strncasecmp, _dart_strncasecmp>('strncasecmp');
+  _strncasecmp ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Uint64),
+      _dart_strncasecmp>('strncasecmp');
   return _strncasecmp!(
     __s1,
     __s2,
@@ -603,14 +688,16 @@ int strncasecmp(
 
 _dart_strncasecmp? _strncasecmp;
 
+// ignore: non_constant_identifier_names
 int strcasecmp_l(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
   ffi.Pointer<__locale_struct> __loc,
 ) {
-  _strcasecmp_l ??= Libc()
-      .dylib
-      .lookupFunction<_c_strcasecmp_l, _dart_strcasecmp_l>('strcasecmp_l');
+  _strcasecmp_l ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
+          ffi.Pointer<__locale_struct>),
+      _dart_strcasecmp_l>('strcasecmp_l');
   return _strcasecmp_l!(
     __s1,
     __s2,
@@ -618,17 +705,20 @@ int strcasecmp_l(
   );
 }
 
+// ignore: non_constant_identifier_names
 _dart_strcasecmp_l? _strcasecmp_l;
 
+// ignore: non_constant_identifier_names
 int strncasecmp_l(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
   int __n,
   ffi.Pointer<__locale_struct> __loc,
 ) {
-  _strncasecmp_l ??= Libc()
-      .dylib
-      .lookupFunction<_c_strncasecmp_l, _dart_strncasecmp_l>('strncasecmp_l');
+  _strncasecmp_l ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
+          ffi.Uint64, ffi.Pointer<__locale_struct>),
+      _dart_strncasecmp_l>('strncasecmp_l');
   return _strncasecmp_l!(
     __s1,
     __s2,
@@ -637,24 +727,26 @@ int strncasecmp_l(
   );
 }
 
+// ignore: non_constant_identifier_names
 _dart_strncasecmp_l? _strncasecmp_l;
 
 /// Set N bytes of S to 0.  The compiler will not delete a call to this
 /// function, even if S is dead after the call.
+// ignore: non_constant_identifier_names
 void explicit_bzero(
   ffi.Pointer<ffi.Void> __s,
   int __n,
 ) {
-  _explicit_bzero ??= Libc()
-      .dylib
-      .lookupFunction<_c_explicit_bzero, _dart_explicit_bzero>(
-          'explicit_bzero');
+  _explicit_bzero ??= Libc().dylib.lookupFunction<
+      ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Uint64),
+      _dart_explicit_bzero>('explicit_bzero');
   return _explicit_bzero!(
     __s,
     __n,
   );
 }
 
+// ignore: non_constant_identifier_names
 _dart_explicit_bzero? _explicit_bzero;
 
 /// Return the next DELIM-delimited token from *STRINGP,
@@ -663,7 +755,10 @@ ffi.Pointer<ffi.Int8> strsep(
   ffi.Pointer<ffi.Pointer<ffi.Int8>> __stringp,
   ffi.Pointer<ffi.Int8> __delim,
 ) {
-  _strsep ??= Libc().dylib.lookupFunction<_c_strsep, _dart_strsep>('strsep');
+  _strsep ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(
+          ffi.Pointer<ffi.Pointer<ffi.Int8>>, ffi.Pointer<ffi.Int8>),
+      _dart_strsep>('strsep');
   return _strsep!(
     __stringp,
     __delim,
@@ -676,8 +771,8 @@ _dart_strsep? _strsep;
 ffi.Pointer<ffi.Int8> strsignal(
   int __sig,
 ) {
-  _strsignal ??=
-      Libc().dylib.lookupFunction<_c_strsignal, _dart_strsignal>('strsignal');
+  _strsignal ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(ffi.Int32), _dart_strsignal>('strsignal');
   return _strsignal!(
     __sig,
   );
@@ -690,7 +785,10 @@ ffi.Pointer<ffi.Int8> stpcpy(
   ffi.Pointer<ffi.Int8> __dest,
   ffi.Pointer<ffi.Int8> __src,
 ) {
-  _stpcpy ??= Libc().dylib.lookupFunction<_c_stpcpy, _dart_stpcpy>('stpcpy');
+  _stpcpy ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>),
+      _dart_stpcpy>('stpcpy');
   return _stpcpy!(
     __dest,
     __src,
@@ -706,8 +804,10 @@ ffi.Pointer<ffi.Int8> stpncpy(
   ffi.Pointer<ffi.Int8> __src,
   int __n,
 ) {
-  _stpncpy ??=
-      Libc().dylib.lookupFunction<_c_stpncpy, _dart_stpncpy>('stpncpy');
+  _stpncpy ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Uint64),
+      _dart_stpncpy>('stpncpy');
   return _stpncpy!(
     __dest,
     __src,
@@ -720,36 +820,62 @@ _dart_stpncpy? _stpncpy;
 class __locale_data extends ffi.Opaque {}
 
 class __locale_struct extends ffi.Struct {
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<__locale_data>? _unique___locales_item_0;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<__locale_data>? _unique___locales_item_1;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<__locale_data>? _unique___locales_item_2;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<__locale_data>? _unique___locales_item_3;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<__locale_data>? _unique___locales_item_4;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<__locale_data>? _unique___locales_item_5;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<__locale_data>? _unique___locales_item_6;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<__locale_data>? _unique___locales_item_7;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<__locale_data>? _unique___locales_item_8;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<__locale_data>? _unique___locales_item_9;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<__locale_data>? _unique___locales_item_10;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<__locale_data>? _unique___locales_item_11;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<__locale_data>? _unique___locales_item_12;
 
   /// Helper for array `__locales`.
   ArrayHelper___locale_struct___locales_level0 get locales =>
       ArrayHelper___locale_struct___locales_level0(this, [13], 0, 0);
 
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<ffi.Int8>? _unique___names_item_0;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<ffi.Int8>? _unique___names_item_1;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<ffi.Int8>? _unique___names_item_2;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<ffi.Int8>? _unique___names_item_3;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<ffi.Int8>? _unique___names_item_4;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<ffi.Int8>? _unique___names_item_5;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<ffi.Int8>? _unique___names_item_6;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<ffi.Int8>? _unique___names_item_7;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<ffi.Int8>? _unique___names_item_8;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<ffi.Int8>? _unique___names_item_9;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<ffi.Int8>? _unique___names_item_10;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<ffi.Int8>? _unique___names_item_11;
+  // ignore: non_constant_identifier_names
   external ffi.Pointer<ffi.Int8>? _unique___names_item_12;
 
   /// Helper for array `__names`.
@@ -759,13 +885,13 @@ class __locale_struct extends ffi.Struct {
 
 /// Helper for array `__locales` in struct `__locale_struct`.
 class ArrayHelper___locale_struct___locales_level0 {
+  ArrayHelper___locale_struct___locales_level0(
+      this._struct, this.dimensions, this.level, this._absoluteIndex);
   final __locale_struct _struct;
   final List<int> dimensions;
   final int level;
   final int _absoluteIndex;
   int get length => dimensions[level];
-  ArrayHelper___locale_struct___locales_level0(
-      this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
       throw RangeError(
@@ -857,13 +983,13 @@ class ArrayHelper___locale_struct___locales_level0 {
 
 /// Helper for array `__names` in struct `__locale_struct`.
 class ArrayHelper___locale_struct___names_level0 {
+  ArrayHelper___locale_struct___names_level0(
+      this._struct, this.dimensions, this.level, this._absoluteIndex);
   final __locale_struct _struct;
   final List<int> dimensions;
   final int level;
   final int _absoluteIndex;
   int get length => dimensions[level];
-  ArrayHelper___locale_struct___names_level0(
-      this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
       throw RangeError(
@@ -953,35 +1079,16 @@ class ArrayHelper___locale_struct___names_level0 {
   }
 }
 
-typedef _c_memcpy = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<ffi.Void> __dest,
-  ffi.Pointer<ffi.Void> __src,
-  ffi.Uint64 __n,
-);
-
 typedef _dart_memcpy = ffi.Pointer<ffi.Void> Function(
   ffi.Pointer<ffi.Void> __dest,
   ffi.Pointer<ffi.Void> __src,
   int __n,
 );
 
-typedef _c_memmove = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<ffi.Void> __dest,
-  ffi.Pointer<ffi.Void> __src,
-  ffi.Uint64 __n,
-);
-
 typedef _dart_memmove = ffi.Pointer<ffi.Void> Function(
   ffi.Pointer<ffi.Void> __dest,
   ffi.Pointer<ffi.Void> __src,
   int __n,
-);
-
-typedef _c_memccpy = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<ffi.Void> __dest,
-  ffi.Pointer<ffi.Void> __src,
-  ffi.Int32 __c,
-  ffi.Uint64 __n,
 );
 
 typedef _dart_memccpy = ffi.Pointer<ffi.Void> Function(
@@ -991,22 +1098,10 @@ typedef _dart_memccpy = ffi.Pointer<ffi.Void> Function(
   int __n,
 );
 
-typedef _c_memset = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<ffi.Void> __s,
-  ffi.Int32 __c,
-  ffi.Uint64 __n,
-);
-
 typedef _dart_memset = ffi.Pointer<ffi.Void> Function(
   ffi.Pointer<ffi.Void> __s,
   int __c,
   int __n,
-);
-
-typedef _c_memcmp = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> __s1,
-  ffi.Pointer<ffi.Void> __s2,
-  ffi.Uint64 __n,
 );
 
 typedef _dart_memcmp = int Function(
@@ -1015,32 +1110,15 @@ typedef _dart_memcmp = int Function(
   int __n,
 );
 
-typedef _c_memchr = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<ffi.Void> __s,
-  ffi.Int32 __c,
-  ffi.Uint64 __n,
-);
-
 typedef _dart_memchr = ffi.Pointer<ffi.Void> Function(
   ffi.Pointer<ffi.Void> __s,
   int __c,
   int __n,
 );
 
-typedef _c_strcpy = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __dest,
-  ffi.Pointer<ffi.Int8> __src,
-);
-
 typedef _dart_strcpy = ffi.Pointer<ffi.Int8> Function(
   ffi.Pointer<ffi.Int8> __dest,
   ffi.Pointer<ffi.Int8> __src,
-);
-
-typedef _c_strncpy = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __dest,
-  ffi.Pointer<ffi.Int8> __src,
-  ffi.Uint64 __n,
 );
 
 typedef _dart_strncpy = ffi.Pointer<ffi.Int8> Function(
@@ -1049,20 +1127,9 @@ typedef _dart_strncpy = ffi.Pointer<ffi.Int8> Function(
   int __n,
 );
 
-typedef _c_strcat = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __dest,
-  ffi.Pointer<ffi.Int8> __src,
-);
-
 typedef _dart_strcat = ffi.Pointer<ffi.Int8> Function(
   ffi.Pointer<ffi.Int8> __dest,
   ffi.Pointer<ffi.Int8> __src,
-);
-
-typedef _c_strncat = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __dest,
-  ffi.Pointer<ffi.Int8> __src,
-  ffi.Uint64 __n,
 );
 
 typedef _dart_strncat = ffi.Pointer<ffi.Int8> Function(
@@ -1071,20 +1138,9 @@ typedef _dart_strncat = ffi.Pointer<ffi.Int8> Function(
   int __n,
 );
 
-typedef _c_strcmp = ffi.Int32 Function(
-  ffi.Pointer<ffi.Int8> __s1,
-  ffi.Pointer<ffi.Int8> __s2,
-);
-
 typedef _dart_strcmp = int Function(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
-);
-
-typedef _c_strncmp = ffi.Int32 Function(
-  ffi.Pointer<ffi.Int8> __s1,
-  ffi.Pointer<ffi.Int8> __s2,
-  ffi.Uint64 __n,
 );
 
 typedef _dart_strncmp = int Function(
@@ -1093,20 +1149,9 @@ typedef _dart_strncmp = int Function(
   int __n,
 );
 
-typedef _c_strcoll = ffi.Int32 Function(
-  ffi.Pointer<ffi.Int8> __s1,
-  ffi.Pointer<ffi.Int8> __s2,
-);
-
 typedef _dart_strcoll = int Function(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
-);
-
-typedef _c_strxfrm = ffi.Uint64 Function(
-  ffi.Pointer<ffi.Int8> __dest,
-  ffi.Pointer<ffi.Int8> __src,
-  ffi.Uint64 __n,
 );
 
 typedef _dart_strxfrm = int Function(
@@ -1115,22 +1160,9 @@ typedef _dart_strxfrm = int Function(
   int __n,
 );
 
-typedef _c_strcoll_l = ffi.Int32 Function(
-  ffi.Pointer<ffi.Int8> __s1,
-  ffi.Pointer<ffi.Int8> __s2,
-  ffi.Pointer<__locale_struct> __l,
-);
-
 typedef _dart_strcoll_l = int Function(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
-  ffi.Pointer<__locale_struct> __l,
-);
-
-typedef _c_strxfrm_l = ffi.Uint64 Function(
-  ffi.Pointer<ffi.Int8> __dest,
-  ffi.Pointer<ffi.Int8> __src,
-  ffi.Uint64 __n,
   ffi.Pointer<__locale_struct> __l,
 );
 
@@ -1141,17 +1173,8 @@ typedef _dart_strxfrm_l = int Function(
   ffi.Pointer<__locale_struct> __l,
 );
 
-typedef _c_strdup = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __s,
-);
-
 typedef _dart_strdup = ffi.Pointer<ffi.Int8> Function(
   ffi.Pointer<ffi.Int8> __s,
-);
-
-typedef _c_strndup = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __string,
-  ffi.Uint64 __n,
 );
 
 typedef _dart_strndup = ffi.Pointer<ffi.Int8> Function(
@@ -1159,19 +1182,9 @@ typedef _dart_strndup = ffi.Pointer<ffi.Int8> Function(
   int __n,
 );
 
-typedef _c_strchr = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __s,
-  ffi.Int32 __c,
-);
-
 typedef _dart_strchr = ffi.Pointer<ffi.Int8> Function(
   ffi.Pointer<ffi.Int8> __s,
   int __c,
-);
-
-typedef _c_strrchr = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __s,
-  ffi.Int32 __c,
 );
 
 typedef _dart_strrchr = ffi.Pointer<ffi.Int8> Function(
@@ -1179,27 +1192,12 @@ typedef _dart_strrchr = ffi.Pointer<ffi.Int8> Function(
   int __c,
 );
 
-typedef _c_strcspn = ffi.Uint64 Function(
-  ffi.Pointer<ffi.Int8> __s,
-  ffi.Pointer<ffi.Int8> __reject,
-);
-
 typedef _dart_strcspn = int Function(
   ffi.Pointer<ffi.Int8> __s,
   ffi.Pointer<ffi.Int8> __reject,
 );
 
-typedef _c_strspn = ffi.Uint64 Function(
-  ffi.Pointer<ffi.Int8> __s,
-  ffi.Pointer<ffi.Int8> __accept,
-);
-
 typedef _dart_strspn = int Function(
-  ffi.Pointer<ffi.Int8> __s,
-  ffi.Pointer<ffi.Int8> __accept,
-);
-
-typedef _c_strpbrk = ffi.Pointer<ffi.Int8> Function(
   ffi.Pointer<ffi.Int8> __s,
   ffi.Pointer<ffi.Int8> __accept,
 );
@@ -1209,19 +1207,9 @@ typedef _dart_strpbrk = ffi.Pointer<ffi.Int8> Function(
   ffi.Pointer<ffi.Int8> __accept,
 );
 
-typedef _c_strstr = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __haystack,
-  ffi.Pointer<ffi.Int8> __needle,
-);
-
 typedef _dart_strstr = ffi.Pointer<ffi.Int8> Function(
   ffi.Pointer<ffi.Int8> __haystack,
   ffi.Pointer<ffi.Int8> __needle,
-);
-
-typedef _c_strtok = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __s,
-  ffi.Pointer<ffi.Int8> __delim,
 );
 
 typedef _dart_strtok = ffi.Pointer<ffi.Int8> Function(
@@ -1229,17 +1217,8 @@ typedef _dart_strtok = ffi.Pointer<ffi.Int8> Function(
   ffi.Pointer<ffi.Int8> __delim,
 );
 
-typedef _c_strlen = ffi.Uint64 Function(
-  ffi.Pointer<ffi.Int8> __s,
-);
-
 typedef _dart_strlen = int Function(
   ffi.Pointer<ffi.Int8> __s,
-);
-
-typedef _c_strnlen = ffi.Uint64 Function(
-  ffi.Pointer<ffi.Int8> __string,
-  ffi.Uint64 __maxlen,
 );
 
 typedef _dart_strnlen = int Function(
@@ -1247,18 +1226,8 @@ typedef _dart_strnlen = int Function(
   int __maxlen,
 );
 
-typedef _c_strerror = ffi.Pointer<ffi.Void> Function(
-  ffi.Int32 __errnum,
-);
-
 typedef _dart_strerror = ffi.Pointer<ffi.Void> Function(
   int __errnum,
-);
-
-typedef _c_strerror_r = ffi.Int32 Function(
-  ffi.Int32 __errnum,
-  ffi.Pointer<ffi.Int8> __buf,
-  ffi.Uint64 __buflen,
 );
 
 typedef _dart_strerror_r = int Function(
@@ -1267,20 +1236,9 @@ typedef _dart_strerror_r = int Function(
   int __buflen,
 );
 
-typedef _c_strerror_l = ffi.Pointer<ffi.Int8> Function(
-  ffi.Int32 __errnum,
-  ffi.Pointer<__locale_struct> __l,
-);
-
 typedef _dart_strerror_l = ffi.Pointer<ffi.Int8> Function(
   int __errnum,
   ffi.Pointer<__locale_struct> __l,
-);
-
-typedef _c_bcmp = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> __s1,
-  ffi.Pointer<ffi.Void> __s2,
-  ffi.Uint64 __n,
 );
 
 typedef _dart_bcmp = int Function(
@@ -1289,21 +1247,10 @@ typedef _dart_bcmp = int Function(
   int __n,
 );
 
-typedef _c_bcopy = ffi.Void Function(
-  ffi.Pointer<ffi.Void> __src,
-  ffi.Pointer<ffi.Void> __dest,
-  ffi.Uint64 __n,
-);
-
 typedef _dart_bcopy = void Function(
   ffi.Pointer<ffi.Void> __src,
   ffi.Pointer<ffi.Void> __dest,
   int __n,
-);
-
-typedef _c_bzero = ffi.Void Function(
-  ffi.Pointer<ffi.Void> __s,
-  ffi.Uint64 __n,
 );
 
 typedef _dart_bzero = void Function(
@@ -1311,19 +1258,9 @@ typedef _dart_bzero = void Function(
   int __n,
 );
 
-typedef _c_index = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __s,
-  ffi.Int32 __c,
-);
-
 typedef _dart_index = ffi.Pointer<ffi.Int8> Function(
   ffi.Pointer<ffi.Int8> __s,
   int __c,
-);
-
-typedef _c_rindex = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __s,
-  ffi.Int32 __c,
 );
 
 typedef _dart_rindex = ffi.Pointer<ffi.Int8> Function(
@@ -1331,44 +1268,21 @@ typedef _dart_rindex = ffi.Pointer<ffi.Int8> Function(
   int __c,
 );
 
-typedef _c_ffs = ffi.Int32 Function(
-  ffi.Int32 __i,
-);
-
 typedef _dart_ffs = int Function(
   int __i,
-);
-
-typedef _c_ffsl = ffi.Int32 Function(
-  ffi.Int64 __l,
 );
 
 typedef _dart_ffsl = int Function(
   int __l,
 );
 
-typedef _c_ffsll = ffi.Int32 Function(
-  ffi.Int64 __ll,
-);
-
 typedef _dart_ffsll = int Function(
   int __ll,
-);
-
-typedef _c_strcasecmp = ffi.Int32 Function(
-  ffi.Pointer<ffi.Int8> __s1,
-  ffi.Pointer<ffi.Int8> __s2,
 );
 
 typedef _dart_strcasecmp = int Function(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
-);
-
-typedef _c_strncasecmp = ffi.Int32 Function(
-  ffi.Pointer<ffi.Int8> __s1,
-  ffi.Pointer<ffi.Int8> __s2,
-  ffi.Uint64 __n,
 );
 
 typedef _dart_strncasecmp = int Function(
@@ -1377,22 +1291,9 @@ typedef _dart_strncasecmp = int Function(
   int __n,
 );
 
-typedef _c_strcasecmp_l = ffi.Int32 Function(
-  ffi.Pointer<ffi.Int8> __s1,
-  ffi.Pointer<ffi.Int8> __s2,
-  ffi.Pointer<__locale_struct> __loc,
-);
-
 typedef _dart_strcasecmp_l = int Function(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
-  ffi.Pointer<__locale_struct> __loc,
-);
-
-typedef _c_strncasecmp_l = ffi.Int32 Function(
-  ffi.Pointer<ffi.Int8> __s1,
-  ffi.Pointer<ffi.Int8> __s2,
-  ffi.Uint64 __n,
   ffi.Pointer<__locale_struct> __loc,
 );
 
@@ -1403,19 +1304,9 @@ typedef _dart_strncasecmp_l = int Function(
   ffi.Pointer<__locale_struct> __loc,
 );
 
-typedef _c_explicit_bzero = ffi.Void Function(
-  ffi.Pointer<ffi.Void> __s,
-  ffi.Uint64 __n,
-);
-
 typedef _dart_explicit_bzero = void Function(
   ffi.Pointer<ffi.Void> __s,
   int __n,
-);
-
-typedef _c_strsep = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Pointer<ffi.Int8>> __stringp,
-  ffi.Pointer<ffi.Int8> __delim,
 );
 
 typedef _dart_strsep = ffi.Pointer<ffi.Int8> Function(
@@ -1423,28 +1314,13 @@ typedef _dart_strsep = ffi.Pointer<ffi.Int8> Function(
   ffi.Pointer<ffi.Int8> __delim,
 );
 
-typedef _c_strsignal = ffi.Pointer<ffi.Int8> Function(
-  ffi.Int32 __sig,
-);
-
 typedef _dart_strsignal = ffi.Pointer<ffi.Int8> Function(
   int __sig,
-);
-
-typedef _c_stpcpy = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __dest,
-  ffi.Pointer<ffi.Int8> __src,
 );
 
 typedef _dart_stpcpy = ffi.Pointer<ffi.Int8> Function(
   ffi.Pointer<ffi.Int8> __dest,
   ffi.Pointer<ffi.Int8> __src,
-);
-
-typedef _c_stpncpy = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __dest,
-  ffi.Pointer<ffi.Int8> __src,
-  ffi.Uint64 __n,
 );
 
 typedef _dart_stpncpy = ffi.Pointer<ffi.Int8> Function(

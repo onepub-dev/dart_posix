@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:meta/meta.dart';
+
 import 'linux.dart';
 import 'mac.dart';
 import 'mode.dart';
@@ -10,8 +12,9 @@ Stat lstat(String pathToFile) =>
 Stat stat(String pathToFile) =>
     Platform.isMacOS ? mac_stat(pathToFile) : linux_stat(pathToFile);
 
+@immutable
 class Stat {
-  Stat({
+  const Stat({
     required this.deviceId,
     required this.inode,
     required this.mode,
@@ -21,11 +24,11 @@ class Stat {
     required this.rdev,
     required this.size,
     // block size is hard to get correctly
-    this.blockSize = 0,
     required this.blocks,
     required this.lastAccess,
     required this.lastModified,
     required this.lastStatusChange,
+    this.blockSize = 0,
   });
 
   /// st_dev - ID of device containing filesystem entity
@@ -90,4 +93,21 @@ class Stat {
       other.lastAccess == lastAccess &&
       other.lastModified == lastModified &&
       other.lastStatusChange == lastStatusChange;
+
+  @override
+  int get hashCode => Object.hashAll([
+        deviceId,
+        inode,
+        mode,
+        nlink,
+        uid,
+        gid,
+        rdev,
+        size,
+        blockSize,
+        blocks,
+        lastAccess,
+        lastModified,
+        lastStatusChange
+      ]);
 }

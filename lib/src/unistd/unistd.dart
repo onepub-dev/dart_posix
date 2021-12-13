@@ -1,25 +1,29 @@
+// ignore: lines_longer_than_80_chars
+// ignore_for_file: non_constant_identifier_names, constant_identifier_names, camel_case_types
+
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import 'package:posix/posix.dart';
-import 'package:posix/src/util/conversions.dart';
 
+import '../../posix.dart';
 import '../libc.dart';
+import '../util/conversions.dart';
 
 /// Test for access to NAME using the real UID and real GID.
 int access(
   String name, // ffi.Pointer<Utf8> name,
   int type,
 ) {
-  _access ??= Libc().dylib.lookupFunction<_c_access, _dart_access>('access');
+  _access ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Int32), _dart_access>('access');
 
-  var c_name = name.toNativeUtf8();
-  var result = _access!(
-    c_name,
+  final cName = name.toNativeUtf8();
+  final result = _access!(
+    cName,
     type,
   );
 
-  malloc.free(c_name);
+  malloc.free(cName);
 
   return result;
 }
@@ -35,18 +39,19 @@ int faccessat(
   int type,
   int flag,
 ) {
-  _faccessat ??=
-      Libc().dylib.lookupFunction<_c_faccessat, _dart_faccessat>('faccessat');
+  _faccessat ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Int32, ffi.Pointer<Utf8>, ffi.Int32, ffi.Int32),
+      _dart_faccessat>('faccessat');
 
-  var c_filename = filename.toNativeUtf8();
-  var result = _faccessat!(
+  final cFilename = filename.toNativeUtf8();
+  final result = _faccessat!(
     fd,
-    c_filename,
+    cFilename,
     type,
     flag,
   );
 
-  malloc.free(c_filename);
+  malloc.free(cFilename);
 
   return result;
 }
@@ -58,7 +63,9 @@ int lseek(
   int offset,
   int whence,
 ) {
-  _lseek ??= Libc().dylib.lookupFunction<_c_lseek, _dart_lseek>('lseek');
+  _lseek ??= Libc().dylib.lookupFunction<
+      ffi.Int64 Function(ffi.Int32, ffi.Int64, ffi.Int32),
+      _dart_lseek>('lseek');
   return _lseek!(
     fd,
     offset,
@@ -75,7 +82,9 @@ _dart_lseek? _lseek;
 int close(
   int fd,
 ) {
-  _close ??= Libc().dylib.lookupFunction<_c_close, _dart_close>('close');
+  _close ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32), _dart_close>('close');
   return _close!(
     fd,
   );
@@ -95,19 +104,21 @@ List<int> read(
   int fd,
   int nbytes,
 ) {
-  var c_buf = malloc.allocate<ffi.Int8>(nbytes);
+  final cBuf = malloc.allocate<ffi.Int8>(nbytes);
 
-  _read ??= Libc().dylib.lookupFunction<_c_read, _dart_read>('read');
-  var result = _read!(
+  _read ??= Libc().dylib.lookupFunction<
+      ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64),
+      _dart_read>('read');
+  final result = _read!(
     fd,
-    c_buf,
+    cBuf,
     nbytes,
   );
 
-  _throwIfErrno('read', result, c_buf);
+  _throwIfErrno('read', result, cBuf);
 
-  var buf = c_buf.asTypedList(result);
-  malloc.free(c_buf);
+  final buf = cBuf.asTypedList(result);
+  malloc.free(cBuf);
 
   return buf;
 }
@@ -122,25 +133,28 @@ int write(
   int fd,
   List<int> buf, // ffi.Pointer<ffi.Void> buf,
 ) {
-  var c_buf = copyDartListToCBuff(buf);
+  final cBuf = copyDartListToCBuff(buf);
 
-  _write ??= Libc().dylib.lookupFunction<_c_write, _dart_write>('write');
-  var written = _write!(
+  _write ??= Libc().dylib.lookupFunction<
+      ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64),
+      _dart_write>('write');
+  final written = _write!(
     fd,
-    c_buf,
+    cBuf,
     buf.length,
   );
 
-  _throwIfErrno('pwrite', written, c_buf);
+  _throwIfErrno('pwrite', written, cBuf);
 
-  malloc.free(c_buf);
+  malloc.free(cBuf);
 
   return written;
 }
 
 _dart_write? _write;
 
-/// Read NBYTES and returns 'nbytes' from FD at the given position OFFSET without
+/// Read NBYTES and returns 'nbytes' from FD at the given position
+/// OFFSET without
 /// changing the file pointer.
 ///
 /// Returns a List<int> with the results. The length of the array will be
@@ -153,19 +167,22 @@ List<int> pread(
   int nbytes,
   int offset,
 ) {
-  var c_buf = malloc.allocate<ffi.Int8>(nbytes);
-  _pread ??= Libc().dylib.lookupFunction<_c_pread, _dart_pread>('pread');
-  var read = _pread!(
+  final cBuf = malloc.allocate<ffi.Int8>(nbytes);
+  _pread ??= Libc().dylib.lookupFunction<
+      ffi.Int64 Function(
+          ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Int64),
+      _dart_pread>('pread');
+  final read = _pread!(
     fd,
-    c_buf,
+    cBuf,
     nbytes,
     offset,
   );
 
-  _throwIfErrno('pread', read, c_buf);
+  _throwIfErrno('pread', read, cBuf);
 
-  var buf = c_buf.asTypedList(read);
-  malloc.free(c_buf);
+  final buf = cBuf.asTypedList(read);
+  malloc.free(cBuf);
 
   return buf;
 }
@@ -181,19 +198,22 @@ int pwrite(
   List<int> buf, // ffi.Pointer<ffi.Void> buf,
   int offset,
 ) {
-  var c_buf = copyDartListToCBuff(buf);
+  final cBuf = copyDartListToCBuff(buf);
 
-  _pwrite ??= Libc().dylib.lookupFunction<_c_pwrite, _dart_pwrite>('pwrite');
-  var written = _pwrite!(
+  _pwrite ??= Libc().dylib.lookupFunction<
+      ffi.Int64 Function(
+          ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Int64),
+      _dart_pwrite>('pwrite');
+  final written = _pwrite!(
     fd,
-    c_buf,
+    cBuf,
     buf.length,
     offset,
   );
 
-  _throwIfErrno('pwrite', written, c_buf);
+  _throwIfErrno('pwrite', written, cBuf);
 
-  malloc.free(c_buf);
+  malloc.free(cBuf);
 
   return written;
 }
@@ -207,17 +227,20 @@ _dart_pwrite? _pwrite;
 List<int> native_pipe(
   ffi.Pointer<ffi.Int32> __pipedes,
 ) {
-  var c_pipedes = malloc.allocate<ffi.Int32>(2);
-  _pipe ??= Libc().dylib.lookupFunction<_c_pipe, _dart_pipe>('pipe');
-  var result = _pipe!(
-    c_pipedes,
+  final cPipedes = malloc.allocate<ffi.Int32>(2);
+  _pipe ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int32>), _dart_pipe>(
+          'pipe');
+  final result = _pipe!(
+    cPipedes,
   );
 
-  _throwIfErrno('pipe', result, c_pipedes);
+  _throwIfErrno('pipe', result, cPipedes);
 
-  var pipedes = c_pipedes.asTypedList(2);
+  final pipedes = cPipedes.asTypedList(2);
 
-  malloc.free(c_pipedes);
+  malloc.free(cPipedes);
 
   return pipedes;
 }
@@ -234,8 +257,10 @@ _dart_pipe? _pipe;
 int alarm(
   int seconds,
 ) {
-  clear_errno();
-  _alarm ??= Libc().dylib.lookupFunction<_c_alarm, _dart_alarm>('alarm');
+  clearErrno();
+  _alarm ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Uint32 Function(ffi.Uint32), _dart_alarm>('alarm');
   return _alarm!(
     seconds,
   );
@@ -256,7 +281,9 @@ _dart_alarm? _alarm;
 int sleep(
   int seconds,
 ) {
-  _sleep ??= Libc().dylib.lookupFunction<_c_sleep, _dart_sleep>('sleep');
+  _sleep ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Uint32 Function(ffi.Uint32), _dart_sleep>('sleep');
   return _sleep!(
     seconds,
   );
@@ -272,7 +299,8 @@ int ualarm(
   int value,
   int interval,
 ) {
-  _ualarm ??= Libc().dylib.lookupFunction<_c_ualarm, _dart_ualarm>('ualarm');
+  _ualarm ??= Libc().dylib.lookupFunction<
+      ffi.Uint32 Function(ffi.Uint32, ffi.Uint32), _dart_ualarm>('ualarm');
   return _ualarm!(
     value,
     interval,
@@ -289,7 +317,9 @@ _dart_ualarm? _ualarm;
 int usleep(
   int useconds,
 ) {
-  _usleep ??= Libc().dylib.lookupFunction<_c_usleep, _dart_usleep>('usleep');
+  _usleep ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Uint32), _dart_usleep>('usleep');
   return _usleep!(
     useconds,
   );
@@ -303,7 +333,8 @@ _dart_usleep? _usleep;
 /// This function is a cancellation point and therefore not marked with
 /// __THROW.
 int pause() {
-  _pause ??= Libc().dylib.lookupFunction<_c_pause, _dart_pause>('pause');
+  _pause ??=
+      Libc().dylib.lookupFunction<ffi.Int32 Function(), _dart_pause>('pause');
   return _pause!();
 }
 
@@ -321,17 +352,19 @@ void chown(
   int owner,
   int group,
 ) {
-  var c_filename = filename.toNativeUtf8();
+  final cFilename = filename.toNativeUtf8();
 
-  clear_errno();
+  clearErrno();
 
-  _chown ??= Libc().dylib.lookupFunction<_c_chown, _dart_chown>('chown');
-  var results = _chown!(
-    c_filename,
+  _chown ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint32, ffi.Uint32),
+      _dart_chown>('chown');
+  final results = _chown!(
+    cFilename,
     owner,
     group,
   );
-  malloc.free(c_filename);
+  malloc.free(cFilename);
 
   if (results != 0) {
     final error = errno();
@@ -343,7 +376,7 @@ _dart_chown? _chown;
 
 /// Change the permission of [filename].
 ///
-/// Pass in the [permission] as an octal string e.g. 777
+/// Pass in the [permissions] as an octal string e.g. 777
 /// to change the file permissions.
 ///
 /// If the call fails a [PosixException] is thrown with the value of
@@ -352,17 +385,18 @@ void chmod(
   String filename,
   String permissions,
 ) {
-  var _permissions = int.parse(permissions, radix: 8);
-  var c_filename = filename.toNativeUtf8();
+  final _permissions = int.parse(permissions, radix: 8);
+  final cFilename = filename.toNativeUtf8();
 
-  clear_errno();
+  clearErrno();
 
-  _chmod ??= Libc().dylib.lookupFunction<_c_chmod, _dart_chmod>('chmod');
-  var results = _chmod!(
-    c_filename,
+  _chmod ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint32), _dart_chmod>('chmod');
+  final results = _chmod!(
+    cFilename,
     _permissions,
   );
-  malloc.free(c_filename);
+  malloc.free(cFilename);
 
   if (results != 0) {
     final error = errno();
@@ -378,7 +412,9 @@ int fchown(
   int owner,
   int group,
 ) {
-  _fchown ??= Libc().dylib.lookupFunction<_c_fchown, _dart_fchown>('fchown');
+  _fchown ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Int32, ffi.Uint32, ffi.Uint32),
+      _dart_fchown>('fchown');
   return _fchown!(
     fd,
     owner,
@@ -395,16 +431,18 @@ int lchown(
   int owner,
   int group,
 ) {
-  var c_filename = filename.toNativeUtf8();
+  final cFilename = filename.toNativeUtf8();
 
-  _lchown ??= Libc().dylib.lookupFunction<_c_lchown, _dart_lchown>('lchown');
-  var result = _lchown!(
-    c_filename,
+  _lchown ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint32, ffi.Uint32),
+      _dart_lchown>('lchown');
+  final result = _lchown!(
+    cFilename,
     owner,
     group,
   );
 
-  malloc.free(c_filename);
+  malloc.free(cFilename);
   return result;
 }
 
@@ -419,19 +457,21 @@ int fchownat(
   int group,
   int flag,
 ) {
-  _fchownat ??=
-      Libc().dylib.lookupFunction<_c_fchownat, _dart_fchownat>('fchownat');
+  _fchownat ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(
+          ffi.Int32, ffi.Pointer<Utf8>, ffi.Uint32, ffi.Uint32, ffi.Int32),
+      _dart_fchownat>('fchownat');
 
-  var c_filename = filename.toNativeUtf8();
-  var result = _fchownat!(
+  final cFilename = filename.toNativeUtf8();
+  final result = _fchownat!(
     fd,
-    c_filename,
+    cFilename,
     owner,
     group,
     flag,
   );
 
-  malloc.free(c_filename);
+  malloc.free(cFilename);
   return result;
 }
 
@@ -440,13 +480,16 @@ _dart_fchownat? _fchownat;
 /// Change the process's working directory to PATH.
 int chdir(String path // ffi.Pointer<Utf8> __path,
     ) {
-  var c_path = path.toNativeUtf8();
-  _chdir ??= Libc().dylib.lookupFunction<_c_chdir, _dart_chdir>('chdir');
-  var result = _chdir!(
-    c_path,
+  final cPath = path.toNativeUtf8();
+  _chdir ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Pointer<Utf8>), _dart_chdir>(
+          'chdir');
+  final result = _chdir!(
+    cPath,
   );
 
-  malloc.free(c_path);
+  malloc.free(cPath);
   return result;
 }
 
@@ -456,7 +499,9 @@ _dart_chdir? _chdir;
 int fchdir(
   int fd,
 ) {
-  _fchdir ??= Libc().dylib.lookupFunction<_c_fchdir, _dart_fchdir>('fchdir');
+  _fchdir ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32), _dart_fchdir>('fchdir');
   return _fchdir!(
     fd,
   );
@@ -475,7 +520,9 @@ ffi.Pointer<ffi.Int8> native_getcwd(
   ffi.Pointer<ffi.Int8> buf,
   int size,
 ) {
-  _getcwd ??= Libc().dylib.lookupFunction<_c_getcwd, _dart_getcwd>('getcwd');
+  _getcwd ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>, ffi.Uint64),
+      _dart_getcwd>('getcwd');
   return _getcwd!(
     buf,
     size,
@@ -488,7 +535,9 @@ _dart_getcwd? _getcwd;
 /// If successful, return BUF.  If not, put an error message in
 /// BUF and return NULL.  BUF should be at least PATH_MAX bytes long.
 ffi.Pointer<ffi.Int8> native_getwd(ffi.Pointer<ffi.Int8> buf) {
-  _getwd ??= Libc().dylib.lookupFunction<_c_getwd, _dart_getwd>('getwd');
+  _getwd ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>),
+      _dart_getwd>('getwd');
   return _getwd!(
     buf,
   );
@@ -500,7 +549,9 @@ _dart_getwd? _getwd;
 int dup(
   int fd,
 ) {
-  _dup ??= Libc().dylib.lookupFunction<_c_dup, _dart_dup>('dup');
+  _dup ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32), _dart_dup>('dup');
   return _dup!(
     fd,
   );
@@ -513,7 +564,10 @@ int dup2(
   int fd,
   int fd2,
 ) {
-  _dup2 ??= Libc().dylib.lookupFunction<_c_dup2, _dart_dup2>('dup2');
+  _dup2 ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32), _dart_dup2>(
+          'dup2');
   return _dup2!(
     fd,
     fd2,
@@ -529,16 +583,19 @@ int native_execve(
   ffi.Pointer<ffi.Pointer<Utf8>> __argv,
   ffi.Pointer<ffi.Pointer<Utf8>> __envp,
 ) {
-  var c_path = path.toNativeUtf8();
+  final cPath = path.toNativeUtf8();
 
-  _execve ??= Libc().dylib.lookupFunction<_c_execve, _dart_execve>('execve');
-  var result = _execve!(
-    c_path,
+  _execve ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<ffi.Pointer<Utf8>>,
+          ffi.Pointer<ffi.Pointer<Utf8>>),
+      _dart_execve>('execve');
+  final result = _execve!(
+    cPath,
     __argv,
     __envp,
   );
 
-  malloc.free(c_path);
+  malloc.free(cPath);
 
   return result;
 }
@@ -552,8 +609,10 @@ int native_fexecve(
   ffi.Pointer<ffi.Pointer<Utf8>> __argv,
   ffi.Pointer<ffi.Pointer<Utf8>> __envp,
 ) {
-  _fexecve ??=
-      Libc().dylib.lookupFunction<_c_fexecve, _dart_fexecve>('fexecve');
+  _fexecve ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Pointer<Utf8>>,
+          ffi.Pointer<ffi.Pointer<Utf8>>),
+      _dart_fexecve>('fexecve');
   return _fexecve!(
     fd,
     __argv,
@@ -568,15 +627,17 @@ int native_execv(
   String path, // ffi.Pointer<Utf8> __path,
   ffi.Pointer<ffi.Pointer<Utf8>> __argv,
 ) {
-  var c_path = path.toNativeUtf8();
+  final cPath = path.toNativeUtf8();
 
-  _execv ??= Libc().dylib.lookupFunction<_c_execv, _dart_execv>('execv');
-  var result = _execv!(
-    c_path,
+  _execv ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<ffi.Pointer<Utf8>>),
+      _dart_execv>('execv');
+  final result = _execv!(
+    cPath,
     __argv,
   );
 
-  malloc.free(c_path);
+  malloc.free(cPath);
 
   return result;
 }
@@ -589,18 +650,21 @@ int execle(
   String path, // ffi.Pointer<Utf8> __path,
   String arg, // ffi.Pointer<Utf8> __arg,
 ) {
-  var c_path = path.toNativeUtf8();
+  final cPath = path.toNativeUtf8();
 
-  var c_arg = arg.toNativeUtf8();
+  final cArg = arg.toNativeUtf8();
 
-  _execle ??= Libc().dylib.lookupFunction<_c_execle, _dart_execle>('execle');
-  var result = _execle!(
-    c_path,
-    c_arg,
+  _execle ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>),
+      _dart_execle>('execle');
+  final result = _execle!(
+    cPath,
+    cArg,
   );
 
-  malloc.free(c_path);
-  malloc.free(c_arg);
+  malloc
+    ..free(cPath)
+    ..free(cArg);
 
   return result;
 }
@@ -613,18 +677,21 @@ int execl(
   String path, // ffi.Pointer<Utf8> __path,
   String arg, // ffi.Pointer<Utf8> __arg,
 ) {
-  var c_path = path.toNativeUtf8();
+  final cPath = path.toNativeUtf8();
 
-  var c_arg = arg.toNativeUtf8();
+  final cArg = arg.toNativeUtf8();
 
-  _execl ??= Libc().dylib.lookupFunction<_c_execl, _dart_execl>('execl');
-  var result = _execl!(
-    c_path,
-    c_arg,
+  _execl ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>),
+      _dart_execl>('execl');
+  final result = _execl!(
+    cPath,
+    cArg,
   );
 
-  malloc.free(c_path);
-  malloc.free(c_arg);
+  malloc
+    ..free(cPath)
+    ..free(cArg);
 
   return result;
 }
@@ -637,15 +704,17 @@ int native_execvp(
   String file, // ffi.Pointer<Utf8> file,
   ffi.Pointer<ffi.Pointer<Utf8>> __argv,
 ) {
-  var c_file = file.toNativeUtf8();
+  final cFile = file.toNativeUtf8();
 
-  _execvp ??= Libc().dylib.lookupFunction<_c_execvp, _dart_execvp>('execvp');
-  var result = _execvp!(
-    c_file,
+  _execvp ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<ffi.Pointer<Utf8>>),
+      _dart_execvp>('execvp');
+  final result = _execvp!(
+    cFile,
     __argv,
   );
 
-  malloc.free(c_file);
+  malloc.free(cFile);
 
   return result;
 }
@@ -659,17 +728,20 @@ int execlp(
   String file, // ffi.Pointer<Utf8> file,
   String arg, // ffi.Pointer<Utf8> __arg,
 ) {
-  var c_file = file.toNativeUtf8();
+  final cFile = file.toNativeUtf8();
 
-  var c_arg = arg.toNativeUtf8();
+  final cArg = arg.toNativeUtf8();
 
-  _execlp ??= Libc().dylib.lookupFunction<_c_execlp, _dart_execlp>('execlp');
-  var result = _execlp!(
-    c_file,
-    c_arg,
+  _execlp ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>),
+      _dart_execlp>('execlp');
+  final result = _execlp!(
+    cFile,
+    cArg,
   );
-  malloc.free(c_file);
-  malloc.free(c_arg);
+  malloc
+    ..free(cFile)
+    ..free(cArg);
 
   return result;
 }
@@ -681,7 +753,9 @@ _dart_execlp? _execlp;
 int nice(
   int increment,
 ) {
-  _nice ??= Libc().dylib.lookupFunction<_c_nice, _dart_nice>('nice');
+  _nice ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32), _dart_nice>('nice');
   return _nice!(
     increment,
   );
@@ -693,7 +767,9 @@ _dart_nice? _nice;
 void exit(
   int status,
 ) {
-  __exit ??= Libc().dylib.lookupFunction<_c__exit, _dart__exit>('_exit');
+  __exit ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Void Function(ffi.Int32), _dart__exit>('_exit');
   return __exit!(
     status,
   );
@@ -706,15 +782,16 @@ int pathconf(
   String path, // ffi.Pointer<Utf8> __path,
   int name,
 ) {
-  var c_path = path.toNativeUtf8();
-  _pathconf ??=
-      Libc().dylib.lookupFunction<_c_pathconf, _dart_pathconf>('pathconf');
-  var result = _pathconf!(
-    c_path,
+  final cPath = path.toNativeUtf8();
+  _pathconf ??= Libc().dylib.lookupFunction<
+      ffi.Int64 Function(ffi.Pointer<Utf8>, ffi.Int32),
+      _dart_pathconf>('pathconf');
+  final result = _pathconf!(
+    cPath,
     name,
   );
 
-  malloc.free(c_path);
+  malloc.free(cPath);
   return result;
 }
 
@@ -725,8 +802,8 @@ int fpathconf(
   int fd,
   int name,
 ) {
-  _fpathconf ??=
-      Libc().dylib.lookupFunction<_c_fpathconf, _dart_fpathconf>('fpathconf');
+  _fpathconf ??= Libc().dylib.lookupFunction<
+      ffi.Int64 Function(ffi.Int32, ffi.Int32), _dart_fpathconf>('fpathconf');
   return _fpathconf!(
     fd,
     name,
@@ -739,8 +816,9 @@ _dart_fpathconf? _fpathconf;
 int sysconf(
   int name,
 ) {
-  _sysconf ??=
-      Libc().dylib.lookupFunction<_c_sysconf, _dart_sysconf>('sysconf');
+  _sysconf ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int64 Function(ffi.Int32), _dart_sysconf>('sysconf');
   return _sysconf!(
     name,
   );
@@ -752,9 +830,10 @@ _dart_sysconf? _sysconf;
 String confstr(
   int name,
 ) {
-  _confstr ??=
-      Libc().dylib.lookupFunction<_c_confstr, _dart_confstr>('confstr');
-  var len = _confstr!(
+  _confstr ??= Libc().dylib.lookupFunction<
+      ffi.Uint64 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64),
+      _dart_confstr>('confstr');
+  final len = _confstr!(
     name,
     ffi.nullptr,
     0,
@@ -764,11 +843,11 @@ String confstr(
     throw PosixException(strerror(errno()), errno());
   }
 
-  var c_buf = malloc.allocate<ffi.Void>(len);
+  final cBuf = malloc.allocate<ffi.Void>(len);
 
-  var result = _confstr!(
+  final result = _confstr!(
     name,
-    c_buf,
+    cBuf,
     len,
   );
 
@@ -776,14 +855,15 @@ String confstr(
     throw PosixException(strerror(errno()), errno());
   }
 
-  return copyCBuffToDartString(c_buf);
+  return copyCBuffToDartString(cBuf);
 }
 
 _dart_confstr? _confstr;
 
 /// Get the process ID of the calling process.
 int getpid() {
-  _getpid ??= Libc().dylib.lookupFunction<_c_getpid, _dart_getpid>('getpid');
+  _getpid ??=
+      Libc().dylib.lookupFunction<ffi.Int32 Function(), _dart_getpid>('getpid');
   return _getpid!();
 }
 
@@ -791,8 +871,9 @@ _dart_getpid? _getpid;
 
 /// Get the process ID of the calling process's parent.
 int getppid() {
-  _getppid ??=
-      Libc().dylib.lookupFunction<_c_getppid, _dart_getppid>('getppid');
+  _getppid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(), _dart_getppid>('getppid');
   return _getppid!();
 }
 
@@ -800,8 +881,9 @@ _dart_getppid? _getppid;
 
 /// Get the process group ID of the calling process.
 int getpgrp() {
-  _getpgrp ??=
-      Libc().dylib.lookupFunction<_c_getpgrp, _dart_getpgrp>('getpgrp');
+  _getpgrp ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(), _dart_getpgrp>('getpgrp');
   return _getpgrp!();
 }
 
@@ -810,8 +892,9 @@ _dart_getpgrp? _getpgrp;
 int getpgid(
   int pid,
 ) {
-  _getpgid ??=
-      Libc().dylib.lookupFunction<_c_getpgid, _dart_getpgid>('getpgid');
+  _getpgid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32), _dart_getpgid>('getpgid');
   return _getpgid!(
     pid,
   );
@@ -826,8 +909,10 @@ int setpgid(
   int pid,
   int pgid,
 ) {
-  _setpgid ??=
-      Libc().dylib.lookupFunction<_c_setpgid, _dart_setpgid>('setpgid');
+  _setpgid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32), _dart_setpgid>(
+          'setpgid');
   return _setpgid!(
     pid,
     pgid,
@@ -839,8 +924,9 @@ _dart_setpgid? _setpgid;
 /// Set the process group ID of the calling process to its own PID.
 /// This is exactly the same as `setpgid (0, 0)'.
 int setpgrp() {
-  _setpgrp ??=
-      Libc().dylib.lookupFunction<_c_setpgrp, _dart_setpgrp>('setpgrp');
+  _setpgrp ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(), _dart_setpgrp>('setpgrp');
   return _setpgrp!();
 }
 
@@ -850,7 +936,8 @@ _dart_setpgrp? _setpgrp;
 /// The process group IDs of the session and the calling process
 /// are set to the process ID of the calling process, which is returned.
 int setsid() {
-  _setsid ??= Libc().dylib.lookupFunction<_c_setsid, _dart_setsid>('setsid');
+  _setsid ??=
+      Libc().dylib.lookupFunction<ffi.Int32 Function(), _dart_setsid>('setsid');
   return _setsid!();
 }
 
@@ -860,7 +947,9 @@ _dart_setsid? _setsid;
 int native_getsid(
   int pid,
 ) {
-  _getsid ??= Libc().dylib.lookupFunction<_c_getsid, _dart_getsid>('getsid');
+  _getsid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32), _dart_getsid>('getsid');
   return _getsid!(
     pid,
   );
@@ -870,7 +959,9 @@ _dart_getsid? _getsid;
 
 /// Get the real user ID of the calling process.
 int getuid() {
-  _getuid ??= Libc().dylib.lookupFunction<_c_getuid, _dart_getuid>('getuid');
+  _getuid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Uint32 Function(), _dart_getuid>('getuid');
   return _getuid!();
 }
 
@@ -878,8 +969,9 @@ _dart_getuid? _getuid;
 
 /// Get the effective user ID of the calling process.
 int geteuid() {
-  _geteuid ??=
-      Libc().dylib.lookupFunction<_c_geteuid, _dart_geteuid>('geteuid');
+  _geteuid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Uint32 Function(), _dart_geteuid>('geteuid');
   return _geteuid!();
 }
 
@@ -887,7 +979,9 @@ _dart_geteuid? _geteuid;
 
 /// Get the real group ID of the calling process.
 int getgid() {
-  _getgid ??= Libc().dylib.lookupFunction<_c_getgid, _dart_getgid>('getgid');
+  _getgid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Uint32 Function(), _dart_getgid>('getgid');
   return _getgid!();
 }
 
@@ -895,8 +989,9 @@ _dart_getgid? _getgid;
 
 /// Get the effective group ID of the calling process.
 int getegid() {
-  _getegid ??=
-      Libc().dylib.lookupFunction<_c_getegid, _dart_getegid>('getegid');
+  _getegid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Uint32 Function(), _dart_getegid>('getegid');
   return _getegid!();
 }
 
@@ -909,8 +1004,9 @@ int getgroups(
   int size,
   ffi.Pointer<ffi.Uint32> __list,
 ) {
-  _getgroups ??=
-      Libc().dylib.lookupFunction<_c_getgroups, _dart_getgroups>('getgroups');
+  _getgroups ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint32>),
+      _dart_getgroups>('getgroups');
   return _getgroups!(
     size,
     __list,
@@ -926,8 +1022,10 @@ _dart_getgroups? _getgroups;
 void setuid(
   int uid,
 ) {
-  _setuid ??= Libc().dylib.lookupFunction<_c_setuid, _dart_setuid>('setuid');
-  var result = _setuid!(
+  _setuid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Uint32), _dart_setuid>('setuid');
+  final result = _setuid!(
     uid,
   );
 
@@ -943,9 +1041,9 @@ void setreuid(
   int ruid,
   int euid,
 ) {
-  _setreuid ??=
-      Libc().dylib.lookupFunction<_c_setreuid, _dart_setreuid>('setreuid');
-  var result = _setreuid!(
+  _setreuid ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Uint32, ffi.Uint32), _dart_setreuid>('setreuid');
+  final result = _setreuid!(
     ruid,
     euid,
   );
@@ -959,9 +1057,10 @@ _dart_setreuid? _setreuid;
 void seteuid(
   int uid,
 ) {
-  _seteuid ??=
-      Libc().dylib.lookupFunction<_c_seteuid, _dart_seteuid>('seteuid');
-  var result = _seteuid!(
+  _seteuid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Uint32), _dart_seteuid>('seteuid');
+  final result = _seteuid!(
     uid,
   );
 
@@ -978,8 +1077,10 @@ _dart_seteuid? _seteuid;
 void setgid(
   int gid,
 ) {
-  _setgid ??= Libc().dylib.lookupFunction<_c_setgid, _dart_setgid>('setgid');
-  var result = _setgid!(
+  _setgid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Uint32), _dart_setgid>('setgid');
+  final result = _setgid!(
     gid,
   );
 
@@ -995,9 +1096,9 @@ void native_setregid(
   int rgid,
   int egid,
 ) {
-  _setregid ??=
-      Libc().dylib.lookupFunction<_c_setregid, _dart_setregid>('setregid');
-  var result = _setregid!(
+  _setregid ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Uint32, ffi.Uint32), _dart_setregid>('setregid');
+  final result = _setregid!(
     rgid,
     egid,
   );
@@ -1012,9 +1113,10 @@ _dart_setregid? _setregid;
 void setegid(
   int gid,
 ) {
-  _setegid ??=
-      Libc().dylib.lookupFunction<_c_setegid, _dart_setegid>('setegid');
-  var result = _setegid!(
+  _setegid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Uint32), _dart_setegid>('setegid');
+  final result = _setegid!(
     gid,
   );
 
@@ -1031,9 +1133,10 @@ _dart_setegid? _setegid;
 ///
 /// Throws [PosixException] if the operation fails.
 int fork() {
-  _fork ??= Libc().dylib.lookupFunction<_c_fork, _dart_fork>('fork');
+  _fork ??=
+      Libc().dylib.lookupFunction<ffi.Int32 Function(), _dart_fork>('fork');
 
-  var result = _fork!();
+  final result = _fork!();
 
   _throwIfErrno('fork', result);
 
@@ -1052,9 +1155,10 @@ _dart_fork? _fork;
 ///
 /// Throws [PosixException] if the operation fails.
 int vfork() {
-  _vfork ??= Libc().dylib.lookupFunction<_c_vfork, _dart_vfork>('vfork');
+  _vfork ??=
+      Libc().dylib.lookupFunction<ffi.Int32 Function(), _dart_vfork>('vfork');
 
-  var result = _vfork!();
+  final result = _vfork!();
 
   _throwIfErrno('vfork', result);
 
@@ -1072,17 +1176,19 @@ _dart_vfork? _vfork;
 ffi.Pointer<Utf8> native_ttyname(
   int fd,
 ) {
-  _ttyname ??=
-      Libc().dylib.lookupFunction<_c_ttyname, _dart_ttyname>('ttyname');
-  var c_name = _ttyname!(
+  _ttyname ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Pointer<Utf8> Function(ffi.Int32), _dart_ttyname>(
+          'ttyname');
+  final cName = _ttyname!(
     fd,
   );
 
-  if (c_name == ffi.nullptr) {
+  if (cName == ffi.nullptr) {
     _throwIfErrno('ttyname', -1);
   }
 
-  return c_name;
+  return cName;
 }
 
 _dart_ttyname? _ttyname;
@@ -1094,8 +1200,9 @@ int native_ttyname_r(
   ffi.Pointer<Utf8> buf,
   int buflen,
 ) {
-  _ttyname_r ??=
-      Libc().dylib.lookupFunction<_c_ttyname_r, _dart_ttyname_r>('ttyname_r');
+  _ttyname_r ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Int32, ffi.Pointer<Utf8>, ffi.Uint64),
+      _dart_ttyname_r>('ttyname_r');
   return _ttyname_r!(
     fd,
     buf,
@@ -1110,7 +1217,9 @@ _dart_ttyname_r? _ttyname_r;
 int isatty(
   int fd,
 ) {
-  _isatty ??= Libc().dylib.lookupFunction<_c_isatty, _dart_isatty>('isatty');
+  _isatty ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32), _dart_isatty>('isatty');
   return _isatty!(
     fd,
   );
@@ -1121,8 +1230,9 @@ _dart_isatty? _isatty;
 /// Return the index into the active-logins file (utmp) for
 /// the controlling terminal.
 int ttyslot() {
-  _ttyslot ??=
-      Libc().dylib.lookupFunction<_c_ttyslot, _dart_ttyslot>('ttyslot');
+  _ttyslot ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(), _dart_ttyslot>('ttyslot');
   return _ttyslot!();
 }
 
@@ -1135,19 +1245,22 @@ void link(
   String from,
   String to,
 ) {
-  var c_from = from.toNativeUtf8();
-  var c_to = to.toNativeUtf8();
+  final cFrom = from.toNativeUtf8();
+  final cTo = to.toNativeUtf8();
 
-  _link ??= Libc().dylib.lookupFunction<_c_link, _dart_link>('link');
-  var result = _link!(
-    c_from,
-    c_to,
+  _link ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>),
+      _dart_link>('link');
+  final result = _link!(
+    cFrom,
+    cTo,
   );
 
-  _throwIfErrno('symlink', result, c_from, c_to);
+  _throwIfErrno('symlink', result, cFrom, cTo);
 
-  malloc.free(c_from);
-  malloc.free(c_to);
+  malloc
+    ..free(cFrom)
+    ..free(cTo);
 }
 
 _dart_link? _link;
@@ -1163,22 +1276,26 @@ void linkat(
   String to,
   int flags,
 ) {
-  var c_from = from.toNativeUtf8();
-  var c_to = to.toNativeUtf8();
+  final cFrom = from.toNativeUtf8();
+  final cTo = to.toNativeUtf8();
 
-  _linkat ??= Libc().dylib.lookupFunction<_c_linkat, _dart_linkat>('linkat');
-  var result = _linkat!(
+  _linkat ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Int32, ffi.Pointer<Utf8>, ffi.Int32,
+          ffi.Pointer<Utf8>, ffi.Int32),
+      _dart_linkat>('linkat');
+  final result = _linkat!(
     __fromfd,
-    c_from,
+    cFrom,
     __tofd,
-    c_to,
+    cTo,
     flags,
   );
 
-  _throwIfErrno('symlink', result, c_from, c_to);
+  _throwIfErrno('symlink', result, cFrom, cTo);
 
-  malloc.free(c_from);
-  malloc.free(c_to);
+  malloc
+    ..free(cFrom)
+    ..free(cTo);
 }
 
 _dart_linkat? _linkat;
@@ -1190,20 +1307,22 @@ void symlink(
   String from,
   String to,
 ) {
-  var c_from = from.toNativeUtf8();
-  var c_to = to.toNativeUtf8();
+  final cFrom = from.toNativeUtf8();
+  final cTo = to.toNativeUtf8();
 
-  _symlink ??=
-      Libc().dylib.lookupFunction<_c_symlink, _dart_symlink>('symlink');
-  var result = _symlink!(
-    c_from,
-    c_to,
+  _symlink ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>),
+      _dart_symlink>('symlink');
+  final result = _symlink!(
+    cFrom,
+    cTo,
   );
 
-  _throwIfErrno('symlink', result, c_from, c_to);
+  _throwIfErrno('symlink', result, cFrom, cTo);
 
-  malloc.free(c_from);
-  malloc.free(c_to);
+  malloc
+    ..free(cFrom)
+    ..free(cTo);
 }
 
 _dart_symlink? _symlink;
@@ -1216,19 +1335,22 @@ int native_readlink(
   ffi.Pointer<Utf8> buf,
   int len,
 ) {
-  var c_path = path.toNativeUtf8();
+  final cPath = path.toNativeUtf8();
 
-  _readlink ??=
-      Libc().dylib.lookupFunction<_c_readlink, _dart_readlink>('readlink');
-  var read = _readlink!(
-    c_path,
+  _readlink ??= Libc().dylib.lookupFunction<
+      ffi.Int64 Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>, ffi.Uint64),
+      _dart_readlink>('readlink');
+  final read = _readlink!(
+    cPath,
     buf,
     len,
   );
 
-  if (read == -1) _throwIfErrno('readlink', read, c_path);
+  if (read == -1) {
+    _throwIfErrno('readlink', read, cPath);
+  }
 
-  malloc.free(c_path);
+  malloc.free(cPath);
 
   return read;
 }
@@ -1237,26 +1359,28 @@ _dart_readlink? _readlink;
 
 /// Like symlink but a relative path in TO is interpreted relative to TOFD.
 ///
-/// Throws a [PosxException] if the symlink failed.
+/// Throws a [PosixException] if the symlink failed.
 void symlinkat(
   String from,
   int tofd,
   String to,
 ) {
-  var c_from = from.toNativeUtf8();
-  var c_to = to.toNativeUtf8();
-  _symlinkat ??=
-      Libc().dylib.lookupFunction<_c_symlinkat, _dart_symlinkat>('symlinkat');
-  var result = _symlinkat!(
-    c_from,
+  final cFrom = from.toNativeUtf8();
+  final cTo = to.toNativeUtf8();
+  _symlinkat ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Int32, ffi.Pointer<Utf8>),
+      _dart_symlinkat>('symlinkat');
+  final result = _symlinkat!(
+    cFrom,
     tofd,
-    c_to,
+    cTo,
   );
 
-  _throwIfErrno('symlinkat', result, c_from, c_to);
+  _throwIfErrno('symlinkat', result, cFrom, cTo);
 
-  malloc.free(c_from);
-  malloc.free(c_to);
+  malloc
+    ..free(cFrom)
+    ..free(cTo);
 }
 
 _dart_symlinkat? _symlinkat;
@@ -1268,21 +1392,22 @@ void native_readlinkat(
   ffi.Pointer<Utf8> buf,
   int len,
 ) {
-  var c_path = path.toNativeUtf8();
+  final cPath = path.toNativeUtf8();
 
-  _readlinkat ??= Libc()
-      .dylib
-      .lookupFunction<_c_readlinkat, _dart_readlinkat>('readlinkat');
-  var result = _readlinkat!(
+  _readlinkat ??= Libc().dylib.lookupFunction<
+      ffi.Int64 Function(
+          ffi.Int32, ffi.Pointer<Utf8>, ffi.Pointer<Utf8>, ffi.Uint64),
+      _dart_readlinkat>('readlinkat');
+  final result = _readlinkat!(
     fd,
-    c_path,
+    cPath,
     buf,
     len,
   );
 
-  _throwIfErrno('readlinkat', result, c_path);
+  _throwIfErrno('readlinkat', result, cPath);
 
-  malloc.free(c_path);
+  malloc.free(cPath);
 }
 
 _dart_readlinkat? _readlinkat;
@@ -1291,16 +1416,19 @@ _dart_readlinkat? _readlinkat;
 void unlink(
   String name,
 ) {
-  var c_name = name.toNativeUtf8();
+  final cName = name.toNativeUtf8();
 
-  _unlink ??= Libc().dylib.lookupFunction<_c_unlink, _dart_unlink>('unlink');
-  var result = _unlink!(
-    c_name,
+  _unlink ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Pointer<Utf8>), _dart_unlink>(
+          'unlink');
+  final result = _unlink!(
+    cName,
   );
 
-  _throwIfErrno('unlink', result, c_name);
+  _throwIfErrno('unlink', result, cName);
 
-  malloc.free(c_name);
+  malloc.free(cName);
 }
 
 _dart_unlink? _unlink;
@@ -1313,17 +1441,18 @@ void unlinkat(
   String name,
   int flag,
 ) {
-  var c_name = name.toNativeUtf8();
-  _unlinkat ??=
-      Libc().dylib.lookupFunction<_c_unlinkat, _dart_unlinkat>('unlinkat');
-  var result = _unlinkat!(
+  final cName = name.toNativeUtf8();
+  _unlinkat ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Int32, ffi.Pointer<Utf8>, ffi.Int32),
+      _dart_unlinkat>('unlinkat');
+  final result = _unlinkat!(
     fd,
-    c_name,
+    cName,
     flag,
   );
-  _throwIfErrno('unlinkat', result, c_name);
+  _throwIfErrno('unlinkat', result, cName);
 
-  malloc.free(c_name);
+  malloc.free(cName);
 }
 
 _dart_unlinkat? _unlinkat;
@@ -1332,15 +1461,18 @@ _dart_unlinkat? _unlinkat;
 ///
 /// Throws a [PosixException] if the delete fails.
 void rmdir(String path) {
-  var c_path = path.toNativeUtf8();
-  _rmdir ??= Libc().dylib.lookupFunction<_c_rmdir, _dart_rmdir>('rmdir');
-  var result = _rmdir!(
-    c_path,
+  final cPath = path.toNativeUtf8();
+  _rmdir ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Pointer<Utf8>), _dart_rmdir>(
+          'rmdir');
+  final result = _rmdir!(
+    cPath,
   );
 
-  _throwIfErrno('rmdir', result, c_path);
+  _throwIfErrno('rmdir', result, cPath);
 
-  malloc.free(c_path);
+  malloc.free(cPath);
 }
 
 _dart_rmdir? _rmdir;
@@ -1349,8 +1481,10 @@ _dart_rmdir? _rmdir;
 int tcgetpgrp(
   int fd,
 ) {
-  _tcgetpgrp ??=
-      Libc().dylib.lookupFunction<_c_tcgetpgrp, _dart_tcgetpgrp>('tcgetpgrp');
+  _tcgetpgrp ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32), _dart_tcgetpgrp>(
+          'tcgetpgrp');
   return _tcgetpgrp!(
     fd,
   );
@@ -1361,13 +1495,13 @@ _dart_tcgetpgrp? _tcgetpgrp;
 /// Set the foreground process group ID of FD set PGRP_ID.
 int tcsetpgrp(
   int fd,
-  int pgrp_id,
+  int pgrpId,
 ) {
-  _tcsetpgrp ??=
-      Libc().dylib.lookupFunction<_c_tcsetpgrp, _dart_tcsetpgrp>('tcsetpgrp');
+  _tcsetpgrp ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Int32, ffi.Int32), _dart_tcsetpgrp>('tcsetpgrp');
   return _tcsetpgrp!(
     fd,
-    pgrp_id,
+    pgrpId,
   );
 }
 
@@ -1382,14 +1516,15 @@ _dart_tcsetpgrp? _tcsetpgrp;
 /// This method is not thread safe.
 ///
 String? getlogin() {
-  _getlogin ??=
-      Libc().dylib.lookupFunction<_c_getlogin, _dart_getlogin>('getlogin');
-  var c_name = _getlogin!();
+  _getlogin ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Pointer<Utf8> Function(), _dart_getlogin>('getlogin');
+  final cName = _getlogin!();
 
-  if (c_name == ffi.nullptr) {
+  if (cName == ffi.nullptr) {
     // may be there is no login name or possibly an error occured.
 
-    var error = errno();
+    final error = errno();
 
     if (error != 0) {
       throw PosixException('Call to getlogin() failed', error,
@@ -1397,7 +1532,7 @@ String? getlogin() {
     }
   }
   // c_name points to static memory so we don't need to free it.
-  var name = c_name == ffi.nullptr ? null : c_name.toDartString();
+  final name = cName == ffi.nullptr ? null : cName.toDartString();
 
   return name;
 }
@@ -1407,13 +1542,13 @@ String _getLogin_error(int error) {
 
   switch (error) {
     case EMFILE:
-      message =
-          'The per-process limit on the number of open file descriptors has been reached.';
+      message = 'The per-process limit on the number of open file descriptors '
+          'has been reached.';
       break;
 
     case ENFILE:
-      message =
-          'The system-wide limit on the total number of open files has been reached.';
+      message = 'The system-wide limit on the total number of open files has '
+          'been reached.';
       break;
 
     case ENXIO:
@@ -1421,7 +1556,8 @@ String _getLogin_error(int error) {
       break;
     case ERANGE:
       message =
-          "(getlogin_r) The length of the username, including the terminating null byte ('\0'), is larger than bufsize.";
+          '(getlogin_r) The length of the username, including the terminating '
+          "null byte ('0'), is larger than bufsize.";
       break;
 
     case ENOENT:
@@ -1448,20 +1584,20 @@ _dart_getlogin? _getlogin;
 ///
 /// Throws a [PosixException] if the name cannot be retrieved.
 String getlogin_r() {
-  const max_length = 32 + 1;
-  var c_name = malloc.allocate<Utf8>(max_length);
-  _getlogin_r ??= Libc()
-      .dylib
-      .lookupFunction<_c_getlogin_r, _dart_getlogin_r>('getlogin_r');
-  var result = _getlogin_r!(
-    c_name,
-    max_length,
+  const maxLength = 32 + 1;
+  final cName = malloc.allocate<Utf8>(maxLength);
+  _getlogin_r ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint64),
+      _dart_getlogin_r>('getlogin_r');
+  final result = _getlogin_r!(
+    cName,
+    maxLength,
   );
 
-  _throwIfErrno('getlogin_r', result, c_name);
+  _throwIfErrno('getlogin_r', result, cName);
 
-  var name = c_name.toDartString();
-  malloc.free(c_name);
+  final name = cName.toDartString();
+  malloc.free(cName);
 
   return name;
 }
@@ -1473,20 +1609,22 @@ _dart_getlogin_r? _getlogin_r;
 void setlogin(
   String name, // ffi.Pointer<Utf8> name,
 ) {
-  var c_name = name.toNativeUtf8();
-  _setlogin ??=
-      Libc().dylib.lookupFunction<_c_setlogin, _dart_setlogin>('setlogin');
+  final cName = name.toNativeUtf8();
+  _setlogin ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Pointer<Utf8>), _dart_setlogin>(
+          'setlogin');
 
-  var result = _setlogin!(
-    c_name,
+  final result = _setlogin!(
+    cName,
   );
 
-  _throwIfErrno('setlogin', result, c_name);
+  _throwIfErrno('setlogin', result, cName);
 
-  malloc.free(c_name);
+  malloc.free(cName);
 }
 
-/// Throws a [PosixException] if [results] == 1
+/// Throws a [PosixException] if [result] == 1
 /// retrieving the actual error code from errno().
 ///
 /// if [result] equals zero then the method returns
@@ -1495,26 +1633,34 @@ void setlogin(
 /// If [toFree1] or [toFree2] are passed they will
 /// be treated as allocated memory and will be freed
 /// if an exception is to be thrown.
-void _throwIfErrno<T>(String method, int result,
+void _throwIfErrno(String method, int result,
     [ffi.Pointer<ffi.NativeType>? toFree1,
     ffi.Pointer<ffi.NativeType>? toFree2]) {
   if (result == -1) {
-    if (toFree1 != null && toFree1 != ffi.nullptr) malloc.free(toFree1);
-    if (toFree2 != null && toFree2 != ffi.nullptr) malloc.free(toFree2);
+    if (toFree1 != null && toFree1 != ffi.nullptr) {
+      malloc.free(toFree1);
+    }
+    if (toFree2 != null && toFree2 != ffi.nullptr) {
+      malloc.free(toFree2);
+    }
 
-    var error = errno();
+    final error = errno();
 
     throw PosixException(
         'An error occured calling $method: ${strerror(error)} ', error);
   }
 }
 
-void _throwIfError<T>(String method, int error,
+void _throwIfError(String method, int error,
     [ffi.Pointer<ffi.NativeType>? toFree1,
     ffi.Pointer<ffi.NativeType>? toFree2]) {
   if (error != 0) {
-    if (toFree1 != null && toFree1 != ffi.nullptr) malloc.free(toFree1);
-    if (toFree2 != null && toFree2 != ffi.nullptr) malloc.free(toFree2);
+    if (toFree1 != null && toFree1 != ffi.nullptr) {
+      malloc.free(toFree1);
+    }
+    if (toFree2 != null && toFree2 != ffi.nullptr) {
+      malloc.free(toFree2);
+    }
     throw PosixException('An error occured calling $method', error);
   }
 }
@@ -1526,7 +1672,10 @@ int native_getopt(
   ffi.Pointer<ffi.Pointer<Utf8>> ___argv,
   ffi.Pointer<Utf8> __shortopts,
 ) {
-  _getopt ??= Libc().dylib.lookupFunction<_c_getopt, _dart_getopt>('getopt');
+  _getopt ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(
+          ffi.Int32, ffi.Pointer<ffi.Pointer<Utf8>>, ffi.Pointer<Utf8>),
+      _dart_getopt>('getopt');
   return _getopt!(
     argc,
     ___argv,
@@ -1542,21 +1691,21 @@ _dart_getopt? _getopt;
 /// The result is null-terminated if LEN is large enough for the full
 /// name and the terminator.
 String gethostname() {
-  const buf_size = 64 + 1;
-  var c_name = malloc.allocate<Utf8>(buf_size);
+  const bufSize = 64 + 1;
+  final cName = malloc.allocate<Utf8>(bufSize);
 
-  _gethostname ??= Libc()
-      .dylib
-      .lookupFunction<_c_gethostname, _dart_gethostname>('gethostname');
-  var result = _gethostname!(
-    c_name,
-    buf_size,
+  _gethostname ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint64),
+      _dart_gethostname>('gethostname');
+  final result = _gethostname!(
+    cName,
+    bufSize,
   );
 
-  _throwIfErrno('gethostname', result, c_name);
+  _throwIfErrno('gethostname', result, cName);
 
-  var hostname = c_name.toDartString();
-  malloc.free(c_name);
+  final hostname = cName.toDartString();
+  malloc.free(cName);
 
   return hostname;
 }
@@ -1568,18 +1717,18 @@ _dart_gethostname? _gethostname;
 int sethostname(
   String name, // ffi.Pointer<Utf8> name,
 ) {
-  var c_name = name.toNativeUtf8();
+  final cName = name.toNativeUtf8();
 
-  _sethostname ??= Libc()
-      .dylib
-      .lookupFunction<_c_sethostname, _dart_sethostname>('sethostname');
-  var result = _sethostname!(
-    c_name,
+  _sethostname ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint64),
+      _dart_sethostname>('sethostname');
+  final result = _sethostname!(
+    cName,
     name.length,
   );
 
-  _throwIfErrno('gethostname', result, c_name);
-  malloc.free(c_name);
+  _throwIfErrno('gethostname', result, cName);
+  malloc.free(cName);
   return result;
 }
 
@@ -1590,8 +1739,10 @@ _dart_sethostname? _sethostname;
 int sethostid(
   int id,
 ) {
-  _sethostid ??=
-      Libc().dylib.lookupFunction<_c_sethostid, _dart_sethostid>('sethostid');
+  _sethostid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int64), _dart_sethostid>(
+          'sethostid');
   return _sethostid!(
     id,
   );
@@ -1606,16 +1757,16 @@ int getdomainname(
   String name, // ffi.Pointer<Utf8> name,
   int len,
 ) {
-  var c_name = name.toNativeUtf8();
-  _getdomainname ??= Libc()
-      .dylib
-      .lookupFunction<_c_getdomainname, _dart_getdomainname>('getdomainname');
-  var result = _getdomainname!(
-    c_name,
+  final cName = name.toNativeUtf8();
+  _getdomainname ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint64),
+      _dart_getdomainname>('getdomainname');
+  final result = _getdomainname!(
+    cName,
     len,
   );
 
-  malloc.free(c_name);
+  malloc.free(cName);
   return result;
 }
 
@@ -1625,16 +1776,16 @@ int setdomainname(
   String name, // ffi.Pointer<Utf8> name,
   int len,
 ) {
-  var c_name = name.toNativeUtf8();
+  final cName = name.toNativeUtf8();
 
-  _setdomainname ??= Libc()
-      .dylib
-      .lookupFunction<_c_setdomainname, _dart_setdomainname>('setdomainname');
-  var result = _setdomainname!(
-    c_name,
+  _setdomainname ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint64),
+      _dart_setdomainname>('setdomainname');
+  final result = _setdomainname!(
+    cName,
     len,
   );
-  malloc.free(c_name);
+  malloc.free(cName);
   return result;
 }
 
@@ -1644,8 +1795,9 @@ _dart_setdomainname? _setdomainname;
 /// with the control terminal, and then send a SIGHUP signal to the process
 /// group of the control terminal.
 int vhangup() {
-  _vhangup ??=
-      Libc().dylib.lookupFunction<_c_vhangup, _dart_vhangup>('vhangup');
+  _vhangup ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(), _dart_vhangup>('vhangup');
   return _vhangup!();
 }
 
@@ -1655,13 +1807,16 @@ _dart_vhangup? _vhangup;
 int revoke(
   String filename, // ffi.Pointer<Utf8> file,
 ) {
-  var c_filename = filename.toNativeUtf8();
-  _revoke ??= Libc().dylib.lookupFunction<_c_revoke, _dart_revoke>('revoke');
-  var result = _revoke!(
-    c_filename,
+  final cFilename = filename.toNativeUtf8();
+  _revoke ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Pointer<Utf8>), _dart_revoke>(
+          'revoke');
+  final result = _revoke!(
+    cFilename,
   );
 
-  malloc.free(c_filename);
+  malloc.free(cFilename);
   return result;
 }
 
@@ -1673,14 +1828,17 @@ _dart_revoke? _revoke;
 /// SAMPLE_BUFFER[((PC - OFFSET) / 2) * SCALE / 65536].  If SCALE is zero,
 /// disable profiling.  Returns zero on success, -1 on error.
 int native_profil(
-  ffi.Pointer<ffi.Uint16> __sample_buffer,
+  ffi.Pointer<ffi.Uint16> SampleBuffer,
   int size,
   int offset,
   int scale,
 ) {
-  _profil ??= Libc().dylib.lookupFunction<_c_profil, _dart_profil>('profil');
+  _profil ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(
+          ffi.Pointer<ffi.Uint16>, ffi.Uint64, ffi.Uint64, ffi.Uint32),
+      _dart_profil>('profil');
   return _profil!(
-    __sample_buffer,
+    SampleBuffer,
     size,
     offset,
     scale,
@@ -1695,14 +1853,17 @@ _dart_profil? _profil;
 int acct(
   String name, // ffi.Pointer<Utf8> name,
 ) {
-  var c_name = name.toNativeUtf8();
+  final cName = name.toNativeUtf8();
 
-  _acct ??= Libc().dylib.lookupFunction<_c_acct, _dart_acct>('acct');
-  var result = _acct!(
-    c_name,
+  _acct ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Pointer<Utf8>), _dart_acct>(
+          'acct');
+  final result = _acct!(
+    cName,
   );
 
-  malloc.free(c_name);
+  malloc.free(cName);
   return result;
 }
 
@@ -1712,7 +1873,8 @@ _dart_acct? _acct;
 ffi.Pointer<Utf8> native_getusershell() {
   _getusershell ??= Libc()
       .dylib
-      .lookupFunction<_c_getusershell, _dart_getusershell>('getusershell');
+      .lookupFunction<ffi.Pointer<Utf8> Function(), _dart_getusershell>(
+          'getusershell');
   return _getusershell!();
 }
 
@@ -1721,7 +1883,7 @@ _dart_getusershell? _getusershell;
 void endusershell() {
   _endusershell ??= Libc()
       .dylib
-      .lookupFunction<_c_endusershell, _dart_endusershell>('endusershell');
+      .lookupFunction<ffi.Void Function(), _dart_endusershell>('endusershell');
   return _endusershell!();
 }
 
@@ -1730,7 +1892,7 @@ _dart_endusershell? _endusershell;
 void setusershell() {
   _setusershell ??= Libc()
       .dylib
-      .lookupFunction<_c_setusershell, _dart_setusershell>('setusershell');
+      .lookupFunction<ffi.Void Function(), _dart_setusershell>('setusershell');
   return _setusershell!();
 }
 
@@ -1743,7 +1905,10 @@ int daemon(
   int nochdir,
   int noclose,
 ) {
-  _daemon ??= Libc().dylib.lookupFunction<_c_daemon, _dart_daemon>('daemon');
+  _daemon ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32), _dart_daemon>(
+          'daemon');
   return _daemon!(
     nochdir,
     noclose,
@@ -1757,13 +1922,16 @@ _dart_daemon? _daemon;
 int chroot(
   String path, // ffi.Pointer<Utf8> __path,
 ) {
-  var c_path = path.toNativeUtf8();
-  _chroot ??= Libc().dylib.lookupFunction<_c_chroot, _dart_chroot>('chroot');
-  var result = _chroot!(
-    c_path,
+  final cPath = path.toNativeUtf8();
+  _chroot ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Pointer<Utf8>), _dart_chroot>(
+          'chroot');
+  final result = _chroot!(
+    cPath,
   );
 
-  malloc.free(c_path);
+  malloc.free(cPath);
   return result;
 }
 
@@ -1774,8 +1942,8 @@ _dart_chroot? _chroot;
 ffi.Pointer<Utf8> native_getpass(
   ffi.Pointer<Utf8> __prompt,
 ) {
-  _getpass ??=
-      Libc().dylib.lookupFunction<_c_getpass, _dart_getpass>('getpass');
+  _getpass ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<Utf8> Function(ffi.Pointer<Utf8>), _dart_getpass>('getpass');
   return _getpass!(
     __prompt,
   );
@@ -1790,7 +1958,9 @@ _dart_getpass? _getpass;
 int fsync(
   int fd,
 ) {
-  _fsync ??= Libc().dylib.lookupFunction<_c_fsync, _dart_fsync>('fsync');
+  _fsync ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32), _dart_fsync>('fsync');
   return _fsync!(
     fd,
   );
@@ -1800,8 +1970,9 @@ _dart_fsync? _fsync;
 
 /// Return identifier for the current host.
 int gethostid() {
-  _gethostid ??=
-      Libc().dylib.lookupFunction<_c_gethostid, _dart_gethostid>('gethostid');
+  _gethostid ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int64 Function(), _dart_gethostid>('gethostid');
   return _gethostid!();
 }
 
@@ -1809,7 +1980,8 @@ _dart_gethostid? _gethostid;
 
 /// Make all changes done to all files actually appear on disk.
 void sync_1() {
-  _sync_1 ??= Libc().dylib.lookupFunction<_c_sync_1, _dart_sync_1>('sync');
+  _sync_1 ??=
+      Libc().dylib.lookupFunction<ffi.Void Function(), _dart_sync_1>('sync');
   return _sync_1!();
 }
 
@@ -1820,7 +1992,7 @@ _dart_sync_1? _sync_1;
 int getpagesize() {
   _getpagesize ??= Libc()
       .dylib
-      .lookupFunction<_c_getpagesize, _dart_getpagesize>('getpagesize');
+      .lookupFunction<ffi.Int32 Function(), _dart_getpagesize>('getpagesize');
   return _getpagesize!();
 }
 
@@ -1831,7 +2003,8 @@ _dart_getpagesize? _getpagesize;
 int getdtablesize() {
   _getdtablesize ??= Libc()
       .dylib
-      .lookupFunction<_c_getdtablesize, _dart_getdtablesize>('getdtablesize');
+      .lookupFunction<ffi.Int32 Function(), _dart_getdtablesize>(
+          'getdtablesize');
   return _getdtablesize!();
 }
 
@@ -1841,15 +2014,16 @@ int truncate(
   String filename, // ffi.Pointer<Utf8> file,
   int length,
 ) {
-  var c_filename = filename.toNativeUtf8();
-  _truncate ??=
-      Libc().dylib.lookupFunction<_c_truncate, _dart_truncate>('truncate');
-  var result = _truncate!(
-    c_filename,
+  final cFilename = filename.toNativeUtf8();
+  _truncate ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Int64),
+      _dart_truncate>('truncate');
+  final result = _truncate!(
+    cFilename,
     length,
   );
 
-  malloc.free(c_filename);
+  malloc.free(cFilename);
   return result;
 }
 
@@ -1859,8 +2033,8 @@ int ftruncate(
   int fd,
   int length,
 ) {
-  _ftruncate ??=
-      Libc().dylib.lookupFunction<_c_ftruncate, _dart_ftruncate>('ftruncate');
+  _ftruncate ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Int32, ffi.Int64), _dart_ftruncate>('ftruncate');
   return _ftruncate!(
     fd,
     length,
@@ -1874,7 +2048,10 @@ _dart_ftruncate? _ftruncate;
 int native_brk(
   ffi.Pointer<ffi.Void> addr,
 ) {
-  _brk ??= Libc().dylib.lookupFunction<_c_brk, _dart_brk>('brk');
+  _brk ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Pointer<ffi.Void>), _dart_brk>(
+          'brk');
   return _brk!(
     addr,
   );
@@ -1889,7 +2066,10 @@ _dart_brk? _brk;
 ffi.Pointer<ffi.Void> sbrk(
   int delta,
 ) {
-  _sbrk ??= Libc().dylib.lookupFunction<_c_sbrk, _dart_sbrk>('sbrk');
+  _sbrk ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Pointer<ffi.Void> Function(ffi.IntPtr), _dart_sbrk>(
+          'sbrk');
   return _sbrk!(
     delta,
   );
@@ -1910,8 +2090,9 @@ _dart_sbrk? _sbrk;
 int syscall(
   int __sysno,
 ) {
-  _syscall ??=
-      Libc().dylib.lookupFunction<_c_syscall, _dart_syscall>('syscall');
+  _syscall ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int64 Function(ffi.Int64), _dart_syscall>('syscall');
   return _syscall!(
     __sysno,
   );
@@ -1924,7 +2105,9 @@ int lockf(
   int cmd,
   int len,
 ) {
-  _lockf ??= Libc().dylib.lookupFunction<_c_lockf, _dart_lockf>('lockf');
+  _lockf ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Int32, ffi.Int32, ffi.Int64),
+      _dart_lockf>('lockf');
   return _lockf!(
     fd,
     cmd,
@@ -1939,8 +2122,10 @@ _dart_lockf? _lockf;
 int fdatasync(
   int fildes,
 ) {
-  _fdatasync ??=
-      Libc().dylib.lookupFunction<_c_fdatasync, _dart_fdatasync>('fdatasync');
+  _fdatasync ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32), _dart_fdatasync>(
+          'fdatasync');
   return _fdatasync!(
     fildes,
   );
@@ -1957,7 +2142,9 @@ ffi.Pointer<Utf8> native_crypt(
   ffi.Pointer<Utf8> key,
   ffi.Pointer<Utf8> salt,
 ) {
-  _crypt ??= Libc().dylib.lookupFunction<_c_crypt, _dart_crypt>('crypt');
+  _crypt ??= Libc().dylib.lookupFunction<
+      ffi.Pointer<Utf8> Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>),
+      _dart_crypt>('crypt');
   return _crypt!(
     key,
     salt,
@@ -1972,9 +2159,9 @@ int native_getentropy(
   ffi.Pointer<ffi.Void> buffer,
   int length,
 ) {
-  _getentropy ??= Libc()
-      .dylib
-      .lookupFunction<_c_getentropy, _dart_getentropy>('getentropy');
+  _getentropy ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<ffi.Void>, ffi.Uint64),
+      _dart_getentropy>('getentropy');
   return _getentropy!(
     buffer,
     length,
@@ -2013,27 +2200,9 @@ const int F_TEST = 3;
 
 const int PATH_MAX = 4096;
 
-///////////////////////////////////////////////////////////////////////////
-///
-/// typedefs
-///
-///////////////////////////////////////////////////////////////////////////
-///
-typedef _c_access = ffi.Int32 Function(
-  ffi.Pointer<Utf8> name,
-  ffi.Int32 __type,
-);
-
 typedef _dart_access = int Function(
   ffi.Pointer<Utf8> name,
   int __type,
-);
-
-typedef _c_faccessat = ffi.Int32 Function(
-  ffi.Int32 fd,
-  ffi.Pointer<Utf8> file,
-  ffi.Int32 __type,
-  ffi.Int32 flag,
 );
 
 typedef _dart_faccessat = int Function(
@@ -2043,30 +2212,14 @@ typedef _dart_faccessat = int Function(
   int flag,
 );
 
-typedef _c_lseek = ffi.Int64 Function(
-  ffi.Int32 fd,
-  ffi.Int64 offset,
-  ffi.Int32 __whence,
-);
-
 typedef _dart_lseek = int Function(
   int fd,
   int offset,
   int __whence,
 );
 
-typedef _c_close = ffi.Int32 Function(
-  ffi.Int32 fd,
-);
-
 typedef _dart_close = int Function(
   int fd,
-);
-
-typedef _c_read = ffi.Int64 Function(
-  ffi.Int32 fd,
-  ffi.Pointer<ffi.Int8> buf,
-  ffi.Uint64 nbytes,
 );
 
 typedef _dart_read = int Function(
@@ -2075,23 +2228,10 @@ typedef _dart_read = int Function(
   int nbytes,
 );
 
-typedef _c_write = ffi.Int64 Function(
-  ffi.Int32 fd,
-  ffi.Pointer<ffi.Int8> buf,
-  ffi.Uint64 n,
-);
-
 typedef _dart_write = int Function(
   int fd,
   ffi.Pointer<ffi.Int8> buf,
   int n,
-);
-
-typedef _c_pread = ffi.Int64 Function(
-  ffi.Int32 fd,
-  ffi.Pointer<ffi.Int8> buf,
-  ffi.Uint64 nbytes,
-  ffi.Int64 offset,
 );
 
 typedef _dart_pread = int Function(
@@ -2101,13 +2241,6 @@ typedef _dart_pread = int Function(
   int offset,
 );
 
-typedef _c_pwrite = ffi.Int64 Function(
-  ffi.Int32 fd,
-  ffi.Pointer<ffi.Int8> buf,
-  ffi.Uint64 n,
-  ffi.Int64 offset,
-);
-
 typedef _dart_pwrite = int Function(
   int fd,
   ffi.Pointer<ffi.Int8> buf,
@@ -2115,33 +2248,16 @@ typedef _dart_pwrite = int Function(
   int offset,
 );
 
-typedef _c_pipe = ffi.Int32 Function(
-  ffi.Pointer<ffi.Int32> __pipedes,
-);
-
 typedef _dart_pipe = int Function(
   ffi.Pointer<ffi.Int32> __pipedes,
-);
-
-typedef _c_alarm = ffi.Uint32 Function(
-  ffi.Uint32 seconds,
 );
 
 typedef _dart_alarm = int Function(
   int seconds,
 );
 
-typedef _c_sleep = ffi.Uint32 Function(
-  ffi.Uint32 seconds,
-);
-
 typedef _dart_sleep = int Function(
   int seconds,
-);
-
-typedef _c_ualarm = ffi.Uint32 Function(
-  ffi.Uint32 value,
-  ffi.Uint32 interval,
 );
 
 typedef _dart_ualarm = int Function(
@@ -2149,23 +2265,11 @@ typedef _dart_ualarm = int Function(
   int interval,
 );
 
-typedef _c_usleep = ffi.Int32 Function(
-  ffi.Uint32 useconds,
-);
-
 typedef _dart_usleep = int Function(
   int useconds,
 );
 
-typedef _c_pause = ffi.Int32 Function();
-
 typedef _dart_pause = int Function();
-
-typedef _c_chown = ffi.Int32 Function(
-  ffi.Pointer<Utf8> file,
-  ffi.Uint32 owner,
-  ffi.Uint32 group,
-);
 
 typedef _dart_chown = int Function(
   ffi.Pointer<Utf8> file,
@@ -2173,19 +2277,9 @@ typedef _dart_chown = int Function(
   int group,
 );
 
-typedef _c_chmod = ffi.Int32 Function(
-  ffi.Pointer<Utf8> file,
-  ffi.Uint32 permissions,
-);
 typedef _dart_chmod = int Function(
   ffi.Pointer<Utf8> file,
   int permissions,
-);
-
-typedef _c_fchown = ffi.Int32 Function(
-  ffi.Int32 fd,
-  ffi.Uint32 owner,
-  ffi.Uint32 group,
 );
 
 typedef _dart_fchown = int Function(
@@ -2194,24 +2288,10 @@ typedef _dart_fchown = int Function(
   int group,
 );
 
-typedef _c_lchown = ffi.Int32 Function(
-  ffi.Pointer<Utf8> file,
-  ffi.Uint32 owner,
-  ffi.Uint32 group,
-);
-
 typedef _dart_lchown = int Function(
   ffi.Pointer<Utf8> file,
   int owner,
   int group,
-);
-
-typedef _c_fchownat = ffi.Int32 Function(
-  ffi.Int32 fd,
-  ffi.Pointer<Utf8> file,
-  ffi.Uint32 owner,
-  ffi.Uint32 group,
-  ffi.Int32 flag,
 );
 
 typedef _dart_fchownat = int Function(
@@ -2222,25 +2302,12 @@ typedef _dart_fchownat = int Function(
   int flag,
 );
 
-typedef _c_chdir = ffi.Int32 Function(
-  ffi.Pointer<Utf8> __path,
-);
-
 typedef _dart_chdir = int Function(
   ffi.Pointer<Utf8> __path,
 );
 
-typedef _c_fchdir = ffi.Int32 Function(
-  ffi.Int32 fd,
-);
-
 typedef _dart_fchdir = int Function(
   int fd,
-);
-
-typedef _c_getcwd = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __buf,
-  ffi.Uint64 __size,
 );
 
 typedef _dart_getcwd = ffi.Pointer<ffi.Int8> Function(
@@ -2248,25 +2315,12 @@ typedef _dart_getcwd = ffi.Pointer<ffi.Int8> Function(
   int __size,
 );
 
-typedef _c_getwd = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> buf,
-);
-
 typedef _dart_getwd = ffi.Pointer<ffi.Int8> Function(
   ffi.Pointer<ffi.Int8> buf,
 );
 
-typedef _c_dup = ffi.Int32 Function(
-  ffi.Int32 fd,
-);
-
 typedef _dart_dup = int Function(
   int fd,
-);
-
-typedef _c_dup2 = ffi.Int32 Function(
-  ffi.Int32 fd,
-  ffi.Int32 fd2,
 );
 
 typedef _dart_dup2 = int Function(
@@ -2274,20 +2328,8 @@ typedef _dart_dup2 = int Function(
   int fd2,
 );
 
-typedef _c_execve = ffi.Int32 Function(
-  ffi.Pointer<Utf8> __path,
-  ffi.Pointer<ffi.Pointer<Utf8>> __argv,
-  ffi.Pointer<ffi.Pointer<Utf8>> __envp,
-);
-
 typedef _dart_execve = int Function(
   ffi.Pointer<Utf8> __path,
-  ffi.Pointer<ffi.Pointer<Utf8>> __argv,
-  ffi.Pointer<ffi.Pointer<Utf8>> __envp,
-);
-
-typedef _c_fexecve = ffi.Int32 Function(
-  ffi.Int32 fd,
   ffi.Pointer<ffi.Pointer<Utf8>> __argv,
   ffi.Pointer<ffi.Pointer<Utf8>> __envp,
 );
@@ -2298,27 +2340,12 @@ typedef _dart_fexecve = int Function(
   ffi.Pointer<ffi.Pointer<Utf8>> __envp,
 );
 
-typedef _c_execv = ffi.Int32 Function(
-  ffi.Pointer<Utf8> __path,
-  ffi.Pointer<ffi.Pointer<Utf8>> __argv,
-);
-
 typedef _dart_execv = int Function(
   ffi.Pointer<Utf8> __path,
   ffi.Pointer<ffi.Pointer<Utf8>> __argv,
 );
 
-typedef _c_execle = ffi.Int32 Function(
-  ffi.Pointer<Utf8> __path,
-  ffi.Pointer<Utf8> __arg,
-);
-
 typedef _dart_execle = int Function(
-  ffi.Pointer<Utf8> __path,
-  ffi.Pointer<Utf8> __arg,
-);
-
-typedef _c_execl = ffi.Int32 Function(
   ffi.Pointer<Utf8> __path,
   ffi.Pointer<Utf8> __arg,
 );
@@ -2328,19 +2355,9 @@ typedef _dart_execl = int Function(
   ffi.Pointer<Utf8> __arg,
 );
 
-typedef _c_execvp = ffi.Int32 Function(
-  ffi.Pointer<Utf8> file,
-  ffi.Pointer<ffi.Pointer<Utf8>> __argv,
-);
-
 typedef _dart_execvp = int Function(
   ffi.Pointer<Utf8> file,
   ffi.Pointer<ffi.Pointer<Utf8>> __argv,
-);
-
-typedef _c_execlp = ffi.Int32 Function(
-  ffi.Pointer<Utf8> file,
-  ffi.Pointer<Utf8> __arg,
 );
 
 typedef _dart_execlp = int Function(
@@ -2348,25 +2365,12 @@ typedef _dart_execlp = int Function(
   ffi.Pointer<Utf8> __arg,
 );
 
-typedef _c_nice = ffi.Int32 Function(
-  ffi.Int32 __inc,
-);
-
 typedef _dart_nice = int Function(
   int __inc,
 );
 
-typedef _c__exit = ffi.Void Function(
-  ffi.Int32 __status,
-);
-
 typedef _dart__exit = void Function(
   int __status,
-);
-
-typedef _c_pathconf = ffi.Int64 Function(
-  ffi.Pointer<Utf8> __path,
-  ffi.Int32 name,
 );
 
 typedef _dart_pathconf = int Function(
@@ -2374,28 +2378,13 @@ typedef _dart_pathconf = int Function(
   int name,
 );
 
-typedef _c_fpathconf = ffi.Int64 Function(
-  ffi.Int32 fd,
-  ffi.Int32 name,
-);
-
 typedef _dart_fpathconf = int Function(
   int fd,
   int name,
 );
 
-typedef _c_sysconf = ffi.Int64 Function(
-  ffi.Int32 name,
-);
-
 typedef _dart_sysconf = int Function(
   int name,
-);
-
-typedef _c_confstr = ffi.Uint64 Function(
-  ffi.Int32 name,
-  ffi.Pointer<ffi.Void> buf,
-  ffi.Uint64 len,
 );
 
 typedef _dart_confstr = int Function(
@@ -2404,29 +2393,14 @@ typedef _dart_confstr = int Function(
   int len,
 );
 
-typedef _c_getpid = ffi.Int32 Function();
-
 typedef _dart_getpid = int Function();
-
-typedef _c_getppid = ffi.Int32 Function();
 
 typedef _dart_getppid = int Function();
 
-typedef _c_getpgrp = ffi.Int32 Function();
-
 typedef _dart_getpgrp = int Function();
-
-typedef _c_getpgid = ffi.Int32 Function(
-  ffi.Int32 pid,
-);
 
 typedef _dart_getpgid = int Function(
   int pid,
-);
-
-typedef _c_setpgid = ffi.Int32 Function(
-  ffi.Int32 pid,
-  ffi.Int32 __pgid,
 );
 
 typedef _dart_setpgid = int Function(
@@ -2434,59 +2408,29 @@ typedef _dart_setpgid = int Function(
   int __pgid,
 );
 
-typedef _c_setpgrp = ffi.Int32 Function();
-
 typedef _dart_setpgrp = int Function();
 
-typedef _c_setsid = ffi.Int32 Function();
-
 typedef _dart_setsid = int Function();
-
-typedef _c_getsid = ffi.Int32 Function(
-  ffi.Int32 pid,
-);
 
 typedef _dart_getsid = int Function(
   int pid,
 );
 
-typedef _c_getuid = ffi.Uint32 Function();
-
 typedef _dart_getuid = int Function();
-
-typedef _c_geteuid = ffi.Uint32 Function();
 
 typedef _dart_geteuid = int Function();
 
-typedef _c_getgid = ffi.Uint32 Function();
-
 typedef _dart_getgid = int Function();
 
-typedef _c_getegid = ffi.Uint32 Function();
-
 typedef _dart_getegid = int Function();
-
-typedef _c_getgroups = ffi.Int32 Function(
-  ffi.Int32 size,
-  ffi.Pointer<ffi.Uint32> __list,
-);
 
 typedef _dart_getgroups = int Function(
   int size,
   ffi.Pointer<ffi.Uint32> __list,
 );
 
-typedef _c_setuid = ffi.Int32 Function(
-  ffi.Uint32 uid,
-);
-
 typedef _dart_setuid = int Function(
   int uid,
-);
-
-typedef _c_setreuid = ffi.Int32 Function(
-  ffi.Uint32 ruid,
-  ffi.Uint32 euid,
 );
 
 typedef _dart_setreuid = int Function(
@@ -2494,25 +2438,12 @@ typedef _dart_setreuid = int Function(
   int euid,
 );
 
-typedef _c_seteuid = ffi.Int32 Function(
-  ffi.Uint32 uid,
-);
-
 typedef _dart_seteuid = int Function(
   int uid,
 );
 
-typedef _c_setgid = ffi.Int32 Function(
-  ffi.Uint32 gid,
-);
-
 typedef _dart_setgid = int Function(
   int gid,
-);
-
-typedef _c_setregid = ffi.Int32 Function(
-  ffi.Uint32 rgid,
-  ffi.Uint32 egid,
 );
 
 typedef _dart_setregid = int Function(
@@ -2520,34 +2451,16 @@ typedef _dart_setregid = int Function(
   int egid,
 );
 
-typedef _c_setegid = ffi.Int32 Function(
-  ffi.Uint32 gid,
-);
-
 typedef _dart_setegid = int Function(
   int gid,
 );
 
-typedef _c_fork = ffi.Int32 Function();
-
 typedef _dart_fork = int Function();
-
-typedef _c_vfork = ffi.Int32 Function();
 
 typedef _dart_vfork = int Function();
 
-typedef _c_ttyname = ffi.Pointer<Utf8> Function(
-  ffi.Int32 fd,
-);
-
 typedef _dart_ttyname = ffi.Pointer<Utf8> Function(
   int fd,
-);
-
-typedef _c_ttyname_r = ffi.Int32 Function(
-  ffi.Int32 fd,
-  ffi.Pointer<Utf8> buf,
-  ffi.Uint64 buflen,
 );
 
 typedef _dart_ttyname_r = int Function(
@@ -2556,34 +2469,15 @@ typedef _dart_ttyname_r = int Function(
   int buflen,
 );
 
-typedef _c_isatty = ffi.Int32 Function(
-  ffi.Int32 fd,
-);
-
 typedef _dart_isatty = int Function(
   int fd,
 );
 
-typedef _c_ttyslot = ffi.Int32 Function();
-
 typedef _dart_ttyslot = int Function();
-
-typedef _c_link = ffi.Int32 Function(
-  ffi.Pointer<Utf8> __from,
-  ffi.Pointer<Utf8> __to,
-);
 
 typedef _dart_link = int Function(
   ffi.Pointer<Utf8> __from,
   ffi.Pointer<Utf8> __to,
-);
-
-typedef _c_linkat = ffi.Int32 Function(
-  ffi.Int32 __fromfd,
-  ffi.Pointer<Utf8> __from,
-  ffi.Int32 __tofd,
-  ffi.Pointer<Utf8> __to,
-  ffi.Int32 flags,
 );
 
 typedef _dart_linkat = int Function(
@@ -2594,20 +2488,9 @@ typedef _dart_linkat = int Function(
   int flags,
 );
 
-typedef _c_symlink = ffi.Int32 Function(
-  ffi.Pointer<Utf8> __from,
-  ffi.Pointer<Utf8> __to,
-);
-
 typedef _dart_symlink = int Function(
   ffi.Pointer<Utf8> __from,
   ffi.Pointer<Utf8> __to,
-);
-
-typedef _c_readlink = ffi.Int64 Function(
-  ffi.Pointer<Utf8> __path,
-  ffi.Pointer<Utf8> buf,
-  ffi.Uint64 len,
 );
 
 typedef _dart_readlink = int Function(
@@ -2616,23 +2499,10 @@ typedef _dart_readlink = int Function(
   int len,
 );
 
-typedef _c_symlinkat = ffi.Int32 Function(
-  ffi.Pointer<Utf8> __from,
-  ffi.Int32 __tofd,
-  ffi.Pointer<Utf8> __to,
-);
-
 typedef _dart_symlinkat = int Function(
   ffi.Pointer<Utf8> __from,
   int __tofd,
   ffi.Pointer<Utf8> __to,
-);
-
-typedef _c_readlinkat = ffi.Int64 Function(
-  ffi.Int32 fd,
-  ffi.Pointer<Utf8> __path,
-  ffi.Pointer<Utf8> buf,
-  ffi.Uint64 len,
 );
 
 typedef _dart_readlinkat = int Function(
@@ -2642,18 +2512,8 @@ typedef _dart_readlinkat = int Function(
   int len,
 );
 
-typedef _c_unlink = ffi.Int32 Function(
-  ffi.Pointer<Utf8> name,
-);
-
 typedef _dart_unlink = int Function(
   ffi.Pointer<Utf8> name,
-);
-
-typedef _c_unlinkat = ffi.Int32 Function(
-  ffi.Int32 fd,
-  ffi.Pointer<Utf8> name,
-  ffi.Int32 flag,
 );
 
 typedef _dart_unlinkat = int Function(
@@ -2662,58 +2522,28 @@ typedef _dart_unlinkat = int Function(
   int flag,
 );
 
-typedef _c_rmdir = ffi.Int32 Function(
-  ffi.Pointer<Utf8> __path,
-);
-
 typedef _dart_rmdir = int Function(
   ffi.Pointer<Utf8> __path,
-);
-
-typedef _c_tcgetpgrp = ffi.Int32 Function(
-  ffi.Int32 fd,
 );
 
 typedef _dart_tcgetpgrp = int Function(
   int fd,
 );
 
-typedef _c_tcsetpgrp = ffi.Int32 Function(
-  ffi.Int32 fd,
-  ffi.Int32 pgrp_id,
-);
-
 typedef _dart_tcsetpgrp = int Function(
   int fd,
-  int pgrp_id,
+  int pgrpId,
 );
-
-typedef _c_getlogin = ffi.Pointer<Utf8> Function();
 
 typedef _dart_getlogin = ffi.Pointer<Utf8> Function();
 
-typedef _c_getlogin_r = ffi.Int32 Function(
-  ffi.Pointer<Utf8> name,
-  ffi.Uint64 name_len,
-);
-
 typedef _dart_getlogin_r = int Function(
   ffi.Pointer<Utf8> name,
-  int name_len,
-);
-
-typedef _c_setlogin = ffi.Int32 Function(
-  ffi.Pointer<Utf8> name,
+  int nameLen,
 );
 
 typedef _dart_setlogin = int Function(
   ffi.Pointer<Utf8> name,
-);
-
-typedef _c_getopt = ffi.Int32 Function(
-  ffi.Int32 argc,
-  ffi.Pointer<ffi.Pointer<Utf8>> ___argv,
-  ffi.Pointer<Utf8> __shortopts,
 );
 
 typedef _dart_getopt = int Function(
@@ -2722,19 +2552,9 @@ typedef _dart_getopt = int Function(
   ffi.Pointer<Utf8> __shortopts,
 );
 
-typedef _c_gethostname = ffi.Int32 Function(
-  ffi.Pointer<Utf8> name,
-  ffi.Uint64 len,
-);
-
 typedef _dart_gethostname = int Function(
   ffi.Pointer<Utf8> name,
   int len,
-);
-
-typedef _c_sethostname = ffi.Int32 Function(
-  ffi.Pointer<Utf8> name,
-  ffi.Uint64 len,
 );
 
 typedef _dart_sethostname = int Function(
@@ -2742,17 +2562,8 @@ typedef _dart_sethostname = int Function(
   int len,
 );
 
-typedef _c_sethostid = ffi.Int32 Function(
-  ffi.Int64 id,
-);
-
 typedef _dart_sethostid = int Function(
   int id,
-);
-
-typedef _c_getdomainname = ffi.Int32 Function(
-  ffi.Pointer<Utf8> name,
-  ffi.Uint64 len,
 );
 
 typedef _dart_getdomainname = int Function(
@@ -2760,125 +2571,62 @@ typedef _dart_getdomainname = int Function(
   int len,
 );
 
-typedef _c_setdomainname = ffi.Int32 Function(
-  ffi.Pointer<Utf8> name,
-  ffi.Uint64 len,
-);
-
 typedef _dart_setdomainname = int Function(
   ffi.Pointer<Utf8> name,
   int len,
 );
 
-typedef _c_vhangup = ffi.Int32 Function();
-
 typedef _dart_vhangup = int Function();
-
-typedef _c_revoke = ffi.Int32 Function(
-  ffi.Pointer<Utf8> file,
-);
 
 typedef _dart_revoke = int Function(
   ffi.Pointer<Utf8> file,
 );
 
-typedef _c_profil = ffi.Int32 Function(
-  ffi.Pointer<ffi.Uint16> __sample_buffer,
-  ffi.Uint64 size,
-  ffi.Uint64 offset,
-  ffi.Uint32 scale,
-);
-
 typedef _dart_profil = int Function(
-  ffi.Pointer<ffi.Uint16> __sample_buffer,
+  ffi.Pointer<ffi.Uint16> SampleBuffer,
   int size,
   int offset,
   int scale,
-);
-
-typedef _c_acct = ffi.Int32 Function(
-  ffi.Pointer<Utf8> name,
 );
 
 typedef _dart_acct = int Function(
   ffi.Pointer<Utf8> name,
 );
 
-typedef _c_getusershell = ffi.Pointer<Utf8> Function();
-
 typedef _dart_getusershell = ffi.Pointer<Utf8> Function();
-
-typedef _c_endusershell = ffi.Void Function();
 
 typedef _dart_endusershell = void Function();
 
-typedef _c_setusershell = ffi.Void Function();
-
 typedef _dart_setusershell = void Function();
-
-typedef _c_daemon = ffi.Int32 Function(
-  ffi.Int32 nochdir,
-  ffi.Int32 noclose,
-);
 
 typedef _dart_daemon = int Function(
   int nochdir,
   int noclose,
 );
 
-typedef _c_chroot = ffi.Int32 Function(
-  ffi.Pointer<Utf8> __path,
-);
-
 typedef _dart_chroot = int Function(
   ffi.Pointer<Utf8> __path,
-);
-
-typedef _c_getpass = ffi.Pointer<Utf8> Function(
-  ffi.Pointer<Utf8> __prompt,
 );
 
 typedef _dart_getpass = ffi.Pointer<Utf8> Function(
   ffi.Pointer<Utf8> __prompt,
 );
 
-typedef _c_fsync = ffi.Int32 Function(
-  ffi.Int32 fd,
-);
-
 typedef _dart_fsync = int Function(
   int fd,
 );
 
-typedef _c_gethostid = ffi.Int64 Function();
-
 typedef _dart_gethostid = int Function();
-
-typedef _c_sync_1 = ffi.Void Function();
 
 typedef _dart_sync_1 = void Function();
 
-typedef _c_getpagesize = ffi.Int32 Function();
-
 typedef _dart_getpagesize = int Function();
 
-typedef _c_getdtablesize = ffi.Int32 Function();
-
 typedef _dart_getdtablesize = int Function();
-
-typedef _c_truncate = ffi.Int32 Function(
-  ffi.Pointer<Utf8> file,
-  ffi.Int64 length,
-);
 
 typedef _dart_truncate = int Function(
   ffi.Pointer<Utf8> file,
   int length,
-);
-
-typedef _c_ftruncate = ffi.Int32 Function(
-  ffi.Int32 fd,
-  ffi.Int64 length,
 );
 
 typedef _dart_ftruncate = int Function(
@@ -2886,34 +2634,16 @@ typedef _dart_ftruncate = int Function(
   int length,
 );
 
-typedef _c_brk = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> addr,
-);
-
 typedef _dart_brk = int Function(
   ffi.Pointer<ffi.Void> addr,
-);
-
-typedef _c_sbrk = ffi.Pointer<ffi.Void> Function(
-  ffi.IntPtr delta,
 );
 
 typedef _dart_sbrk = ffi.Pointer<ffi.Void> Function(
   int delta,
 );
 
-typedef _c_syscall = ffi.Int64 Function(
-  ffi.Int64 __sysno,
-);
-
 typedef _dart_syscall = int Function(
   int __sysno,
-);
-
-typedef _c_lockf = ffi.Int32 Function(
-  ffi.Int32 fd,
-  ffi.Int32 cmd,
-  ffi.Int64 len,
 );
 
 typedef _dart_lockf = int Function(
@@ -2922,27 +2652,13 @@ typedef _dart_lockf = int Function(
   int len,
 );
 
-typedef _c_fdatasync = ffi.Int32 Function(
-  ffi.Int32 fildes,
-);
-
 typedef _dart_fdatasync = int Function(
   int fildes,
-);
-
-typedef _c_crypt = ffi.Pointer<Utf8> Function(
-  ffi.Pointer<Utf8> key,
-  ffi.Pointer<Utf8> salt,
 );
 
 typedef _dart_crypt = ffi.Pointer<Utf8> Function(
   ffi.Pointer<Utf8> key,
   ffi.Pointer<Utf8> salt,
-);
-
-typedef _c_getentropy = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> buffer,
-  ffi.Uint64 length,
 );
 
 typedef _dart_getentropy = int Function(

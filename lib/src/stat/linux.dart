@@ -7,22 +7,24 @@ import '../libc.dart';
 
 import 'os.dart';
 
+// ignore: non_constant_identifier_names
 late final linux_lstat = LinuxStatCall('__lxstat');
+// ignore: non_constant_identifier_names
 late final linux_stat = LinuxStatCall('__xstat');
 
 class LinuxStatCall extends OsStatCall {
   LinuxStatCall(String name) : super(name);
 
   @override
-  Stat sysCall(ffi.Pointer<Utf8> pathToFile_ptr) {
-    final buffer_ptr = _alloc();
-    final result = _call(1, pathToFile_ptr, buffer_ptr);
+  Stat sysCall(ffi.Pointer<Utf8> pathToFilePtr) {
+    final bufferPtr = _alloc();
+    final result = _call(1, pathToFilePtr, bufferPtr);
     if (result != 0) {
-      _free(buffer_ptr);
+      _free(bufferPtr);
       throw PosixException('$name call failed', errno());
     }
-    final stat = _copy(buffer_ptr.ref);
-    _free(buffer_ptr);
+    final stat = _copy(bufferPtr.ref);
+    _free(bufferPtr);
     return stat;
   }
 
@@ -33,19 +35,19 @@ class LinuxStatCall extends OsStatCall {
       malloc(ffi.sizeOf<LinuxStatStruct>());
 
   Stat _copy(LinuxStatStruct ref) => Stat(
-        deviceId: ref.st_dev,
-        inode: ref.st_ino,
-        mode: Mode.fromInt(ref.st_mode),
-        nlink: ref.st_nlink,
-        uid: ref.st_uid,
-        gid: ref.st_gid,
-        rdev: ref.st_rdev,
-        size: ref.st_size,
-        blockSize: ref.st_blksize,
-        blocks: ref.st_blocks,
-        lastAccess: fromSeconds(ref.st_atim.tv_sec, ref.st_atim.tv_nsec),
-        lastModified: fromSeconds(ref.st_mtim.tv_sec, ref.st_mtim.tv_nsec),
-        lastStatusChange: fromSeconds(ref.st_ctim.tv_sec, ref.st_ctim.tv_nsec),
+        deviceId: ref.dev,
+        inode: ref.ino,
+        mode: Mode.fromInt(ref.mode),
+        nlink: ref.nlink,
+        uid: ref.uid,
+        gid: ref.gid,
+        rdev: ref.rdev,
+        size: ref.size,
+        blockSize: ref.blksize,
+        blocks: ref.blocks,
+        lastAccess: fromSeconds(ref.atim.sec, ref.atim.nsec),
+        lastModified: fromSeconds(ref.mtim.sec, ref.mtim.nsec),
+        lastStatusChange: fromSeconds(ref.ctim.sec, ref.ctim.nsec),
       );
 
   void _free(ffi.Pointer<LinuxStatStruct> ptr) => malloc.free(ptr);
@@ -59,59 +61,59 @@ typedef LinuxStatCall_dart = int Function(
 
 class LinuxStatStruct extends ffi.Struct {
   @ffi.Uint64()
-  external int st_dev;
+  external int dev;
 
   @ffi.Uint64()
-  external int st_ino;
+  external int ino;
 
   @ffi.Uint64()
-  external int st_nlink;
+  external int nlink;
 
   @ffi.Uint32()
-  external int st_mode;
+  external int mode;
 
   @ffi.Uint32()
-  external int st_uid;
+  external int uid;
 
   @ffi.Uint32()
-  external int st_gid;
+  external int gid;
 
   @ffi.Int32()
   external int pad0;
 
   @ffi.Uint64()
-  external int st_rdev;
+  external int rdev;
 
   @ffi.Int64()
-  external int st_size;
+  external int size;
 
   @ffi.Int64()
-  external int st_blksize;
+  external int blksize;
 
   @ffi.Int64()
-  external int st_blocks;
+  external int blocks;
 
-  external LinuxTimespecStruct st_atim;
+  external LinuxTimespecStruct atim;
 
-  external LinuxTimespecStruct st_mtim;
+  external LinuxTimespecStruct mtim;
 
-  external LinuxTimespecStruct st_ctim;
+  external LinuxTimespecStruct ctim;
 
   @ffi.Int64()
-  // ignore: unused_field
+  // ignore: unused_field, non_constant_identifier_names
   external int _unique___glibc_reserved_item_0;
   @ffi.Int64()
-  // ignore: unused_field
+  // ignore: unused_field, non_constant_identifier_names
   external int _unique___glibc_reserved_item_1;
   @ffi.Int64()
-  // ignore: unused_field
+  // ignore: unused_field, non_constant_identifier_names
   external int _unique___glibc_reserved_item_2;
 }
 
 class LinuxTimespecStruct extends ffi.Struct {
   @ffi.Int64()
-  external int tv_sec;
+  external int sec;
 
   @ffi.Int64()
-  external int tv_nsec;
+  external int nsec;
 }
