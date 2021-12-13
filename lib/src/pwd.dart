@@ -279,8 +279,7 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> pwPasswd, String error) {
 
   final homePathTo = copyCBuffToDartString(pwPasswd.ref.dir!, free: false);
 
-  final shellPathTo =
-      copyCBuffToDartString(pwPasswd.ref.shell!, free: false);
+  final shellPathTo = copyCBuffToDartString(pwPasswd.ref.shell!, free: false);
 
   /// We don't own the pointer so no need to free it.
   /// free(_pw_passwd);
