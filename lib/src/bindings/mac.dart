@@ -18,6 +18,7 @@ part 'constants.dart';
 part 'classes.dart';
 part 'opaque.dart';
 part 'opaque_thread.dart';
+part 'accessx.dart';
 
 /// Mac bindings to all posix apis
 class mac_posix {
