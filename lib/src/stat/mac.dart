@@ -5,26 +5,26 @@ import 'package:ffi/ffi.dart';
 import '../../posix.dart';
 import '../libc.dart';
 
-import 'mode.dart';
 import 'os.dart';
-import 'stat.dart';
 
-late final mac_lstat = MacStatCall('lstat\$INODE64');
-late final mac_stat = MacStatCall('stat\$INODE64');
+// ignore: non_constant_identifier_names
+late final mac_lstat = MacStatCall(r'lstat$INODE64');
+// ignore: non_constant_identifier_names
+late final mac_stat = MacStatCall(r'stat$INODE64');
 
 class MacStatCall extends OsStatCall {
   MacStatCall(String name) : super(name);
 
   @override
-  Stat sysCall(ffi.Pointer<Utf8> pathToFile_ptr) {
-    final buffer_ptr = _alloc();
-    final result = _call(pathToFile_ptr, buffer_ptr);
+  Stat sysCall(ffi.Pointer<Utf8> pathToFilePtr) {
+    final bufferPtr = _alloc();
+    final result = _call(pathToFilePtr, bufferPtr);
     if (result != 0) {
-      _free(buffer_ptr);
+      _free(bufferPtr);
       throw PosixException('$name call failed', errno());
     }
-    final stat = _copy(buffer_ptr.ref);
-    _free(buffer_ptr);
+    final stat = _copy(bufferPtr.ref);
+    _free(bufferPtr);
     return stat;
   }
 
@@ -34,22 +34,20 @@ class MacStatCall extends OsStatCall {
   ffi.Pointer<MacStatStruct> _alloc() => malloc(ffi.sizeOf<MacStatStruct>());
 
   Stat _copy(MacStatStruct ref) => Stat(
-        deviceId: ref.st_dev,
-        inode: ref.st_ino,
-        mode: Mode.fromInt(ref.st_mode),
-        nlink: ref.st_nlink,
-        uid: ref.st_uid,
-        gid: ref.st_gid,
-        rdev: ref.st_rdev,
-        size: ref.st_size,
-        blockSize: ref.st_blksize,
-        blocks: ref.st_blocks,
-        lastAccess:
-            fromSeconds(ref.st_atimespec.tv_sec, ref.st_atimespec.tv_nsec),
-        lastModified:
-            fromSeconds(ref.st_mtimespec.tv_sec, ref.st_mtimespec.tv_nsec),
+        deviceId: ref.dev,
+        inode: ref.ino,
+        mode: Mode.fromInt(ref.mode),
+        nlink: ref.nlink,
+        uid: ref.uid,
+        gid: ref.gid,
+        rdev: ref.rdev,
+        size: ref.size,
+        blockSize: ref.blksize,
+        blocks: ref.blocks,
+        lastAccess: fromSeconds(ref.atimespec.sec, ref.atimespec.nsec),
+        lastModified: fromSeconds(ref.mtimespec.sec, ref.mtimespec.nsec),
         lastStatusChange:
-            fromSeconds(ref.st_ctimespec.tv_sec, ref.st_ctimespec.tv_nsec),
+            fromSeconds(ref.ctimespec.sec, ref.ctimespec.nsec),
       );
 
   void _free(ffi.Pointer<MacStatStruct> ptr) => malloc.free(ptr);
@@ -63,64 +61,64 @@ typedef MacStatCall_dart = int Function(
 
 class MacStatStruct extends ffi.Struct {
   @ffi.Uint32()
-  external int st_dev;
+  external int dev;
 
   @ffi.Uint16()
-  external int st_mode;
+  external int mode;
 
   @ffi.Uint16()
-  external int st_nlink;
+  external int nlink;
 
   @ffi.Uint64()
-  external int st_ino;
+  external int ino;
 
   @ffi.Uint32()
-  external int st_uid;
+  external int uid;
 
   @ffi.Uint32()
-  external int st_gid;
+  external int gid;
 
   @ffi.Int32()
-  external int st_rdev;
+  external int rdev;
 
-  external MacTimespecStruct st_atimespec;
+  external MacTimespecStruct atimespec;
 
-  external MacTimespecStruct st_mtimespec;
+  external MacTimespecStruct mtimespec;
 
-  external MacTimespecStruct st_ctimespec;
+  external MacTimespecStruct ctimespec;
 
-  external MacTimespecStruct st_birthtimespec;
-
-  @ffi.Int64()
-  external int st_size;
+  external MacTimespecStruct birthtimespec;
 
   @ffi.Int64()
-  external int st_blocks;
+  external int size;
+
+  @ffi.Int64()
+  external int blocks;
 
   @ffi.Int32()
-  external int st_blksize;
+  external int blksize;
 
   @ffi.Uint32()
-  external int st_flags;
+  external int flags;
 
   @ffi.Uint32()
-  external int st_gen;
+  external int gen;
 
   @ffi.Int32()
-  external int st_lspare;
+  external int lspare;
 
   @ffi.Int64()
-  // ignore: unused_field
+  // ignore: unused_field, non_constant_identifier_names
   external int _unique_st_qspare_item_0;
   @ffi.Int64()
-  // ignore: unused_field
+  // ignore: unused_field, non_constant_identifier_names
   external int _unique_st_qspare_item_1;
 }
 
 class MacTimespecStruct extends ffi.Struct {
   @ffi.Int64()
-  external int tv_sec;
+  external int sec;
 
   @ffi.Int64()
-  external int tv_nsec;
+  external int nsec;
 }

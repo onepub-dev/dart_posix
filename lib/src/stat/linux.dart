@@ -5,9 +5,7 @@ import 'package:ffi/ffi.dart';
 import '../../posix.dart';
 import '../libc.dart';
 
-import 'mode.dart';
 import 'os.dart';
-import 'stat.dart';
 
 late final linux_lstat = LinuxStatCall('__lxstat');
 late final linux_stat = LinuxStatCall('__xstat');
