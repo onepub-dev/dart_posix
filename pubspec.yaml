@@ -10,6 +10,6 @@ dependencies:
   quiver: ^3.0.1+1
 dev_dependencies: 
   dcli: ^1.14.1
-  ffigen: ^2.0.0
+  ffigen: ^4.1.2
   lint_hard: ^1.0.0
   test: ^1.16.2
