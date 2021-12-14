@@ -12,6 +12,14 @@ String getUserNameByUID(int uid) {
   return pwd.username;
 }
 
+/// Retrieve the user database entry for the given username.
+///
+/// This is an wrapper for the posix [getpwnam] function.
+///
+/// If [username] is not found then a [PosixException]
+/// is thrown.
+Passwd getPassword(String username) => getpwnam(username);
+
 /// Search for a Group with a matching group ID.
 ///
 /// This is an wrapper for the posix [getgrgid] function.
