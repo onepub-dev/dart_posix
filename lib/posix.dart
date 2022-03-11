@@ -13,6 +13,7 @@ export 'src/simplified.dart';
 export 'src/stat/mode.dart';
 export 'src/stat/stat.dart';
 export 'src/string/string.dart';
+export 'src/sysinfo.dart';
 export 'src/unistd/errno.dart';
 export 'src/unistd/unistd.dart';
 export 'src/wrapper.dart';
