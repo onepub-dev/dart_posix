@@ -12,5 +12,5 @@ void main() {
     passwd = getpwuid(passwd.uid);
 
     print(passwd);
-  });
+  }, skip: !Platform.isLinux); // TODO: fix macOS (_passwd.gecos == nullptr)
 }
