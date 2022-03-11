@@ -22,5 +22,7 @@ void main() {
     expect(info.totalhigh, isNonNegative);
     expect(info.freehigh, isNonNegative);
     expect(info.mem_unit, isPositive);
-  }, skip: !Platform.isLinux); // TODO: fix macOS (undefined symbol "sysinfo")
+  },
+      skip: !Platform
+          .isLinux); // TODO(jpnurmi): fix macOS (undefined symbol "sysinfo")
 }
