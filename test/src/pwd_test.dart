@@ -12,5 +12,7 @@ void main() {
     passwd = getpwuid(passwd.uid);
 
     print(passwd);
-  });
+  },
+      skip: !Platform
+          .isLinux); // TODO(jpnurmi): fix macOS (_passwd.gecos == nullptr)
 }

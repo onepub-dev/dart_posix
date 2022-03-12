@@ -184,6 +184,7 @@ class _sysinfo_t extends ffi.Struct {
   external int mem_unit;
 
   /// Helper for array `_f`.
+  // ignore: unused_element
   ArrayHelper_sysinfo__f_level0 get _f =>
       ArrayHelper_sysinfo__f_level0(this, [0], 0, 0);
 }
