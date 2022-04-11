@@ -528,7 +528,7 @@ typedef _dart_getwgroups_np = int Function(
 );
 
 typedef _dart_initgroups = int Function(
-  ffi.Pointer<ffi.Int8> arg0,
+  ffi.Pointer<Utf8> arg0,
   int arg1,
 );
 
