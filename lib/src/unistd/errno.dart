@@ -11,7 +11,9 @@ int errno() => _func().value;
 /// Clear the errno by setting it to 0.
 /// You should do this before calling a function that
 /// may set errno.
-void clearErrno() => _func().value = 0;
+void clearErrno() => setErrno(0);
+
+void setErrno(int error) => _func().value = error;
 
 const int EPERM = 1;
 
