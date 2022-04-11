@@ -1,10 +1,9 @@
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
+import '../posix.dart';
 
 import 'libc.dart';
-import 'posix_exception.dart';
-import 'unistd/errno.dart';
 import 'util/conversions.dart';
 
 class _IO_FILE extends ffi.Opaque {}
@@ -247,28 +246,80 @@ _dart_getgrnam? _getgrnam;
 
 // _dart_getgrouplist _getgrouplist;
 
-// /// Initialize the group set for the current user
-// /// by reading the group database and using all groups
-// /// of which USER is a member.  Also include GROUP.
-// ///
-// /// This function is not part of POSIX and therefore no official
-// /// cancellation point.  But due to similarity with an POSIX interface
-// /// or due to the implementation it is a cancellation point and
-// /// therefore not marked with __THROW.
-// int initgroups(
-//   ffi.Pointer<ffi.Int8> __user,
-//   int __group,
-// ) {
-//   _initgroups ??= Libc()
-//       .dylib
-//       .lookupFunction<_c_initgroups, _dart_initgroups>('initgroups');
-//   return _initgroups(
-//     __user,
-//     __group,
-//   );
-// }
+/// Initialize the group set for the current user
+/// by reading the group database and using all groups
+/// of which USER is a member.  Also adds [group]
+/// to the list of groups if passed.
+///
+/// This function is not part of POSIX and therefore no official
+/// cancellation point.  But due to similarity with an POSIX interface
+/// or due to the implementation it is a cancellation point and
+/// therefore not marked with __THROW.
+///
+/// The initgroups() function returns 0 on success.
+/// On error, -1 is returned, and errno is set appropriately.
+void initgroups(String user, {int? group}) {
+  // If the user doesn't pass a group we use getegid as the list of
+  // groups should already have the users effective group.
+  // We do this as we can't find any doco on what group should
+  // be set to if you don't wont' to add a group (-1 doesn't work).
+  group ??= getegid();
+  final cUser = user.toNativeUtf8();
 
-// _dart_initgroups _initgroups;
+  _initgroups ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint32),
+      _dart_initgroups>('initgroups');
+
+  final err = _initgroups!(
+    cUser,
+    group,
+  );
+  malloc.free(cUser);
+
+  if (err != 0) {
+    throw PosixException('initgroups failed for $user', errno());
+  }
+}
+
+_dart_initgroups? _initgroups;
+
+/// Retrieves the list of groups for the current users.
+List<int> getgroups() {
+  final groups = <int>[];
+
+  _getgroups ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint32>),
+      _dart_getgroups>('getgroups');
+
+  /// get how many groups there are.
+  final size = _getgroups!(0, ffi.nullptr);
+
+  using((arena) {
+    // allocate the list.
+    final list = arena<ffi.Uint32>(size);
+
+    final count = _getgroups!(
+      size,
+      list,
+    );
+
+    if (count == -1) {
+      throw PosixException('getgroups call failed', errno());
+    }
+
+    for (var i = 0; i < size; i++) {
+      groups.add(list[i]);
+    }
+  });
+  return groups;
+}
+
+typedef _dart_getgroups = int Function(
+  int size,
+  ffi.Pointer<ffi.Uint32> __list,
+);
+
+_dart_getgroups? _getgroups;
 
 class Group {
   Group(
@@ -417,12 +468,7 @@ typedef _c_getgrnam = ffi.Pointer<group> Function(
 //   ffi.Pointer<ffi.Int32> __ngroups,
 // );
 
-// typedef _c_initgroups = ffi.Int32 Function(
-//   ffi.Pointer<ffi.Int8> __user,
-//   ffi.Uint32 __group,
-// );
-
-// typedef _dart_initgroups = int Function(
-//   ffi.Pointer<ffi.Int8> __user,
-//   int __group,
-// );
+typedef _dart_initgroups = int Function(
+  ffi.Pointer<Utf8> __user,
+  int __group,
+);

@@ -1,6 +1,6 @@
 import '../posix.dart';
 
-/// the simplified library provides a number of more obvious entry points
+/// the simplified library provides a number of the more obvious entry points
 /// for common operations.
 ///
 /// These functions simply wrap existing posix functions using modern naming
@@ -41,3 +41,21 @@ Group getGroupName(
   String group,
 ) =>
     getgrnam(group);
+
+// Retrieves the group for the group
+// id [gid].
+Group getGroupByGid(int gid) => getgrgid(gid);
+
+/// Retrieves the list of group gid's for the current user.
+List<int> getGroupIds() => getgroups();
+
+/// Retrieves the list of [Group]s for the current user.
+List<Group> getGroups() {
+  final groupIds = getGroupIds();
+  final groups = <Group>[];
+  for (final gid in groupIds) {
+    final group = getGroupByGid(gid);
+     groups.add(group);
+  }
+  return groups;
+}
