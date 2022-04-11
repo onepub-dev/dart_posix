@@ -52,9 +52,9 @@ My initial thoughts is to make the api identical to the posix api which would me
 
 Do we return error no.s or do we throw.
 
-As Dart is a modern language it uses Exception whereas posix returns erorr codes.
+As Dart is a modern language it uses Exception whereas posix returns error codes.
 
-Often posix will return null and then expect you to make a separate call to 'errorno' to get the actually error no.
+Often posix will return null and then expect you to make a separate call to 'errorno' to get the actual error no.
 
 I'm inclined to bring the api that we expose into the modern world.
 
