@@ -12,6 +12,8 @@ library mac;
 
 import 'dart:ffi' as ffi;
 
+import 'package:ffi/ffi.dart';
+
 part 'mac_part2.dart';
 part 'typedef.dart';
 part 'constants.dart';
@@ -1617,17 +1619,22 @@ class mac_posix {
       _getwgroups_np_ptr.asFunction<_dart_getwgroups_np>();
 
   int initgroups(
-    ffi.Pointer<ffi.Int8> arg0,
-    int arg1,
-  ) =>
-      _initgroups(
-        arg0,
-        arg1,
-      );
+    String user,
+    int group,
+  ) {
+    final cUser = user.toNativeUtf8();
+    final err = _initgroups(
+      cUser,
+      group,
+    );
+    malloc.free(cUser);
+    return err;
+  }
 
   late final _initgroups_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>('initgroups');
+          ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Int32)>>(
+      'initgroups');
+
   late final _dart_initgroups _initgroups =
       _initgroups_ptr.asFunction<_dart_initgroups>();
 
