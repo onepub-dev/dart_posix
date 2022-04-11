@@ -997,23 +997,6 @@ int getegid() {
 
 _dart_getegid? _getegid;
 
-/// If SIZE is zero, return the number of supplementary groups
-/// the calling process is in.  Otherwise, fill in the group IDs
-/// of its supplementary groups in LIST and return the number written.
-int getgroups(
-  int size,
-  ffi.Pointer<ffi.Uint32> __list,
-) {
-  _getgroups ??= Libc().dylib.lookupFunction<
-      ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint32>),
-      _dart_getgroups>('getgroups');
-  return _getgroups!(
-    size,
-    __list,
-  );
-}
-
-_dart_getgroups? _getgroups;
 
 /// Set the user ID of the calling process to UID.
 /// If the calling process is the super-user, set the real
@@ -2424,10 +2407,6 @@ typedef _dart_getgid = int Function();
 
 typedef _dart_getegid = int Function();
 
-typedef _dart_getgroups = int Function(
-  int size,
-  ffi.Pointer<ffi.Uint32> __list,
-);
 
 typedef _dart_setuid = int Function(
   int uid,
