@@ -55,7 +55,7 @@ List<Group> getGroups() {
   final groups = <Group>[];
   for (final gid in groupIds) {
     final group = getGroupByGid(gid);
-     groups.add(group);
+    groups.add(group);
   }
   return groups;
 }

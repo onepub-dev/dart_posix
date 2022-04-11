@@ -997,7 +997,6 @@ int getegid() {
 
 _dart_getegid? _getegid;
 
-
 /// Set the user ID of the calling process to UID.
 /// If the calling process is the super-user, set the real
 /// and effective user IDs, and the saved set-user-ID to UID;
@@ -2406,7 +2405,6 @@ typedef _dart_geteuid = int Function();
 typedef _dart_getgid = int Function();
 
 typedef _dart_getegid = int Function();
-
 
 typedef _dart_setuid = int Function(
   int uid,

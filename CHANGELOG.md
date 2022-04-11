@@ -1,3 +1,18 @@
+# 3.1.0
+- ADDED: initgroups and getgroups. Added a simple function name for getGroupByGid and getGroups
+- ADDED: method setErrno.
+- ADDED: uname()
+- ADDED: sysinfo()
+- Moved getgroups from unistd to grp.dart.
+- upgraded to latest dcli version.
+- Upgrade Dart & package:ffi to the latest stable versions (2.16)
+- grp_test: use "admin" group on macOS
+- sysinfo: add missing unused_element to pass analysis
+- Set up CI
+- pwd_test: replace hard-coded username with $USER
+- added tests back in after upgrade dcli to resolve circular dependency.
+- Added simplified api name getPassword
+
 # 3.0.0
 - BREAKING: Changed Passwd field user_info to userInfo.
 - BREAKING: Renamed clear_errno to clearErrno

@@ -15,9 +15,9 @@ void main() {
     }
     expect(info.totalram, isPositive);
     expect(info.sharedram, isPositive);
-    expect(info.bufferram, isPositive);
-    expect(info.totalswap, isPositive);
-    expect(info.freeswap, isPositive);
+    expect(info.bufferram, isNonNegative);
+    expect(info.totalswap, isNonNegative);
+    expect(info.freeswap, isNonNegative);
     expect(info.procs, isPositive);
     expect(info.totalhigh, isNonNegative);
     expect(info.freehigh, isNonNegative);
