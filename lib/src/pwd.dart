@@ -93,6 +93,8 @@ _dart_getpwent? _getpwent;
 
 /// Retrieve the user database entry for the given user ID.
 ///
+/// Throws a [PosixException] if [uid] is not a know uid.
+///
 /// This function is a possible cancellation point and therefore not
 /// marked with __THROW.
 Passwd getpwuid(
@@ -104,12 +106,15 @@ Passwd getpwuid(
       _getpwuid!(
         uid,
       ),
-      'Error occured attempting to Passwd for uid: $uid');
+      'Error occured attempting to retrieve Passwd for uid: $uid');
 }
 
 _dart_getpwuid? _getpwuid;
 
 /// Retrieve the user database entry for the given username.
+///
+/// Throws a [PosixException] if [username] is is not a known
+/// user.
 ///
 /// This function is a possible cancellation point and therefore not
 /// marked with __THROW.
@@ -124,7 +129,7 @@ Passwd getpwnam(String username) {
       _getpwnam!(
         cName,
       ),
-      'Error occured attempting to Passwd for username: $username');
+      'Error occured attempting to retrieve Passwd for username: $username');
 
   malloc.free(cName);
 
