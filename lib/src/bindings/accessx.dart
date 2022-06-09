@@ -1,3 +1,9 @@
+/* Copyright (C) S. Brett Sutton - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Brett Sutton <bsutton@onepub.dev>, Jan 2022
+ */
+
 // ignore_for_file: non_constant_identifier_names
 
 part of mac;
