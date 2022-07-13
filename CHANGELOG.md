@@ -1,3 +1,7 @@
+# 4.0.0
+- Upgraded to ffi 2.0
+- Improved the doco and exception message for getpwuid and getpwname.
+
 # 3.1.0
 - ADDED: initgroups and getgroups. Added a simple function name for getGroupByGid and getGroups
 - ADDED: method setErrno.
