@@ -13,6 +13,3 @@ dev_dependencies:
   ffigen: ^6.0.0
   lint_hard: ^2.0.0
   test: ^1.16.2
-dependency_overrides: 
-  dcli: 
-    path: ../dcli/dcli
