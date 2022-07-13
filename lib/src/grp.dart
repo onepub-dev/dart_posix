@@ -12,7 +12,7 @@ import '../posix.dart';
 import 'libc.dart';
 import 'util/conversions.dart';
 
-class _IO_FILE extends ffi.Opaque {}
+class IO_FILE extends ffi.Opaque {}
 
 /// Rewind the group-file stream.
 ///
@@ -68,11 +68,11 @@ _dart_getgrent? _getgrent;
 /// therefore not marked with __THROW.
 // ignore: non_constant_identifier_names
 Group native_fgetgrent(
-  ffi.Pointer<_IO_FILE> __stream,
+  ffi.Pointer<IO_FILE> __stream,
 ) {
   clearErrno();
   _fgetgrent ??= Libc().dylib.lookupFunction<
-      ffi.Pointer<group> Function(ffi.Pointer<_IO_FILE>),
+      ffi.Pointer<group> Function(ffi.Pointer<IO_FILE>),
       _dart_fgetgrent>('fgetgrent');
 
   return _buildGroup(
@@ -386,7 +386,7 @@ typedef _dart_endgrent = void Function();
 typedef _dart_getgrent = ffi.Pointer<group> Function();
 
 typedef _dart_fgetgrent = ffi.Pointer<group> Function(
-  ffi.Pointer<_IO_FILE> __stream,
+  ffi.Pointer<IO_FILE> __stream,
 );
 
 typedef _dart_getgrgid = ffi.Pointer<group> Function(

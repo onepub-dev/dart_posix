@@ -14,9 +14,9 @@ import '../libc.dart';
 import 'os.dart';
 
 // ignore: non_constant_identifier_names
-late final mac_lstat = MacStatCall(r'lstat$INODE64');
+final mac_lstat = MacStatCall(r'lstat$INODE64');
 // ignore: non_constant_identifier_names
-late final mac_stat = MacStatCall(r'stat$INODE64');
+final mac_stat = MacStatCall(r'stat$INODE64');
 
 class MacStatCall extends OsStatCall {
   MacStatCall(String name) : super(name);

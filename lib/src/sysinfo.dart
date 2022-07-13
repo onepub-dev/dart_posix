@@ -154,8 +154,8 @@ class _sysinfo_t extends ffi.Struct {
   external int _unique_loads_item_2;
 
   /// Helper for array `loads`.
-  ArrayHelper_sysinfo_loads_level0 get loads =>
-      ArrayHelper_sysinfo_loads_level0(this, [3], 0, 0);
+  _ArrayHelper_sysinfo_loads_level0 get loads =>
+      _ArrayHelper_sysinfo_loads_level0(this, [3], 0, 0);
   @ffi.Uint64()
   external int totalram;
 
@@ -191,19 +191,19 @@ class _sysinfo_t extends ffi.Struct {
 
   /// Helper for array `_f`.
   // ignore: unused_element
-  ArrayHelper_sysinfo__f_level0 get _f =>
-      ArrayHelper_sysinfo__f_level0(this, [0], 0, 0);
+  _ArrayHelper_sysinfo__f_level0 get _f =>
+      _ArrayHelper_sysinfo__f_level0(this, [0], 0, 0);
 }
 
 /// Helper for array `loads` in struct `sysinfo`.
-class ArrayHelper_sysinfo_loads_level0 {
+class _ArrayHelper_sysinfo_loads_level0 {
   final _sysinfo_t _struct;
   final List<int> dimensions;
   final int level;
   final int _absoluteIndex;
   int get length => dimensions[level];
   // ignore: sort_constructors_first
-  ArrayHelper_sysinfo_loads_level0(
+  _ArrayHelper_sysinfo_loads_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
@@ -245,7 +245,7 @@ class ArrayHelper_sysinfo_loads_level0 {
 }
 
 /// Helper for array `_f` in struct `sysinfo`.
-class ArrayHelper_sysinfo__f_level0 {
+class _ArrayHelper_sysinfo__f_level0 {
   // ignore: unused_field
   final _sysinfo_t _struct;
   final List<int> dimensions;
@@ -253,7 +253,7 @@ class ArrayHelper_sysinfo__f_level0 {
   final int _absoluteIndex;
   int get length => dimensions[level];
   // ignore: sort_constructors_first
-  ArrayHelper_sysinfo__f_level0(
+  _ArrayHelper_sysinfo__f_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {

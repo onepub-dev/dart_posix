@@ -14,9 +14,9 @@ import '../libc.dart';
 import 'os.dart';
 
 // ignore: non_constant_identifier_names
-late final linux_lstat = LinuxStatCall('__lxstat');
+final linux_lstat = LinuxStatCall('__lxstat');
 // ignore: non_constant_identifier_names
-late final linux_stat = LinuxStatCall('__xstat');
+final linux_stat = LinuxStatCall('__xstat');
 
 class LinuxStatCall extends OsStatCall {
   LinuxStatCall(String name) : super(name);

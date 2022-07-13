@@ -275,11 +275,11 @@ _dart_strxfrm? _strxfrm;
 int strcoll_l(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
-  ffi.Pointer<__locale_struct> __l,
+  ffi.Pointer<locale_struct> __l,
 ) {
   _strcoll_l ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
-          ffi.Pointer<__locale_struct>),
+          ffi.Pointer<locale_struct>),
       _dart_strcoll_l>('strcoll_l');
   return _strcoll_l!(
     __s1,
@@ -298,11 +298,11 @@ int strxfrm_l(
   ffi.Pointer<ffi.Int8> __dest,
   ffi.Pointer<ffi.Int8> __src,
   int __n,
-  ffi.Pointer<__locale_struct> __l,
+  ffi.Pointer<locale_struct> __l,
 ) {
   _strxfrm_l ??= Libc().dylib.lookupFunction<
       ffi.Uint64 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
-          ffi.Uint64, ffi.Pointer<__locale_struct>),
+          ffi.Uint64, ffi.Pointer<locale_struct>),
       _dart_strxfrm_l>('strxfrm_l');
   return _strxfrm_l!(
     __dest,
@@ -527,10 +527,10 @@ _dart_strerror_r? _strerror_r;
 // ignore: non_constant_identifier_names
 ffi.Pointer<ffi.Int8> strerror_l(
   int __errnum,
-  ffi.Pointer<__locale_struct> __l,
+  ffi.Pointer<locale_struct> __l,
 ) {
   _strerror_l ??= Libc().dylib.lookupFunction<
-      ffi.Pointer<ffi.Int8> Function(ffi.Int32, ffi.Pointer<__locale_struct>),
+      ffi.Pointer<ffi.Int8> Function(ffi.Int32, ffi.Pointer<locale_struct>),
       _dart_strerror_l>('strerror_l');
   return _strerror_l!(
     __errnum,
@@ -698,11 +698,11 @@ _dart_strncasecmp? _strncasecmp;
 int strcasecmp_l(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
-  ffi.Pointer<__locale_struct> __loc,
+  ffi.Pointer<locale_struct> __loc,
 ) {
   _strcasecmp_l ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
-          ffi.Pointer<__locale_struct>),
+          ffi.Pointer<locale_struct>),
       _dart_strcasecmp_l>('strcasecmp_l');
   return _strcasecmp_l!(
     __s1,
@@ -719,11 +719,11 @@ int strncasecmp_l(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
   int __n,
-  ffi.Pointer<__locale_struct> __loc,
+  ffi.Pointer<locale_struct> __loc,
 ) {
   _strncasecmp_l ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
-          ffi.Uint64, ffi.Pointer<__locale_struct>),
+          ffi.Uint64, ffi.Pointer<locale_struct>),
       _dart_strncasecmp_l>('strncasecmp_l');
   return _strncasecmp_l!(
     __s1,
@@ -823,35 +823,35 @@ ffi.Pointer<ffi.Int8> stpncpy(
 
 _dart_stpncpy? _stpncpy;
 
-class __locale_data extends ffi.Opaque {}
+class locale_data extends ffi.Opaque {}
 
-class __locale_struct extends ffi.Struct {
+class locale_struct extends ffi.Struct {
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<__locale_data>? _unique___locales_item_0;
+  external ffi.Pointer<locale_data>? _unique___locales_item_0;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<__locale_data>? _unique___locales_item_1;
+  external ffi.Pointer<locale_data>? _unique___locales_item_1;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<__locale_data>? _unique___locales_item_2;
+  external ffi.Pointer<locale_data>? _unique___locales_item_2;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<__locale_data>? _unique___locales_item_3;
+  external ffi.Pointer<locale_data>? _unique___locales_item_3;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<__locale_data>? _unique___locales_item_4;
+  external ffi.Pointer<locale_data>? _unique___locales_item_4;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<__locale_data>? _unique___locales_item_5;
+  external ffi.Pointer<locale_data>? _unique___locales_item_5;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<__locale_data>? _unique___locales_item_6;
+  external ffi.Pointer<locale_data>? _unique___locales_item_6;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<__locale_data>? _unique___locales_item_7;
+  external ffi.Pointer<locale_data>? _unique___locales_item_7;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<__locale_data>? _unique___locales_item_8;
+  external ffi.Pointer<locale_data>? _unique___locales_item_8;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<__locale_data>? _unique___locales_item_9;
+  external ffi.Pointer<locale_data>? _unique___locales_item_9;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<__locale_data>? _unique___locales_item_10;
+  external ffi.Pointer<locale_data>? _unique___locales_item_10;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<__locale_data>? _unique___locales_item_11;
+  external ffi.Pointer<locale_data>? _unique___locales_item_11;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<__locale_data>? _unique___locales_item_12;
+  external ffi.Pointer<locale_data>? _unique___locales_item_12;
 
   /// Helper for array `__locales`.
   ArrayHelper___locale_struct___locales_level0 get locales =>
@@ -893,7 +893,7 @@ class __locale_struct extends ffi.Struct {
 class ArrayHelper___locale_struct___locales_level0 {
   ArrayHelper___locale_struct___locales_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
-  final __locale_struct _struct;
+  final locale_struct _struct;
   final List<int> dimensions;
   final int level;
   final int _absoluteIndex;
@@ -905,7 +905,7 @@ class ArrayHelper___locale_struct___locales_level0 {
     }
   }
 
-  ffi.Pointer<__locale_data> operator [](int index) {
+  ffi.Pointer<locale_data> operator [](int index) {
     _checkBounds(index);
     switch (_absoluteIndex + index) {
       case 0:
@@ -939,7 +939,7 @@ class ArrayHelper___locale_struct___locales_level0 {
     }
   }
 
-  void operator []=(int index, ffi.Pointer<__locale_data> value) {
+  void operator []=(int index, ffi.Pointer<locale_data> value) {
     _checkBounds(index);
     switch (_absoluteIndex + index) {
       case 0:
@@ -991,7 +991,7 @@ class ArrayHelper___locale_struct___locales_level0 {
 class ArrayHelper___locale_struct___names_level0 {
   ArrayHelper___locale_struct___names_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
-  final __locale_struct _struct;
+  final locale_struct _struct;
   final List<int> dimensions;
   final int level;
   final int _absoluteIndex;
@@ -1169,14 +1169,14 @@ typedef _dart_strxfrm = int Function(
 typedef _dart_strcoll_l = int Function(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
-  ffi.Pointer<__locale_struct> __l,
+  ffi.Pointer<locale_struct> __l,
 );
 
 typedef _dart_strxfrm_l = int Function(
   ffi.Pointer<ffi.Int8> __dest,
   ffi.Pointer<ffi.Int8> __src,
   int __n,
-  ffi.Pointer<__locale_struct> __l,
+  ffi.Pointer<locale_struct> __l,
 );
 
 typedef _dart_strdup = ffi.Pointer<ffi.Int8> Function(
@@ -1244,7 +1244,7 @@ typedef _dart_strerror_r = int Function(
 
 typedef _dart_strerror_l = ffi.Pointer<ffi.Int8> Function(
   int __errnum,
-  ffi.Pointer<__locale_struct> __l,
+  ffi.Pointer<locale_struct> __l,
 );
 
 typedef _dart_bcmp = int Function(
@@ -1300,14 +1300,14 @@ typedef _dart_strncasecmp = int Function(
 typedef _dart_strcasecmp_l = int Function(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
-  ffi.Pointer<__locale_struct> __loc,
+  ffi.Pointer<locale_struct> __loc,
 );
 
 typedef _dart_strncasecmp_l = int Function(
   ffi.Pointer<ffi.Int8> __s1,
   ffi.Pointer<ffi.Int8> __s2,
   int __n,
-  ffi.Pointer<__locale_struct> __loc,
+  ffi.Pointer<locale_struct> __loc,
 );
 
 typedef _dart_explicit_bzero = void Function(

@@ -125,13 +125,13 @@ class _opaque_pthread_attr_t extends ffi.Struct {
   external int _unique___opaque_item_55;
 
   /// Helper for array `__opaque`.
-  ArrayHelper__opaque_pthread_attr_t___opaque_level0 get __opaque =>
-      ArrayHelper__opaque_pthread_attr_t___opaque_level0(this, [56], 0, 0);
+  _ArrayHelper__opaque_pthread_attr_t___opaque_level0 get __opaque =>
+      _ArrayHelper__opaque_pthread_attr_t___opaque_level0(this, [56], 0, 0);
 }
 
 /// Helper for array `__opaque` in struct `_opaque_pthread_attr_t`.
-class ArrayHelper__opaque_pthread_attr_t___opaque_level0 {
-  ArrayHelper__opaque_pthread_attr_t___opaque_level0(
+class _ArrayHelper__opaque_pthread_attr_t___opaque_level0 {
+  _ArrayHelper__opaque_pthread_attr_t___opaque_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
@@ -529,13 +529,13 @@ class _opaque_pthread_cond_t extends ffi.Struct {
   external int _unique___opaque_item_39;
 
   /// Helper for array `__opaque`.
-  ArrayHelper__opaque_pthread_cond_t___opaque_level0 get __opaque =>
-      ArrayHelper__opaque_pthread_cond_t___opaque_level0(this, [40], 0, 0);
+  _ArrayHelper__opaque_pthread_cond_t___opaque_level0 get __opaque =>
+      _ArrayHelper__opaque_pthread_cond_t___opaque_level0(this, [40], 0, 0);
 }
 
 /// Helper for array `__opaque` in struct `_opaque_pthread_cond_t`.
-class ArrayHelper__opaque_pthread_cond_t___opaque_level0 {
-  ArrayHelper__opaque_pthread_cond_t___opaque_level0(
+class _ArrayHelper__opaque_pthread_cond_t___opaque_level0 {
+  _ArrayHelper__opaque_pthread_cond_t___opaque_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
@@ -789,13 +789,13 @@ class _opaque_pthread_condattr_t extends ffi.Struct {
   external int _unique___opaque_item_7;
 
   /// Helper for array `__opaque`.
-  ArrayHelper__opaque_pthread_condattr_t___opaque_level0 get __opaque =>
-      ArrayHelper__opaque_pthread_condattr_t___opaque_level0(this, [8], 0, 0);
+  _ArrayHelper__opaque_pthread_condattr_t___opaque_level0 get __opaque =>
+      _ArrayHelper__opaque_pthread_condattr_t___opaque_level0(this, [8], 0, 0);
 }
 
 /// Helper for array `__opaque` in struct `_opaque_pthread_condattr_t`.
-class ArrayHelper__opaque_pthread_condattr_t___opaque_level0 {
-  ArrayHelper__opaque_pthread_condattr_t___opaque_level0(
+class _ArrayHelper__opaque_pthread_condattr_t___opaque_level0 {
+  _ArrayHelper__opaque_pthread_condattr_t___opaque_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
 
   void _checkBounds(int index) {
@@ -986,13 +986,13 @@ class _opaque_pthread_mutex_t extends ffi.Struct {
   external int _unique___opaque_item_55;
 
   /// Helper for array `__opaque`.
-  ArrayHelper__opaque_pthread_mutex_t___opaque_level0 get __opaque =>
-      ArrayHelper__opaque_pthread_mutex_t___opaque_level0(this, [56], 0, 0);
+  _ArrayHelper__opaque_pthread_mutex_t___opaque_level0 get __opaque =>
+      _ArrayHelper__opaque_pthread_mutex_t___opaque_level0(this, [56], 0, 0);
 }
 
 /// Helper for array `__opaque` in struct `_opaque_pthread_mutex_t`.
-class ArrayHelper__opaque_pthread_mutex_t___opaque_level0 {
-  ArrayHelper__opaque_pthread_mutex_t___opaque_level0(
+class _ArrayHelper__opaque_pthread_mutex_t___opaque_level0 {
+  _ArrayHelper__opaque_pthread_mutex_t___opaque_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
@@ -1326,13 +1326,13 @@ class _opaque_pthread_mutexattr_t extends ffi.Struct {
   external int _unique___opaque_item_7;
 
   /// Helper for array `__opaque`.
-  ArrayHelper__opaque_pthread_mutexattr_t___opaque_level0 get __opaque =>
-      ArrayHelper__opaque_pthread_mutexattr_t___opaque_level0(this, [8], 0, 0);
+  _ArrayHelper__opaque_pthread_mutexattr_t___opaque_level0 get __opaque =>
+      _ArrayHelper__opaque_pthread_mutexattr_t___opaque_level0(this, [8], 0, 0);
 }
 
 /// Helper for array `__opaque` in struct `_opaque_pthread_mutexattr_t`.
-class ArrayHelper__opaque_pthread_mutexattr_t___opaque_level0 {
-  ArrayHelper__opaque_pthread_mutexattr_t___opaque_level0(
+class _ArrayHelper__opaque_pthread_mutexattr_t___opaque_level0 {
+  _ArrayHelper__opaque_pthread_mutexattr_t___opaque_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
@@ -1426,13 +1426,13 @@ class _opaque_pthread_once_t extends ffi.Struct {
   external int _unique___opaque_item_7;
 
   /// Helper for array `__opaque`.
-  ArrayHelper__opaque_pthread_once_t___opaque_level0 get __opaque =>
-      ArrayHelper__opaque_pthread_once_t___opaque_level0(this, [8], 0, 0);
+  _ArrayHelper__opaque_pthread_once_t___opaque_level0 get __opaque =>
+      _ArrayHelper__opaque_pthread_once_t___opaque_level0(this, [8], 0, 0);
 }
 
 /// Helper for array `__opaque` in struct `_opaque_pthread_once_t`.
-class ArrayHelper__opaque_pthread_once_t___opaque_level0 {
-  ArrayHelper__opaque_pthread_once_t___opaque_level0(
+class _ArrayHelper__opaque_pthread_once_t___opaque_level0 {
+  _ArrayHelper__opaque_pthread_once_t___opaque_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
@@ -1894,13 +1894,13 @@ class _opaque_pthread_rwlock_t extends ffi.Struct {
   external int _unique___opaque_item_191;
 
   /// Helper for array `__opaque`.
-  ArrayHelper__opaque_pthread_rwlock_t___opaque_level0 get __opaque =>
-      ArrayHelper__opaque_pthread_rwlock_t___opaque_level0(this, [192], 0, 0);
+  _ArrayHelper__opaque_pthread_rwlock_t___opaque_level0 get __opaque =>
+      _ArrayHelper__opaque_pthread_rwlock_t___opaque_level0(this, [192], 0, 0);
 }
 
 /// Helper for array `__opaque` in struct `_opaque_pthread_rwlock_t`.
-class ArrayHelper__opaque_pthread_rwlock_t___opaque_level0 {
-  ArrayHelper__opaque_pthread_rwlock_t___opaque_level0(
+class _ArrayHelper__opaque_pthread_rwlock_t___opaque_level0 {
+  _ArrayHelper__opaque_pthread_rwlock_t___opaque_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
@@ -2930,14 +2930,14 @@ class _opaque_pthread_rwlockattr_t extends ffi.Struct {
   external int _unique___opaque_item_15;
 
   /// Helper for array `__opaque`.
-  ArrayHelper__opaque_pthread_rwlockattr_t___opaque_level0 get __opaque =>
-      ArrayHelper__opaque_pthread_rwlockattr_t___opaque_level0(
+  _ArrayHelper__opaque_pthread_rwlockattr_t___opaque_level0 get __opaque =>
+      _ArrayHelper__opaque_pthread_rwlockattr_t___opaque_level0(
           this, [16], 0, 0);
 }
 
 /// Helper for array `__opaque` in struct `_opaque_pthread_rwlockattr_t`.
-class ArrayHelper__opaque_pthread_rwlockattr_t___opaque_level0 {
-  ArrayHelper__opaque_pthread_rwlockattr_t___opaque_level0(
+class _ArrayHelper__opaque_pthread_rwlockattr_t___opaque_level0 {
+  _ArrayHelper__opaque_pthread_rwlockattr_t___opaque_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
   final _opaque_pthread_rwlockattr_t _struct;
   final List<int> dimensions;

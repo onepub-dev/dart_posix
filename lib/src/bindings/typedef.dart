@@ -1092,7 +1092,7 @@ typedef _dart_chflags = int Function(
 
 typedef _dart_chmodx_np = int Function(
   ffi.Pointer<ffi.Int8> arg0,
-  ffi.Pointer<_filesec> arg1,
+  ffi.Pointer<filesec> arg1,
 );
 
 typedef _dart_fchflags = int Function(
@@ -1102,13 +1102,13 @@ typedef _dart_fchflags = int Function(
 
 typedef _dart_fchmodx_np = int Function(
   int arg0,
-  ffi.Pointer<_filesec> arg1,
+  ffi.Pointer<filesec> arg1,
 );
 
 typedef _dart_fstatx_np = int Function(
   int arg0,
   ffi.Pointer<stat> arg1,
-  ffi.Pointer<_filesec> arg2,
+  ffi.Pointer<filesec> arg2,
 );
 
 typedef _dart_lchflags = int Function(
@@ -1124,45 +1124,45 @@ typedef _dart_lchmod = int Function(
 typedef _dart_lstatx_np = int Function(
   ffi.Pointer<ffi.Int8> arg0,
   ffi.Pointer<stat> arg1,
-  ffi.Pointer<_filesec> arg2,
+  ffi.Pointer<filesec> arg2,
 );
 
 typedef _dart_mkdirx_np = int Function(
   ffi.Pointer<ffi.Int8> arg0,
-  ffi.Pointer<_filesec> arg1,
+  ffi.Pointer<filesec> arg1,
 );
 
 typedef _dart_mkfifox_np = int Function(
   ffi.Pointer<ffi.Int8> arg0,
-  ffi.Pointer<_filesec> arg1,
+  ffi.Pointer<filesec> arg1,
 );
 
 typedef _dart_statx_np = int Function(
   ffi.Pointer<ffi.Int8> arg0,
   ffi.Pointer<stat> arg1,
-  ffi.Pointer<_filesec> arg2,
+  ffi.Pointer<filesec> arg2,
 );
 
 typedef _dart_umaskx_np = int Function(
-  ffi.Pointer<_filesec> arg0,
+  ffi.Pointer<filesec> arg0,
 );
 
 typedef _dart_fstatx64_np = int Function(
   int arg0,
   ffi.Pointer<stat64> arg1,
-  ffi.Pointer<_filesec> arg2,
+  ffi.Pointer<filesec> arg2,
 );
 
 typedef _dart_lstatx64_np = int Function(
   ffi.Pointer<ffi.Int8> arg0,
   ffi.Pointer<stat64> arg1,
-  ffi.Pointer<_filesec> arg2,
+  ffi.Pointer<filesec> arg2,
 );
 
 typedef _dart_statx64_np = int Function(
   ffi.Pointer<ffi.Int8> arg0,
   ffi.Pointer<stat64> arg1,
-  ffi.Pointer<_filesec> arg2,
+  ffi.Pointer<filesec> arg2,
 );
 
 typedef _dart_fstat64 = int Function(
