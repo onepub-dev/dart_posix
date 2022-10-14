@@ -261,6 +261,7 @@ class Passwd {
 
   /// Comma delimited set of fields about the user (name, phone, ...)
   /// = pw_gecos in posix.
+  /// May be empty.
   String userInfo;
 
   /// Home directory - pw_dir in posix
@@ -283,7 +284,9 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> pwPasswd, String error) {
   final username = copyCBuffToDartString(pwPasswd.ref.name!, free: false);
   final password = copyCBuffToDartString(pwPasswd.ref.password!, free: false);
 
-  final userInfo = copyCBuffToDartString(pwPasswd.ref.gecos!, free: false);
+  final userInfo = pwPasswd.ref.gecos != null
+      ? copyCBuffToDartString(pwPasswd.ref.gecos!, free: false)
+      : '';
 
   final uid = pwPasswd.ref.uid;
   final gid = pwPasswd.ref.gid;
