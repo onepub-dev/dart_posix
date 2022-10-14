@@ -1,3 +1,7 @@
+# 4.0.1
+- fixed bug on macos where gecos in getpwent can be null.
+- moved back to depending on the publish dcli version now that the circular dependecies have been resolved.
+
 # 4.0.0
 - Upgraded to ffi 2.0
 - Improved the doco and exception message for getpwuid and getpwname.
