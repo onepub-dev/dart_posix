@@ -6,7 +6,7 @@
 
 import 'dart:io';
 
-import 'package:posix/src/pwd.dart';
+import 'package:posix/posix.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -18,5 +18,9 @@ void main() {
     passwd = getpwuid(passwd.uid);
 
     print(passwd);
-  }, skip: !Platform.isLinux);
+  }, skip: Platform.isWindows);
+
+  test('pwd list users', () async {
+    getUsers().forEach(print);
+  }, skip: Platform.isWindows);
 }

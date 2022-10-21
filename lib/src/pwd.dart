@@ -40,15 +40,23 @@ _dart_endpwent? _endpwent;
 
 /// Read an entry from the user database stream, opening it if necessary.
 ///
-/// This function is a possible cancellation point and therefore not
-/// marked with __THROW.
-Passwd getpwent() {
+/// Repeated calls to getpwent will return the next use in the user database.
+/// When all users have been read null will be returned.
+///
+/// Once you have finished reading fromthe stream  you MUST call endpwent() to
+/// close the stream otherwise a memory leak will occur.
+Passwd? getpwent() {
   _getpwent ??= Libc()
       .dylib
       .lookupFunction<ffi.Pointer<_passwd> Function(), _dart_getpwent>(
           'getpwent');
+
+  final pwent = _getpwent!();
+  if (pwent == ffi.nullptr) {
+    return null;
+  }
   return _buildPasswd(
-      _getpwent!(),
+      pwent,
       'Error occured attempting to read the next entry from the user '
       'database stream');
 }
@@ -273,7 +281,7 @@ class Passwd {
   @override
   String toString() =>
       'username: $username uid: $uid gid: $gid home: $homePathTo shell: '
-      '$shellPathTo';
+      '$shellPathTo gecos: $userInfo';
 }
 
 Passwd _buildPasswd(ffi.Pointer<_passwd> pwPasswd, String error) {
@@ -284,7 +292,7 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> pwPasswd, String error) {
   final username = copyCBuffToDartString(pwPasswd.ref.name!, free: false);
   final password = copyCBuffToDartString(pwPasswd.ref.password!, free: false);
 
-  final userInfo = pwPasswd.ref.gecos != ffi.nullptr
+  final userInfo = pwPasswd.ref.gecos == ffi.nullptr
       ? ''
       : copyCBuffToDartString(pwPasswd.ref.gecos!, free: false);
 
