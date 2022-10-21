@@ -284,9 +284,9 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> pwPasswd, String error) {
   final username = copyCBuffToDartString(pwPasswd.ref.name!, free: false);
   final password = copyCBuffToDartString(pwPasswd.ref.password!, free: false);
 
-  final userInfo = pwPasswd.ref.gecos != null
-      ? copyCBuffToDartString(pwPasswd.ref.gecos!, free: false)
-      : '';
+  final userInfo = pwPasswd.ref.gecos != ffi.nullptr
+      ? ''
+      : copyCBuffToDartString(pwPasswd.ref.gecos!, free: false);
 
   final uid = pwPasswd.ref.uid;
   final gid = pwPasswd.ref.gid;
