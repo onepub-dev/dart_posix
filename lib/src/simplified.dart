@@ -65,3 +65,16 @@ List<Group> getGroups() {
   }
   return groups;
 }
+
+/// Retrieves the list of [Group]s for the current user.
+List<Passwd> getUsers() {
+  final users = <Passwd>[];
+  Passwd? passwd;
+
+  while ((passwd = getpwent()) != null) {
+    users.add(passwd!);
+  }
+  endpwent();
+
+  return users;
+}
