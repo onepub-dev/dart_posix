@@ -1,3 +1,8 @@
+# 4.1.0
+- BREAKING: change getpwent to return Passwd? as it couldn't be used for its intended purpose to interate across the list of users.
+- Added simplifed getUsers method.
+- second attempt at fixing the macos gecos npe.
+
 # 4.0.1
 - fixed bug on macos where gecos in getpwent can be null.
 - moved back to depending on the publish dcli version now that the circular dependecies have been resolved.
