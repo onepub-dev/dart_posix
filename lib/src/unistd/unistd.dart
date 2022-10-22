@@ -1639,17 +1639,19 @@ void _throwIfErrno(String method, int result,
   }
 }
 
-void _throwIfError(String method, int error,
+// If result is non-zero then an PosixException is thrown
+// with errno.
+void _throwIfError(String method, int result,
     [ffi.Pointer<ffi.NativeType>? toFree1,
     ffi.Pointer<ffi.NativeType>? toFree2]) {
-  if (error != 0) {
+  if (result != 0) {
     if (toFree1 != null && toFree1 != ffi.nullptr) {
       malloc.free(toFree1);
     }
     if (toFree2 != null && toFree2 != ffi.nullptr) {
       malloc.free(toFree2);
     }
-    throw PosixException('An error occured calling $method', error);
+    throw PosixException('An error occured calling $method', errno());
   }
 }
 
