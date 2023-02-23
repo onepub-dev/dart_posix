@@ -7,7 +7,6 @@
 import 'dart:ffi' as ffi;
 
 import '../libc.dart';
-
 import '../util/conversions.dart';
 
 /// Exposes a collection of C string and memory functions such
@@ -827,62 +826,62 @@ class locale_data extends ffi.Opaque {}
 
 class locale_struct extends ffi.Struct {
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<locale_data>? _unique___locales_item_0;
+  external ffi.Pointer<locale_data> _unique___locales_item_0;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<locale_data>? _unique___locales_item_1;
+  external ffi.Pointer<locale_data> _unique___locales_item_1;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<locale_data>? _unique___locales_item_2;
+  external ffi.Pointer<locale_data> _unique___locales_item_2;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<locale_data>? _unique___locales_item_3;
+  external ffi.Pointer<locale_data> _unique___locales_item_3;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<locale_data>? _unique___locales_item_4;
+  external ffi.Pointer<locale_data> _unique___locales_item_4;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<locale_data>? _unique___locales_item_5;
+  external ffi.Pointer<locale_data> _unique___locales_item_5;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<locale_data>? _unique___locales_item_6;
+  external ffi.Pointer<locale_data> _unique___locales_item_6;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<locale_data>? _unique___locales_item_7;
+  external ffi.Pointer<locale_data> _unique___locales_item_7;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<locale_data>? _unique___locales_item_8;
+  external ffi.Pointer<locale_data> _unique___locales_item_8;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<locale_data>? _unique___locales_item_9;
+  external ffi.Pointer<locale_data> _unique___locales_item_9;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<locale_data>? _unique___locales_item_10;
+  external ffi.Pointer<locale_data> _unique___locales_item_10;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<locale_data>? _unique___locales_item_11;
+  external ffi.Pointer<locale_data> _unique___locales_item_11;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<locale_data>? _unique___locales_item_12;
+  external ffi.Pointer<locale_data> _unique___locales_item_12;
 
   /// Helper for array `__locales`.
   ArrayHelper___locale_struct___locales_level0 get locales =>
       ArrayHelper___locale_struct___locales_level0(this, [13], 0, 0);
 
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<ffi.Int8>? _unique___names_item_0;
+  external ffi.Pointer<ffi.Int8> _unique___names_item_0;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<ffi.Int8>? _unique___names_item_1;
+  external ffi.Pointer<ffi.Int8> _unique___names_item_1;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<ffi.Int8>? _unique___names_item_2;
+  external ffi.Pointer<ffi.Int8> _unique___names_item_2;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<ffi.Int8>? _unique___names_item_3;
+  external ffi.Pointer<ffi.Int8> _unique___names_item_3;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<ffi.Int8>? _unique___names_item_4;
+  external ffi.Pointer<ffi.Int8> _unique___names_item_4;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<ffi.Int8>? _unique___names_item_5;
+  external ffi.Pointer<ffi.Int8> _unique___names_item_5;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<ffi.Int8>? _unique___names_item_6;
+  external ffi.Pointer<ffi.Int8> _unique___names_item_6;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<ffi.Int8>? _unique___names_item_7;
+  external ffi.Pointer<ffi.Int8> _unique___names_item_7;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<ffi.Int8>? _unique___names_item_8;
+  external ffi.Pointer<ffi.Int8> _unique___names_item_8;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<ffi.Int8>? _unique___names_item_9;
+  external ffi.Pointer<ffi.Int8> _unique___names_item_9;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<ffi.Int8>? _unique___names_item_10;
+  external ffi.Pointer<ffi.Int8> _unique___names_item_10;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<ffi.Int8>? _unique___names_item_11;
+  external ffi.Pointer<ffi.Int8> _unique___names_item_11;
   // ignore: non_constant_identifier_names
-  external ffi.Pointer<ffi.Int8>? _unique___names_item_12;
+  external ffi.Pointer<ffi.Int8> _unique___names_item_12;
 
   /// Helper for array `__names`.
   ArrayHelper___locale_struct___names_level0 get names =>
@@ -909,31 +908,31 @@ class ArrayHelper___locale_struct___locales_level0 {
     _checkBounds(index);
     switch (_absoluteIndex + index) {
       case 0:
-        return _struct._unique___locales_item_0!;
+        return _struct._unique___locales_item_0;
       case 1:
-        return _struct._unique___locales_item_1!;
+        return _struct._unique___locales_item_1;
       case 2:
-        return _struct._unique___locales_item_2!;
+        return _struct._unique___locales_item_2;
       case 3:
-        return _struct._unique___locales_item_3!;
+        return _struct._unique___locales_item_3;
       case 4:
-        return _struct._unique___locales_item_4!;
+        return _struct._unique___locales_item_4;
       case 5:
-        return _struct._unique___locales_item_5!;
+        return _struct._unique___locales_item_5;
       case 6:
-        return _struct._unique___locales_item_6!;
+        return _struct._unique___locales_item_6;
       case 7:
-        return _struct._unique___locales_item_7!;
+        return _struct._unique___locales_item_7;
       case 8:
-        return _struct._unique___locales_item_8!;
+        return _struct._unique___locales_item_8;
       case 9:
-        return _struct._unique___locales_item_9!;
+        return _struct._unique___locales_item_9;
       case 10:
-        return _struct._unique___locales_item_10!;
+        return _struct._unique___locales_item_10;
       case 11:
-        return _struct._unique___locales_item_11!;
+        return _struct._unique___locales_item_11;
       case 12:
-        return _struct._unique___locales_item_12!;
+        return _struct._unique___locales_item_12;
       default:
         throw Exception('Invalid Array Helper generated.');
     }

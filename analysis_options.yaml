@@ -9,9 +9,12 @@ linter:
   rules:
     camel_case_types: false
     non_constant_identifier_names: true
-
+    avoid_print: false  
     
 analyzer:
   exclude: test/*.dart    
+
+
+
 
 

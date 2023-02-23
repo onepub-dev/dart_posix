@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dcli/dcli.dart' as dcli;
+import 'package:path/path.dart';
 //import 'package:dcli/posix.dart' as dcli;
 
 import 'package:posix/posix.dart' hide group;
@@ -17,7 +18,7 @@ void main() {
   group('stat:', () {
     test('missing', () {
       final temp = dcli.createTempDir();
-      final path = dcli.join(temp, 'missing_file');
+      final path = join(temp, 'missing_file');
       bool succeeded;
       try {
         lstat(path);
@@ -69,7 +70,7 @@ void main() {
               'with this\n');
           //dcli.chmod(0x933, file);  // 0x933 == 04463
           'chmod 4463 $file'.toList();
-          final link = dcli.join(temp, 'test_link');
+          final link = join(temp, 'test_link');
           dcli.symlink(file, link);
 
           final actual = lstat(link);
@@ -90,7 +91,7 @@ void main() {
               'with this\n');
           //dcli.chmod(0x933, file);  // 0x933 == 04463
           'chmod 4463 $file'.toList();
-          final link = dcli.join(temp, 'test_link');
+          final link = join(temp, 'test_link');
           dcli.symlink(file, link);
 
           final actual = stat(link);
@@ -104,7 +105,7 @@ void main() {
 
     test('named pipe', () {
       dcli.withTempDir((temp) {
-        final path = dcli.join(temp, 'test_fifo');
+        final path = join(temp, 'test_fifo');
         'mkfifo $path'.toList();
 
         final actual = stat(path);
@@ -127,7 +128,7 @@ void main() {
 
     test('memory corruption ...', () async {
       dcli.withTempDir((temp) {
-        final testFile = dcli.join(temp, 'test.txt');
+        final testFile = join(temp, 'test.txt');
         dcli.touch(testFile, create: true);
         //dcli.chmod(0x1B4, testFile); // 0x1B4 = 0664
         'chmod 664 $testFile'.toList();

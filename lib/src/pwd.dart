@@ -289,19 +289,19 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> pwPasswd, String error) {
     throw PosixException(error, errno());
   }
 
-  final username = copyCBuffToDartString(pwPasswd.ref.name!, free: false);
-  final password = copyCBuffToDartString(pwPasswd.ref.password!, free: false);
+  final username = copyCBuffToDartString(pwPasswd.ref.name, free: false);
+  final password = copyCBuffToDartString(pwPasswd.ref.password, free: false);
 
   final userInfo = pwPasswd.ref.gecos == ffi.nullptr
       ? ''
-      : copyCBuffToDartString(pwPasswd.ref.gecos!, free: false);
+      : copyCBuffToDartString(pwPasswd.ref.gecos, free: false);
 
   final uid = pwPasswd.ref.uid;
   final gid = pwPasswd.ref.gid;
 
-  final homePathTo = copyCBuffToDartString(pwPasswd.ref.dir!, free: false);
+  final homePathTo = copyCBuffToDartString(pwPasswd.ref.dir, free: false);
 
-  final shellPathTo = copyCBuffToDartString(pwPasswd.ref.shell!, free: false);
+  final shellPathTo = copyCBuffToDartString(pwPasswd.ref.shell, free: false);
 
   /// We don't own the pointer so no need to free it.
   /// free(_pw_passwd);
@@ -310,8 +310,8 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> pwPasswd, String error) {
       username: username,
       password: password,
       userInfo: userInfo,
-      uid: uid!,
-      gid: gid!,
+      uid: uid,
+      gid: gid,
       homePathTo: homePathTo,
       shellPathTo: shellPathTo);
 }
@@ -319,28 +319,28 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> pwPasswd, String error) {
 /// A record in the user database.
 class _passwd extends ffi.Struct {
   /// Username.
-  external ffi.Pointer<ffi.Int8>? name;
+  external ffi.Pointer<ffi.Int8> name;
 
   /// Hashed passphrase, if shadow database
   /// not in use (see shadow.h).
-  external ffi.Pointer<ffi.Int8>? password;
+  external ffi.Pointer<ffi.Int8> password;
 
   /// User ID.
   @ffi.Uint32()
-  external int? uid;
+  external int uid;
 
   /// Group ID.
   @ffi.Uint32()
-  external int? gid;
+  external int gid;
 
   /// Real name.
-  external ffi.Pointer<ffi.Int8>? gecos;
+  external ffi.Pointer<ffi.Int8> gecos;
 
   /// Home directory.
-  external ffi.Pointer<ffi.Int8>? dir;
+  external ffi.Pointer<ffi.Int8> dir;
 
   /// Shell program.
-  external ffi.Pointer<ffi.Int8>? shell;
+  external ffi.Pointer<ffi.Int8> shell;
 }
 
 // class _IO_FILE extends ffi.Struct {}

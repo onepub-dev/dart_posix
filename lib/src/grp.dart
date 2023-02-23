@@ -7,8 +7,8 @@
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
-import '../posix.dart';
 
+import '../posix.dart';
 import 'libc.dart';
 import 'util/conversions.dart';
 
@@ -354,29 +354,29 @@ Group _buildGroup(ffi.Pointer<group> grGroup, String error) {
     throw PosixException(error, errno());
   }
 
-  final name = copyCBuffToDartString(grGroup.ref.name!, free: false);
-  final password = copyCBuffToDartString(grGroup.ref.passwd!, free: false);
+  final name = copyCBuffToDartString(grGroup.ref.name, free: false);
+  final password = copyCBuffToDartString(grGroup.ref.passwd, free: false);
   final gid = grGroup.ref.gid;
-  final members = copyCStringListToDartList(grGroup.ref.mem!, free: false);
+  final members = copyCStringListToDartList(grGroup.ref.mem, free: false);
 
   /// We don't own the pointer so no need to free it.
   /// free(_gr_group);
-  return Group(name: name, password: password, gid: gid!, members: members);
+  return Group(name: name, password: password, gid: gid, members: members);
 }
 
 class group extends ffi.Struct {
   /// Group name.
-  external ffi.Pointer<ffi.Int8>? name;
+  external ffi.Pointer<ffi.Int8> name;
 
   /// Password.
-  external ffi.Pointer<ffi.Int8>? passwd;
+  external ffi.Pointer<ffi.Int8> passwd;
 
   /// Group ID.
   @ffi.Uint32()
-  external int? gid;
+  external int gid;
 
   /// Member list.
-  external ffi.Pointer<ffi.Pointer<ffi.Int8>>? mem;
+  external ffi.Pointer<ffi.Pointer<ffi.Int8>> mem;
 }
 
 typedef _dart_setgrent = void Function();
