@@ -6,7 +6,8 @@
 
 import 'dart:io';
 
-import 'package:dcli/dcli.dart' show withTempFile;
+import 'package:dcli/dcli.dart'
+    show DartProject, StringAsProcess, join, withTempFile;
 import 'package:posix/posix.dart';
 import 'package:test/test.dart';
 
@@ -90,4 +91,33 @@ void main() {
       expect(_stat.mode.isOtherExecutable, isFalse);
     });
   }, skip: true, tags: ['sudo']);
+
+  test('setuid', () {
+    final pathToTest = DartProject.self.pathToTestDir;
+    final pathToSript = join(pathToTest, 'src', 'unistd', 'unistd_test.sh');
+
+    final euid = geteuid();
+
+    var lines = pathToSript.toList(runInShell: true);
+    expect(lines[0], equals('$euid'));
+
+    final users = getUsers();
+
+    final altEuid =
+        users.firstWhere((user) => user.uid != euid && user.uid != 0).uid;
+    expect(altEuid != 0, isTrue);
+
+    seteuid(altEuid);
+    expect(geteuid() == altEuid, isTrue);
+
+    lines = pathToSript.toList(runInShell: true);
+
+    expect(lines[0], equals('$altEuid'));
+
+    seteuid(euid);
+
+    lines = pathToSript.toList(runInShell: true);
+
+    expect(lines[0], equals('$euid'));
+  });
 }
