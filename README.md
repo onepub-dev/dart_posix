@@ -1,4 +1,4 @@
-Provides Dart access to the POSIX api for osx and linux system.
+Provides Dart access to the POSIX api for MacOS and Linux system.
 
 
 ```dart
