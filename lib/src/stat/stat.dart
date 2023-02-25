@@ -8,15 +8,31 @@ import 'dart:io';
 
 import 'package:meta/meta.dart';
 
+import '../posix_exception.dart';
 import 'linux.dart';
 import 'mac.dart';
 import 'mode.dart';
 
-Stat lstat(String pathToFile) =>
-    Platform.isMacOS ? mac_lstat(pathToFile) : linux_lstat(pathToFile);
+Stat lstat(String pathToFile) {
+  Stat stat;
+  try {
+    stat = Platform.isMacOS ? macLStat(pathToFile) : linuxLStat(pathToFile);
+  } on PosixException catch (e) {
+    throw StatException('${e.posixError} $pathToFile', e.code);
+  }
 
-Stat stat(String pathToFile) =>
-    Platform.isMacOS ? mac_stat(pathToFile) : linux_stat(pathToFile);
+  return stat;
+}
+
+Stat stat(String pathToFile) {
+  Stat stat;
+  try {
+    stat = Platform.isMacOS ? macStat(pathToFile) : linuxStat(pathToFile);
+  } on PosixException catch (e) {
+    throw StatException('${e.posixError} $pathToFile', e.code);
+  }
+  return stat;
+}
 
 @immutable
 class Stat {
@@ -116,4 +132,11 @@ class Stat {
         lastModified,
         lastStatusChange
       ]);
+}
+
+class StatException extends PosixException {
+  StatException(String message, int code) : super(message, code);
+
+  @override
+  String toString() => message;
 }

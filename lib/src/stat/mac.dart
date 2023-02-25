@@ -10,13 +10,11 @@ import 'package:ffi/ffi.dart';
 
 import '../../posix.dart';
 import '../libc.dart';
-
 import 'os.dart';
 
 // ignore: non_constant_identifier_names
-final mac_lstat = MacStatCall(r'lstat$INODE64');
-// ignore: non_constant_identifier_names
-final mac_stat = MacStatCall(r'stat$INODE64');
+final macLStat = MacStatCall(r'lstat$INODE64');
+final macStat = MacStatCall(r'stat$INODE64');
 
 class MacStatCall extends OsStatCall {
   MacStatCall(String name) : super(name);

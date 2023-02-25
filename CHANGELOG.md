@@ -1,3 +1,8 @@
+# 4.2.0
+- support for dart 3.x which appears to require the ffi.Pointer is a non-nullable type.
+- added unit test for seteuid checking that a spawned shell inherits the change.
+- Fixed a bug when a PosixException was thrown it would often return -1 rather than errno.
+
 # 4.1.0
 - BREAKING: change getpwent to return Passwd? as it couldn't be used for its intended purpose to interate across the list of users.
 - Added simplifed getUsers method.

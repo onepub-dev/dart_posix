@@ -156,18 +156,16 @@ packages:
   dcli:
     dependency: "direct dev"
     description:
-      name: dcli
-      sha256: "8b6adedc2c3e459173f5893aa35e761606d983483d742cdee8b037b2446f177b"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../dcli/dcli"
+      relative: true
+    source: path
     version: "2.0.1"
   dcli_core:
-    dependency: transitive
+    dependency: "direct dev"
     description:
-      name: dcli_core
-      sha256: "07352d8ca9d589a804d2d270d233a8d5ed2cc885511eed517bb97d8fa03c7310"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../dcli/dcli_core"
+      relative: true
+    source: path
     version: "2.0.1"
   equatable:
     dependency: transitive

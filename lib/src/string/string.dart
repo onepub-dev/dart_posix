@@ -1006,31 +1006,31 @@ class ArrayHelper___locale_struct___names_level0 {
     _checkBounds(index);
     switch (_absoluteIndex + index) {
       case 0:
-        return _struct._unique___names_item_0!;
+        return _struct._unique___names_item_0;
       case 1:
-        return _struct._unique___names_item_1!;
+        return _struct._unique___names_item_1;
       case 2:
-        return _struct._unique___names_item_2!;
+        return _struct._unique___names_item_2;
       case 3:
-        return _struct._unique___names_item_3!;
+        return _struct._unique___names_item_3;
       case 4:
-        return _struct._unique___names_item_4!;
+        return _struct._unique___names_item_4;
       case 5:
-        return _struct._unique___names_item_5!;
+        return _struct._unique___names_item_5;
       case 6:
-        return _struct._unique___names_item_6!;
+        return _struct._unique___names_item_6;
       case 7:
-        return _struct._unique___names_item_7!;
+        return _struct._unique___names_item_7;
       case 8:
-        return _struct._unique___names_item_8!;
+        return _struct._unique___names_item_8;
       case 9:
-        return _struct._unique___names_item_9!;
+        return _struct._unique___names_item_9;
       case 10:
-        return _struct._unique___names_item_10!;
+        return _struct._unique___names_item_10;
       case 11:
-        return _struct._unique___names_item_11!;
+        return _struct._unique___names_item_11;
       case 12:
-        return _struct._unique___names_item_12!;
+        return _struct._unique___names_item_12;
       default:
         throw Exception('Invalid Array Helper generated.');
     }

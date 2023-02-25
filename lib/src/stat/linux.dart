@@ -10,13 +10,10 @@ import 'package:ffi/ffi.dart';
 
 import '../../posix.dart';
 import '../libc.dart';
-
 import 'os.dart';
 
-// ignore: non_constant_identifier_names
-final linux_lstat = LinuxStatCall('__lxstat');
-// ignore: non_constant_identifier_names
-final linux_stat = LinuxStatCall('__xstat');
+final linuxLStat = LinuxStatCall('__lxstat');
+final linuxStat = LinuxStatCall('__xstat');
 
 class LinuxStatCall extends OsStatCall {
   LinuxStatCall(String name) : super(name);
@@ -27,7 +24,7 @@ class LinuxStatCall extends OsStatCall {
     final result = _call(1, pathToFilePtr, bufferPtr);
     if (result != 0) {
       _free(bufferPtr);
-      throw PosixException('$name call failed', errno());
+      throw PosixException('Call to $name', errno());
     }
     final stat = _copy(bufferPtr.ref);
     _free(bufferPtr);

@@ -8,16 +8,15 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dcli/dcli.dart' as dcli;
+import 'package:dcli_core/dcli_core.dart' as core;
 import 'package:path/path.dart';
-//import 'package:dcli/posix.dart' as dcli;
-
 import 'package:posix/posix.dart' hide group;
 import 'package:test/test.dart';
 
 void main() {
   group('stat:', () {
-    test('missing', () {
-      final temp = dcli.createTempDir();
+    test('missing', () async {
+      final temp = await core.createTempDir();
       final path = join(temp, 'missing_file');
       bool succeeded;
       try {
@@ -29,13 +28,13 @@ void main() {
       expect(succeeded, false);
     });
 
-    test('file', () {
-      dcli.withTempDir((temp) {
-        dcli.withTempFile((path) {
+    test('file', () async {
+      await core.withTempDir((temp) async {
+        await core.withTempFile<void>((path) async {
           File(path).writeAsStringSync('123456789\n'
               'This is a\n'
               'text file\n');
-          //dcli.chmod(0x933, path);  // 0x933 == 04463
+          //core.chmod(0x933, path);  // 0x933 == 04463
           'chmod 4463 $path'.toList();
           'ln $path $temp/test_file_2.txt'.toList();
           'ln $path $temp/test_file_3.txt'.toList();
@@ -53,8 +52,8 @@ void main() {
       });
     });
 
-    test('directory', () {
-      dcli.withTempDir((temp) {
+    test('directory', () async {
+      await core.withTempDir((temp) async {
         final actual = lstat(temp);
         final expected = _getExpected(temp);
         _checkAgrees(actual, expected);
@@ -62,16 +61,16 @@ void main() {
       });
     });
 
-    test('link - lstat', () {
-      dcli.withTempDir((temp) {
-        dcli.withTempFile((file) {
+    test('link - lstat', () async {
+      await core.withTempDir((temp) async {
+        await core.withTempFile((file) async {
           File(file).writeAsStringSync('Not a lot\n'
               'going on \n'
               'with this\n');
-          //dcli.chmod(0x933, file);  // 0x933 == 04463
+          //core.chmod(0x933, file);  // 0x933 == 04463
           'chmod 4463 $file'.toList();
           final link = join(temp, 'test_link');
-          dcli.symlink(file, link);
+          await core.symlink(file, link);
 
           final actual = lstat(link);
           final expected = _getExpected(link);
@@ -83,16 +82,16 @@ void main() {
       });
     });
 
-    test('link - stat', () {
-      dcli.withTempDir((temp) {
-        dcli.withTempFile((file) {
+    test('link - stat', () async {
+      await core.withTempDir((temp) async {
+        await core.withTempFile((file) async {
           File(file).writeAsStringSync('Not a lot\n'
               'going on \n'
               'with this\n');
-          //dcli.chmod(0x933, file);  // 0x933 == 04463
+          //core.chmod(0x933, file);  // 0x933 == 04463
           'chmod 4463 $file'.toList();
           final link = join(temp, 'test_link');
-          dcli.symlink(file, link);
+          await core.symlink(file, link);
 
           final actual = stat(link);
           final expected = _getExpected(file);
@@ -103,8 +102,8 @@ void main() {
       });
     });
 
-    test('named pipe', () {
-      dcli.withTempDir((temp) {
+    test('named pipe', () async {
+      await core.withTempDir((temp) async {
         final path = join(temp, 'test_fifo');
         'mkfifo $path'.toList();
 
@@ -127,10 +126,10 @@ void main() {
     });
 
     test('memory corruption ...', () async {
-      dcli.withTempDir((temp) {
+      await core.withTempDir((temp) async {
         final testFile = join(temp, 'test.txt');
-        dcli.touch(testFile, create: true);
-        //dcli.chmod(0x1B4, testFile); // 0x1B4 = 0664
+        await core.touch(testFile, create: true);
+        //core.chmod(0x1B4, testFile); // 0x1B4 = 0664
         'chmod 664 $testFile'.toList();
         for (var i = 0; i < 1000; i++) {
           final struct = stat(testFile);

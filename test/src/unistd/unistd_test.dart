@@ -6,8 +6,9 @@
 
 import 'dart:io';
 
-import 'package:dcli/dcli.dart'
-    show DartProject, StringAsProcess, join, withTempFile;
+import 'package:dcli/dcli.dart' as dcli;
+import 'package:dcli_core/dcli_core.dart' as core;
+import 'package:path/path.dart' hide equals;
 import 'package:posix/posix.dart';
 import 'package:test/test.dart';
 
@@ -39,8 +40,8 @@ void main() {
     chown('/tmp', 1000, 1000);
   }, skip: true, tags: ['sudo']);
 
-  test('chmod', () {
-    withTempFile((file) {
+  test('chmod', () async {
+    await core.withTempFile((file) async {
       var _stat = stat(file);
       chmod(file, '777');
       _stat = stat(file);
@@ -92,8 +93,8 @@ void main() {
     });
   }, skip: true, tags: ['sudo']);
 
-  test('setuid', () {
-    final pathToTest = DartProject.self.pathToTestDir;
+  test('setuid', () async {
+    final pathToTest = dcli.DartProject.self.pathToTestDir;
     final pathToSript = join(pathToTest, 'src', 'unistd', 'unistd_test.sh');
 
     final euid = geteuid();
@@ -119,5 +120,5 @@ void main() {
     lines = pathToSript.toList(runInShell: true);
 
     expect(lines[0], equals('$euid'));
-  });
+  }, skip: true, tags: ['sudo']);
 }
