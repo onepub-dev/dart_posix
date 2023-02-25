@@ -154,14 +154,14 @@ packages:
     source: hosted
     version: "3.0.0-beta.1"
   dcli:
-    dependency: "direct dev"
+    dependency: "direct overridden"
     description:
       path: "../dcli/dcli"
       relative: true
     source: path
     version: "2.0.1"
   dcli_core:
-    dependency: "direct dev"
+    dependency: "direct overridden"
     description:
       path: "../dcli/dcli_core"
       relative: true
