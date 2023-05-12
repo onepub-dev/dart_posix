@@ -7,16 +7,19 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dcli/dcli.dart' as dcli;
-import 'package:dcli_core/dcli_core.dart' as core;
+import 'package:cli_script/cli_script.dart' as cli;
 import 'package:path/path.dart';
 import 'package:posix/posix.dart' hide group;
 import 'package:test/test.dart';
 
+import 'dcli/temp_file.dart' as tf;
+import 'dcli/touch.dart';
+import 'dcli/utility.dart';
+
 void main() {
   group('stat:', () {
     test('missing', () async {
-      final temp = await core.createTempDir();
+      final temp = await createTempDir();
       final path = join(temp, 'missing_file');
       bool succeeded;
       try {
@@ -29,18 +32,18 @@ void main() {
     });
 
     test('file', () async {
-      await core.withTempDir((temp) async {
-        await core.withTempFile<void>((path) async {
+      await withTempDir((temp) async {
+        await tf.withTempFile<void>((path) async {
           File(path).writeAsStringSync('123456789\n'
               'This is a\n'
               'text file\n');
           //core.chmod(0x933, path);  // 0x933 == 04463
-          'chmod 4463 $path'.toList();
-          'ln $path $temp/test_file_2.txt'.toList();
-          'ln $path $temp/test_file_3.txt'.toList();
+          await cli.lines('chmod 4463 $path').toList();
+          await cli.lines('ln $path $temp/test_file_2.txt').toList();
+          await cli.lines('ln $path $temp/test_file_3.txt').toList();
 
           final actual = lstat(path);
-          final expected = _getExpected(path);
+          final expected = await _getExpected(path);
           _checkAgrees(actual, expected);
           _checkType(actual, isFile: true);
           expect(actual.size, 30,
@@ -53,27 +56,27 @@ void main() {
     });
 
     test('directory', () async {
-      await core.withTempDir((temp) async {
+      await withTempDir((temp) async {
         final actual = lstat(temp);
-        final expected = _getExpected(temp);
+        final expected = await _getExpected(temp);
         _checkAgrees(actual, expected);
         _checkType(actual, isDirectory: true);
       });
     });
 
     test('link - lstat', () async {
-      await core.withTempDir((temp) async {
-        await core.withTempFile((file) async {
+      await withTempDir((temp) async {
+        await tf.withTempFile((file) async {
           File(file).writeAsStringSync('Not a lot\n'
               'going on \n'
               'with this\n');
           //core.chmod(0x933, file);  // 0x933 == 04463
-          'chmod 4463 $file'.toList();
+          await cli.lines('chmod 4463 $file').toList();
           final link = join(temp, 'test_link');
-          await core.symlink(file, link);
+          symlink(file, link);
 
           final actual = lstat(link);
-          final expected = _getExpected(link);
+          final expected = await _getExpected(link);
           _checkAgrees(actual, expected);
           _checkType(actual, isLink: true);
           expect(actual.size, file.length,
@@ -83,18 +86,18 @@ void main() {
     });
 
     test('link - stat', () async {
-      await core.withTempDir((temp) async {
-        await core.withTempFile((file) async {
+      await withTempDir((temp) async {
+        await tf.withTempFile((file) async {
           File(file).writeAsStringSync('Not a lot\n'
               'going on \n'
               'with this\n');
           //core.chmod(0x933, file);  // 0x933 == 04463
-          'chmod 4463 $file'.toList();
+          await cli.lines('chmod 4463 $file').toList();
           final link = join(temp, 'test_link');
-          await core.symlink(file, link);
+          symlink(file, link);
 
           final actual = stat(link);
-          final expected = _getExpected(file);
+          final expected = await _getExpected(file);
           _checkAgrees(actual, expected);
           _checkType(actual, isFile: true);
           expect(actual.size, 30, reason: 'size: should be 30');
@@ -103,22 +106,22 @@ void main() {
     });
 
     test('named pipe', () async {
-      await core.withTempDir((temp) async {
+      await withTempDir((temp) async {
         final path = join(temp, 'test_fifo');
-        'mkfifo $path'.toList();
+        await cli.lines('mkfifo $path').toList();
 
         final actual = stat(path);
-        final expected = _getExpected(path);
+        final expected = await _getExpected(path);
         _checkAgrees(actual, expected);
         _checkType(actual, isNamedPipe: true);
       });
     });
 
-    test('character device (/dev/tty)', () {
+    test('character device (/dev/tty)', () async {
       const path = '/dev/tty';
 
       final actual = lstat(path);
-      final expected = _getExpected(path);
+      final expected = await _getExpected(path);
       _checkAgrees(actual, expected);
       _checkType(actual, isCharacterDevice: true);
       expect(actual.uid, 0, reason: 'uid: should be owned by root(?)');
@@ -126,11 +129,11 @@ void main() {
     });
 
     test('memory corruption ...', () async {
-      await core.withTempDir((temp) async {
+      await withTempDir((temp) async {
         final testFile = join(temp, 'test.txt');
-        await core.touch(testFile, create: true);
+        touch(testFile, create: true);
         //core.chmod(0x1B4, testFile); // 0x1B4 = 0664
-        'chmod 664 $testFile'.toList();
+        await cli.lines('chmod 664 $testFile').toList();
         for (var i = 0; i < 1000; i++) {
           final struct = stat(testFile);
 
@@ -198,8 +201,8 @@ void _checkType(
   expect(actual.mode.isSocket, isSocket, reason: 'isSocket');
 }
 
-Stat _getExpected(String path) {
-  final json = _runScript('mystat', '"$path"').join('\n');
+Future<Stat> _getExpected(String path) async {
+  final json = (await _runScript('mystat', '"$path"')).join('\n');
   final map = jsonDecode(json) as Map;
 
   DateTime fromSeconds(int seconds) =>
@@ -222,5 +225,5 @@ Stat _getExpected(String path) {
   );
 }
 
-List<String> _runScript(String name, String args) =>
-    'test/scripts/$name $args'.toList();
+Future<List<String>> _runScript(String name, String args) async =>
+    cli.lines('test/scripts/$name $args').toList();

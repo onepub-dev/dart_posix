@@ -1,3 +1,10 @@
+# 5.0.0
+- fixes #12 ffi error with dart 3.x
+This error actually affects any sdk from 2.19 hence the new minimum sdk.
+There are no other updates in this release.
+- upgraded base sdk to 2.19
+
+
 # 4.2.0
 - support for dart 3.x which appears to require the ffi.Pointer is a non-nullable type.
 - added unit test for seteuid checking that a spawned shell inherits the change.

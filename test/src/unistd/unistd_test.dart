@@ -6,11 +6,12 @@
 
 import 'dart:io';
 
-import 'package:dcli/dcli.dart' as dcli;
-import 'package:dcli_core/dcli_core.dart' as core;
+import 'package:cli_script/cli_script.dart';
 import 'package:path/path.dart' hide equals;
 import 'package:posix/posix.dart';
 import 'package:test/test.dart';
+
+import '../dcli/temp_file.dart' as temp;
 
 void main() {
   test('getcwd ...', () async {
@@ -41,7 +42,7 @@ void main() {
   }, skip: true, tags: ['sudo']);
 
   test('chmod', () async {
-    await core.withTempFile((file) async {
+    await temp.withTempFile((file) async {
       var _stat = stat(file);
       chmod(file, '777');
       _stat = stat(file);
@@ -94,13 +95,13 @@ void main() {
   }, skip: true, tags: ['sudo']);
 
   test('setuid', () async {
-    final pathToTest = dcli.DartProject.self.pathToTestDir;
+    const pathToTest = 'test'; // dcli.DartProject.self.pathToTestDir;
     final pathToSript = join(pathToTest, 'src', 'unistd', 'unistd_test.sh');
 
     final euid = geteuid();
 
-    var lines = pathToSript.toList(runInShell: true);
-    expect(lines[0], equals('$euid'));
+    var cliLines = await lines(pathToSript).toList(); // (runInShell: true);
+    expect(cliLines[0], equals('$euid'));
 
     final users = getUsers();
 
@@ -111,14 +112,14 @@ void main() {
     seteuid(altEuid);
     expect(geteuid() == altEuid, isTrue);
 
-    lines = pathToSript.toList(runInShell: true);
+    cliLines = await lines(pathToSript).toList(); // .toList(runInShell: true);
 
-    expect(lines[0], equals('$altEuid'));
+    expect(cliLines[0], equals('$altEuid'));
 
     seteuid(euid);
 
-    lines = pathToSript.toList(runInShell: true);
+    cliLines = await lines(pathToSript).toList(); // .toList(runInShell: true);
 
-    expect(lines[0], equals('$euid'));
+    expect(cliLines[0], equals('$euid'));
   }, skip: true, tags: ['sudo']);
 }
