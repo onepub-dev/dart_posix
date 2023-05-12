@@ -7,7 +7,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:crypto/crypto.dart';
 import 'package:path/path.dart';
 import 'package:uuid/uuid.dart';
 
@@ -186,37 +185,6 @@ Future<R> withTempFile<R>(
     }
   }
   return result;
-}
-
-/// Calculates the sha256 hash of a file's
-/// content.
-///
-/// This is likely to be an expensive operation
-/// if the file is large.
-///
-/// You can use this method to check if a file
-/// has changes since the last time you took
-/// the file's hash.
-///
-/// Throws [FileNotFoundException] if [path]
-/// doesn't exist.
-/// Throws [NotAFileException] if path is
-/// not a file.
-Future<Digest> calculateHash(String path) async {
-  if (!exists(path)) {
-    throw FileNotFoundException(path);
-  }
-
-  if (!isFile(path)) {
-    throw NotAFileException(path);
-  }
-  final input = File(path);
-
-  const hasher = sha256;
-  final digest = await hasher.bind(input.openRead()).first;
-
-  verbose(() => 'calculateHash($path) = $digest');
-  return digest;
 }
 
 /// Thrown when a file doesn't exist

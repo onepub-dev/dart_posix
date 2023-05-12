@@ -16,7 +16,7 @@ final linuxLStat = LinuxStatCall('__lxstat');
 final linuxStat = LinuxStatCall('__xstat');
 
 class LinuxStatCall extends OsStatCall {
-  LinuxStatCall(String name) : super(name);
+  LinuxStatCall(super.name);
 
   @override
   Stat sysCall(ffi.Pointer<Utf8> pathToFilePtr) {

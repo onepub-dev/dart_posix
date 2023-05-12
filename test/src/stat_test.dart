@@ -12,9 +12,9 @@ import 'package:path/path.dart';
 import 'package:posix/posix.dart' hide group;
 import 'package:test/test.dart';
 
+import 'dcli/create_dir.dart';
 import 'dcli/temp_file.dart' as tf;
 import 'dcli/touch.dart';
-import 'dcli/utility.dart';
 
 void main() {
   group('stat:', () {

@@ -135,7 +135,7 @@ class Stat {
 }
 
 class StatException extends PosixException {
-  StatException(String message, int code) : super(message, code);
+  StatException(super.message, super.code);
 
   @override
   String toString() => message;

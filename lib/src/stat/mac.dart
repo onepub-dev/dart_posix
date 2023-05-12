@@ -17,7 +17,7 @@ final macLStat = MacStatCall(r'lstat$INODE64');
 final macStat = MacStatCall(r'stat$INODE64');
 
 class MacStatCall extends OsStatCall {
-  MacStatCall(String name) : super(name);
+  MacStatCall(super.name);
 
   @override
   Stat sysCall(ffi.Pointer<Utf8> pathToFilePtr) {
