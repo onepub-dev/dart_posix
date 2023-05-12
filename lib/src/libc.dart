@@ -15,14 +15,12 @@ const int NULL = 0;
 class Libc {
   factory Libc() => _self;
   Libc._internal() {
-    var path = 'libc.so.6';
-    if (Platform.isMacOS) {
-      path = '/usr/lib/libSystem.dylib';
-    }
     if (Platform.isWindows) {
-      path = r'primitives_library\Debug\primitives.dll';
+      const path = r'primitives_library\Debug\primitives.dll';
+      _dylib = ffi.DynamicLibrary.open(path);
+    } else {
+      _dylib = ffi.DynamicLibrary.process();
     }
-    _dylib = ffi.DynamicLibrary.open(path);
   }
   static final Libc _self = Libc._internal();
 
