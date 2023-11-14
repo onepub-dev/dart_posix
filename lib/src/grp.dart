@@ -12,7 +12,7 @@ import '../posix.dart';
 import 'libc.dart';
 import 'util/conversions.dart';
 
-class IO_FILE extends ffi.Opaque {}
+final class IO_FILE extends ffi.Opaque {}
 
 /// Rewind the group-file stream.
 ///
@@ -364,7 +364,7 @@ Group _buildGroup(ffi.Pointer<group> grGroup, String error) {
   return Group(name: name, password: password, gid: gid, members: members);
 }
 
-class group extends ffi.Struct {
+final class group extends ffi.Struct {
   /// Group name.
   external ffi.Pointer<ffi.Int8> name;
 

@@ -7,7 +7,7 @@
 // ignore_for_file: non_constant_identifier_names, unused_element, unused_field
 part of mac;
 
-class _opaque_pthread_attr_t extends ffi.Struct {
+final class _opaque_pthread_attr_t extends ffi.Struct {
   @ffi.Int64()
   external int __sig;
 
@@ -443,7 +443,7 @@ class _ArrayHelper__opaque_pthread_attr_t___opaque_level0 {
   }
 }
 
-class _opaque_pthread_cond_t extends ffi.Struct {
+final class _opaque_pthread_cond_t extends ffi.Struct {
   @ffi.Int64()
   external int __sig;
 
@@ -767,7 +767,7 @@ class _ArrayHelper__opaque_pthread_cond_t___opaque_level0 {
   }
 }
 
-class _opaque_pthread_condattr_t extends ffi.Struct {
+final class _opaque_pthread_condattr_t extends ffi.Struct {
   @ffi.Int64()
   external int __sig;
 
@@ -868,7 +868,7 @@ class _ArrayHelper__opaque_pthread_condattr_t___opaque_level0 {
   }
 }
 
-class _opaque_pthread_mutex_t extends ffi.Struct {
+final class _opaque_pthread_mutex_t extends ffi.Struct {
   @ffi.Int64()
   external int __sig;
 
@@ -1304,7 +1304,7 @@ class _ArrayHelper__opaque_pthread_mutex_t___opaque_level0 {
   }
 }
 
-class _opaque_pthread_mutexattr_t extends ffi.Struct {
+final class _opaque_pthread_mutexattr_t extends ffi.Struct {
   @ffi.Int64()
   external int __sig;
 
@@ -1404,7 +1404,7 @@ class _ArrayHelper__opaque_pthread_mutexattr_t___opaque_level0 {
   }
 }
 
-class _opaque_pthread_once_t extends ffi.Struct {
+final class _opaque_pthread_once_t extends ffi.Struct {
   @ffi.Int64()
   external int __sig;
 
@@ -1504,7 +1504,7 @@ class _ArrayHelper__opaque_pthread_once_t___opaque_level0 {
   }
 }
 
-class _opaque_pthread_rwlock_t extends ffi.Struct {
+final class _opaque_pthread_rwlock_t extends ffi.Struct {
   @ffi.Int64()
   external int __sig;
 
@@ -2892,7 +2892,7 @@ class _ArrayHelper__opaque_pthread_rwlock_t___opaque_level0 {
   }
 }
 
-class _opaque_pthread_rwlockattr_t extends ffi.Struct {
+final class _opaque_pthread_rwlockattr_t extends ffi.Struct {
   @ffi.Int64()
   external int __sig;
 

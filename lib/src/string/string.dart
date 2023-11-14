@@ -822,9 +822,9 @@ ffi.Pointer<ffi.Int8> stpncpy(
 
 _dart_stpncpy? _stpncpy;
 
-class locale_data extends ffi.Opaque {}
+final class locale_data extends ffi.Opaque {}
 
-class locale_struct extends ffi.Struct {
+final class locale_struct extends ffi.Struct {
   // ignore: non_constant_identifier_names
   external ffi.Pointer<locale_data> _unique___locales_item_0;
   // ignore: non_constant_identifier_names

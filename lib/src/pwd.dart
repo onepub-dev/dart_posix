@@ -317,7 +317,7 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> pwPasswd, String error) {
 }
 
 /// A record in the user database.
-class _passwd extends ffi.Struct {
+final class _passwd extends ffi.Struct {
   /// Username.
   external ffi.Pointer<ffi.Int8> name;
 

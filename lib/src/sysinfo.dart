@@ -8,9 +8,9 @@
 
 import 'dart:ffi' as ffi;
 
+import 'package:collection/collection.dart';
 import 'package:ffi/ffi.dart' as ffi;
 import 'package:meta/meta.dart';
-import 'package:quiver/collection.dart';
 
 import 'libc.dart';
 import 'posix_exception.dart';
@@ -107,7 +107,7 @@ class Sysinfo {
     }
     return other is Sysinfo &&
         uptime == other.uptime &&
-        listsEqual(other.loads, loads) &&
+        const ListEquality<int>().equals(other.loads, loads) &&
         totalram == other.totalram &&
         sharedram == other.sharedram &&
         bufferram == other.bufferram &&
@@ -142,7 +142,7 @@ class Sysinfo {
       'freehigh: $freehigh, mem_unit: $mem_unit)';
 }
 
-class _sysinfo_t extends ffi.Struct {
+final class _sysinfo_t extends ffi.Struct {
   @ffi.Int64()
   external int uptime;
 

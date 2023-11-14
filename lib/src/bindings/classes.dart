@@ -8,7 +8,7 @@
 
 part of mac;
 
-class timespec extends ffi.Struct {
+final class timespec extends ffi.Struct {
   @ffi.Int64()
   external int tv_sec;
 
@@ -16,7 +16,7 @@ class timespec extends ffi.Struct {
   external int tv_nsec;
 }
 
-class timeval extends ffi.Struct {
+final class timeval extends ffi.Struct {
   /// seconds
   @ffi.Int64()
   external int tv_sec;
@@ -26,11 +26,11 @@ class timeval extends ffi.Struct {
   external int tv_usec;
 }
 
-class fssearchblock extends ffi.Opaque {}
+final class fssearchblock extends ffi.Opaque {}
 
-class searchstate extends ffi.Opaque {}
+final class searchstate extends ffi.Opaque {}
 
-class passwd extends ffi.Struct {
+final class passwd extends ffi.Struct {
   /// user name
   external ffi.Pointer<ffi.Int8> pw_name;
 
@@ -66,7 +66,7 @@ class passwd extends ffi.Struct {
   external int pw_expire;
 }
 
-class group extends ffi.Struct {
+final class group extends ffi.Struct {
   /// XBD group name
   external ffi.Pointer<ffi.Int8> gr_name;
 
@@ -87,7 +87,7 @@ class group extends ffi.Struct {
 /// and should not be used by user space, and should be removed from this
 /// header file entirely (along with the unused cvtstat() prototype in
 /// vnode_internal.h).
-class ostat extends ffi.Struct {
+final class ostat extends ffi.Struct {
   /// inode's device
   @ffi.Uint16()
   external int st_dev;
@@ -146,7 +146,7 @@ class ostat extends ffi.Struct {
   external int st_gen;
 }
 
-class stat extends ffi.Struct {
+final class stat extends ffi.Struct {
   @ffi.Int32()
   external int st_dev;
 
@@ -247,7 +247,7 @@ class ArrayHelper_stat_st_qspare_level0 {
   }
 }
 
-class stat64 extends ffi.Struct {
+final class stat64 extends ffi.Struct {
   @ffi.Int32()
   external int st_dev;
 
@@ -348,4 +348,4 @@ class ArrayHelper_stat64_st_qspare_level0 {
   }
 }
 
-class filesec extends ffi.Opaque {}
+final class filesec extends ffi.Opaque {}

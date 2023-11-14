@@ -8,7 +8,7 @@
 
 part of mac;
 
-class accessx_descriptor extends ffi.Struct {
+final class accessx_descriptor extends ffi.Struct {
   @ffi.Uint32()
   external int ad_name_offset;
 
@@ -69,7 +69,7 @@ class ArrayHelper_accessx_descriptor_ad_pad_level0 {
   }
 }
 
-class fd_set extends ffi.Struct {
+final class fd_set extends ffi.Struct {
   @ffi.Int32()
   external int _unique_fds_bits_item_0;
   @ffi.Int32()

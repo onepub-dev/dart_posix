@@ -3618,7 +3618,7 @@ class mac_posix {
       _stat64_1_ptr.asFunction<_dart_stat64_1>();
 }
 
-class __darwin_pthread_handler_rec extends ffi.Struct {
+final class __darwin_pthread_handler_rec extends ffi.Struct {
   /// Routine to call
   external ffi
           .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>

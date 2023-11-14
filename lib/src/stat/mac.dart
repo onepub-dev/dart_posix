@@ -62,7 +62,7 @@ typedef MacStatCall_c = ffi.Int32 Function(
 typedef MacStatCall_dart = int Function(
     ffi.Pointer<Utf8>, ffi.Pointer<MacStatStruct>);
 
-class MacStatStruct extends ffi.Struct {
+final class MacStatStruct extends ffi.Struct {
   @ffi.Uint32()
   external int dev;
 
@@ -118,7 +118,7 @@ class MacStatStruct extends ffi.Struct {
   external int _unique_st_qspare_item_1;
 }
 
-class MacTimespecStruct extends ffi.Struct {
+final class MacTimespecStruct extends ffi.Struct {
   @ffi.Int64()
   external int sec;
 

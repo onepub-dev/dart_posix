@@ -62,7 +62,7 @@ typedef LinuxStatCall_c = ffi.Int32 Function(
 typedef LinuxStatCall_dart = int Function(
     int, ffi.Pointer<Utf8>, ffi.Pointer<LinuxStatStruct>);
 
-class LinuxStatStruct extends ffi.Struct {
+final class LinuxStatStruct extends ffi.Struct {
   @ffi.Uint64()
   external int dev;
 
@@ -113,7 +113,7 @@ class LinuxStatStruct extends ffi.Struct {
   external int _unique___glibc_reserved_item_2;
 }
 
-class LinuxTimespecStruct extends ffi.Struct {
+final class LinuxTimespecStruct extends ffi.Struct {
   @ffi.Int64()
   external int sec;
 
