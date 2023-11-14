@@ -1,3 +1,8 @@
+# 6.0.0
+- Fixed a bug with uname on gnu as the struct wasn't large enough as gnu returns the 'domain' field requiring an extra 65 bytes.
+- ugpraded to dart 3.x 
+- removed quiver as it pulls in the test packages which causes conflicts with other projects.
+
 # 5.0.0
 - fixes #12 ffi error with dart 3.x
 This error actually affects any sdk from 2.19 hence the new minimum sdk.

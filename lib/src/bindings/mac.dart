@@ -574,8 +574,9 @@ class mac_posix {
       );
 
   late final _lseek_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int64 Function(ffi.Int32, ffi.Int64, ffi.Int32)>>('lseek');
+          ffi
+          .NativeFunction<ffi.Int64 Function(ffi.Int32, ffi.Int64, ffi.Int32)>>(
+      'lseek');
   late final _dart_lseek _lseek = _lseek_ptr.asFunction<_dart_lseek>();
 
   int pathconf(
@@ -911,8 +912,9 @@ class mac_posix {
       );
 
   late final _encrypt_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>('encrypt');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>(
+      'encrypt');
   late final _dart_encrypt _encrypt = _encrypt_ptr.asFunction<_dart_encrypt>();
 
   int fchdir(
@@ -1022,8 +1024,9 @@ class mac_posix {
       );
 
   late final _lockf_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Int32, ffi.Int64)>>('lockf');
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32, ffi.Int64)>>(
+      'lockf');
   late final _dart_lockf _lockf = _lockf_ptr.asFunction<_dart_lockf>();
 
   int nice(
@@ -2624,8 +2627,9 @@ class mac_posix {
       );
 
   late final _getpwnam_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<passwd> Function(ffi.Pointer<ffi.Int8>)>>('getpwnam');
+          ffi
+          .NativeFunction<ffi.Pointer<passwd> Function(ffi.Pointer<ffi.Int8>)>>(
+      'getpwnam');
   late final _dart_getpwnam _getpwnam =
       _getpwnam_ptr.asFunction<_dart_getpwnam>();
 
@@ -2959,8 +2963,9 @@ class mac_posix {
       );
 
   late final _getgrnam_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<group> Function(ffi.Pointer<ffi.Int8>)>>('getgrnam');
+          ffi
+          .NativeFunction<ffi.Pointer<group> Function(ffi.Pointer<ffi.Int8>)>>(
+      'getgrnam');
   late final _dart_getgrnam _getgrnam =
       _getgrnam_ptr.asFunction<_dart_getgrnam>();
 
@@ -3063,8 +3068,9 @@ class mac_posix {
       );
 
   late final _getgruuid_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<group> Function(ffi.Pointer<ffi.Uint8>)>>('getgruuid');
+          ffi
+          .NativeFunction<ffi.Pointer<group> Function(ffi.Pointer<ffi.Uint8>)>>(
+      'getgruuid');
   late final _dart_getgruuid _getgruuid =
       _getgruuid_ptr.asFunction<_dart_getgruuid>();
 
@@ -3383,8 +3389,9 @@ class mac_posix {
       );
 
   late final _fchmodx_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Pointer<filesec>)>>('fchmodx_np');
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<filesec>)>>(
+      'fchmodx_np');
   late final _dart_fchmodx_np _fchmodx_np =
       _fchmodx_np_ptr.asFunction<_dart_fchmodx_np>();
 
@@ -3582,8 +3589,9 @@ class mac_posix {
       );
 
   late final _fstat64_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat64>)>>('fstat64');
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat64>)>>(
+      'fstat64');
   late final _dart_fstat64 _fstat64 = _fstat64_ptr.asFunction<_dart_fstat64>();
 
   int lstat64(
@@ -3621,7 +3629,7 @@ class mac_posix {
 final class __darwin_pthread_handler_rec extends ffi.Struct {
   /// Routine to call
   external ffi
-          .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>
+      .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>
       __routine;
 
   /// Argument to pass
