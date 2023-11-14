@@ -1,3 +1,6 @@
+# 6.0.1
+- removed dependency on collection as causing compatability problems upstream.
+
 # 6.0.0
 - Fixed a bug with uname on gnu as the struct wasn't large enough as gnu returns the 'domain' field requiring an extra 65 bytes.
 - ugpraded to dart 3.x 
