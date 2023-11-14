@@ -8,7 +8,6 @@
 
 import 'dart:ffi' as ffi;
 
-import 'package:collection/collection.dart';
 import 'package:ffi/ffi.dart' as ffi;
 import 'package:meta/meta.dart';
 
@@ -107,7 +106,7 @@ class Sysinfo {
     }
     return other is Sysinfo &&
         uptime == other.uptime &&
-        const ListEquality<int>().equals(other.loads, loads) &&
+        _compareList(other.loads, loads) &&
         totalram == other.totalram &&
         sharedram == other.sharedram &&
         bufferram == other.bufferram &&
@@ -117,6 +116,19 @@ class Sysinfo {
         totalhigh == other.totalhigh &&
         freehigh == other.freehigh &&
         mem_unit == other.mem_unit;
+  }
+
+  bool _compareList<T>(List<T> lhs, List<T> rhs) {
+    if (lhs.length != rhs.length) {
+      return false;
+    }
+
+    for (var i = 0; i < lhs.length; i++) {
+      if (lhs[i] != rhs[i]) {
+        return false;
+      }
+    }
+    return true;
   }
 
   @override
