@@ -88,7 +88,7 @@ dart pub run ffigen:setup -I/usr/lib/llvm-11/include -L/usr/lib/llvm-11/lib
  
  
  ```
- dart pub run ffigen  --config ffigen.yaml
+ dart pub run ffigen  --config ffigen/linux.yaml 
  ```
 
  

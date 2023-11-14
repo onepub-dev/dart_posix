@@ -10,7 +10,7 @@ part of 'uname.dart';
 
 const _UTSNAME_BSD_LENGTH = 256;
 
-class _utsname_bsd_t extends ffi.Struct {
+final class _utsname_bsd_t extends ffi.Struct {
   @ffi.Array.multi([_UTSNAME_BSD_LENGTH])
   external ffi.Array<ffi.Int8> sysname;
 
@@ -34,5 +34,11 @@ extension _UtsnameBsd on ffi.Pointer<_utsname_bsd_t> {
         release: ref.release.toDartString(_UTSNAME_BSD_LENGTH),
         version: ref.version.toDartString(_UTSNAME_BSD_LENGTH),
         machine: ref.machine.toDartString(_UTSNAME_BSD_LENGTH),
+        domain: '(none)',
       );
 }
+
+// ignore: avoid_private_typedef_functions
+typedef _dart_utsname_bsd = int Function(
+  ffi.Pointer<_utsname_bsd_t> __info,
+);

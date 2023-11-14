@@ -10,7 +10,7 @@ part of 'uname.dart';
 
 const _UTSNAME_GNU_LENGTH = 65;
 
-class _utsname_gnu_t extends ffi.Struct {
+final class _utsname_gnu_t extends ffi.Struct {
   @ffi.Array.multi([_UTSNAME_GNU_LENGTH])
   external ffi.Array<ffi.Int8> sysname;
 
@@ -25,6 +25,9 @@ class _utsname_gnu_t extends ffi.Struct {
 
   @ffi.Array.multi([_UTSNAME_GNU_LENGTH])
   external ffi.Array<ffi.Int8> machine;
+
+  @ffi.Array.multi([_UTSNAME_GNU_LENGTH])
+  external ffi.Array<ffi.Int8> domain;
 }
 
 extension _UtsnameGnu on ffi.Pointer<_utsname_gnu_t> {
@@ -34,5 +37,11 @@ extension _UtsnameGnu on ffi.Pointer<_utsname_gnu_t> {
         release: ref.release.toDartString(_UTSNAME_GNU_LENGTH),
         version: ref.version.toDartString(_UTSNAME_GNU_LENGTH),
         machine: ref.machine.toDartString(_UTSNAME_GNU_LENGTH),
+        domain: ref.domain.toDartString(_UTSNAME_GNU_LENGTH),
       );
 }
+
+// ignore: avoid_private_typedef_functions
+typedef _dart_utsname_gnu = int Function(
+  ffi.Pointer<_utsname_gnu_t> __info,
+);

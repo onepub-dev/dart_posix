@@ -19,9 +19,46 @@ part 'uname_bsd.dart';
 part 'uname_gnu.dart';
 
 /// Returns name and information about current kernel.
-Utsname uname() => ffi.using((arena) => Platform.isMacOS
-    ? _uname(arena<_utsname_bsd_t>()).toUtsname()
-    : _uname(arena<_utsname_gnu_t>()).toUtsname());
+// Utsname uname() => ffi.using((arena) {
+
+//   return Platform.isMacOS
+//     ? _uname(arena<_utsname_bsd_t>()).toUtsname()
+//     : _uname(arena<_utsname_gnu_t>()).toUtsname();
+// });
+
+Utsname uname() => Platform.isMacOS ? _unameBsd() : _unameGnu();
+
+Utsname _unameBsd() {
+  final f = _uname_bsd_f ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<_utsname_bsd_t> __info),
+      _dart_utsname_bsd>('uname');
+
+  final buf = ffi.malloc<_utsname_bsd_t>();
+  final res = f(buf);
+  if (res != 0) {
+    throw PosixException('uname', errno());
+  }
+  final utsName = buf.toUtsname();
+
+  ffi.malloc.free(buf);
+  return utsName;
+}
+
+Utsname _unameGnu() {
+  final f = _uname_gnu_f ??= Libc().dylib.lookupFunction<
+      ffi.Int32 Function(ffi.Pointer<_utsname_gnu_t> __info),
+      _dart_utsname_gnu>('uname');
+
+  final buf = ffi.malloc<_utsname_gnu_t>();
+  final res = f(buf);
+  if (res != 0) {
+    throw PosixException('uname', errno());
+  }
+  final utsName = buf.toUtsname();
+
+  ffi.malloc.free(buf);
+  return utsName;
+}
 
 /// Name and information about current kernel.
 @immutable
@@ -33,6 +70,7 @@ class Utsname {
     required this.release,
     required this.version,
     required this.machine,
+    required this.domain,
   });
 
   /// Operating system name (e.g., "Linux")
@@ -50,6 +88,9 @@ class Utsname {
   /// Hardware identifier
   final String machine;
 
+  /// NIS or YP domain name
+  final String domain;
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -60,7 +101,8 @@ class Utsname {
         nodename == other.nodename &&
         release == other.release &&
         version == other.version &&
-        machine == other.machine;
+        machine == other.machine &&
+        domain == other.domain;
   }
 
   @override
@@ -70,27 +112,17 @@ class Utsname {
         release,
         version,
         machine,
+        domain,
       );
 
   @override
   String toString() =>
       'Utsname(sysname: $sysname, nodename: $nodename, release: $release, '
-      'version: $version, machine: $machine)';
+      'version: $version, machine: $machine, domain: $domain)';
 }
-
-typedef _dart_uname = int Function(ffi.Pointer buf);
-// ignore: avoid_private_typedef_functions
-typedef _c_uname = ffi.Int32 Function(ffi.Pointer buf);
 
 // ignore: non_constant_identifier_names
-_dart_uname? _uname_f;
+int Function(ffi.Pointer<_utsname_bsd_t>)? _uname_bsd_f;
 
-ffi.Pointer<T> _uname<T extends ffi.NativeType>(ffi.Pointer<T> buf) {
-  _uname_f ??= Libc().dylib.lookupFunction<_c_uname, _dart_uname>('uname');
-
-  final res = _uname_f!(buf);
-  if (res != 0) {
-    throw PosixException('uname', errno());
-  }
-  return buf;
-}
+// ignore: non_constant_identifier_names
+int Function(ffi.Pointer<_utsname_gnu_t>)? _uname_gnu_f;
