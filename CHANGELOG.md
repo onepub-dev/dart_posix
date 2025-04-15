@@ -1,3 +1,6 @@
+# 6.0.2
+- Removed deprecated `Pointer.elementAt`.
+
 # 6.0.1
 - removed dependency on collection as causing compatability problems upstream.
 

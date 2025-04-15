@@ -29,7 +29,7 @@ List<String> copyCStringListToDartList(
 
   var count = 0;
   while (true) {
-    final _value = cStringList.elementAt(count).value;
+    final _value = cStringList[count];
 
     if (_value.address == 0) {
       break;

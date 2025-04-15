@@ -1,14 +1,14 @@
 name: posix
-version: 6.0.1
+version: 6.0.2
 homepage: https://github.com/onepub-dev/dart_posix
 description: Exposes the POSIX api on OSx and Linux
-environment: 
+environment:
   sdk: '>=3.0.0 <4.0.0'
-dependencies: 
+dependencies:
   ffi: ^2.0.1
   meta: ^1.7.0
   path: ^1.8.3
-dev_dependencies: 
+dev_dependencies:
   cli_script: ^0.3.1
   ffigen: ^6.0.0
   lint_hard: ^3.0.0
