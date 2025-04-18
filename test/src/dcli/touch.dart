@@ -45,7 +45,7 @@ class _Touch extends DCliFunction {
         'Create the tree and try again.',
       );
     }
-    if (create == false && !exists(absolutePath)) {
+    if (!create && !exists(absolutePath)) {
       throw TouchException(
         'The file $absolutePath does not exist. '
         'Did you mean to use touch(path, create: true) ?',
@@ -75,5 +75,6 @@ class _Touch extends DCliFunction {
 /// thrown when the [touch] function encounters an exception
 class TouchException extends DCliFunctionException {
   /// thrown when the [touch] function encounters an exception
+  // ignore: matching_super_parameters
   TouchException(super.reason);
 }

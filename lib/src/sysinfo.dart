@@ -243,13 +243,10 @@ class _ArrayHelper_sysinfo_loads_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique_loads_item_0 = value;
-        break;
       case 1:
         _struct._unique_loads_item_1 = value;
-        break;
       case 2:
         _struct._unique_loads_item_2 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }

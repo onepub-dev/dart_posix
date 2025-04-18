@@ -943,43 +943,30 @@ class ArrayHelper___locale_struct___locales_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique___locales_item_0 = value;
-        break;
       case 1:
         _struct._unique___locales_item_1 = value;
-        break;
       case 2:
         _struct._unique___locales_item_2 = value;
-        break;
       case 3:
         _struct._unique___locales_item_3 = value;
-        break;
       case 4:
         _struct._unique___locales_item_4 = value;
-        break;
       case 5:
         _struct._unique___locales_item_5 = value;
-        break;
       case 6:
         _struct._unique___locales_item_6 = value;
-        break;
       case 7:
         _struct._unique___locales_item_7 = value;
-        break;
       case 8:
         _struct._unique___locales_item_8 = value;
-        break;
       case 9:
         _struct._unique___locales_item_9 = value;
-        break;
       case 10:
         _struct._unique___locales_item_10 = value;
-        break;
       case 11:
         _struct._unique___locales_item_11 = value;
-        break;
       case 12:
         _struct._unique___locales_item_12 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }
@@ -1041,43 +1028,30 @@ class ArrayHelper___locale_struct___names_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique___names_item_0 = value;
-        break;
       case 1:
         _struct._unique___names_item_1 = value;
-        break;
       case 2:
         _struct._unique___names_item_2 = value;
-        break;
       case 3:
         _struct._unique___names_item_3 = value;
-        break;
       case 4:
         _struct._unique___names_item_4 = value;
-        break;
       case 5:
         _struct._unique___names_item_5 = value;
-        break;
       case 6:
         _struct._unique___names_item_6 = value;
-        break;
       case 7:
         _struct._unique___names_item_7 = value;
-        break;
       case 8:
         _struct._unique___names_item_8 = value;
-        break;
       case 9:
         _struct._unique___names_item_9 = value;
-        break;
       case 10:
         _struct._unique___names_item_10 = value;
-        break;
       case 11:
         _struct._unique___names_item_11 = value;
-        break;
       case 12:
         _struct._unique___names_item_12 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }

@@ -11,7 +11,7 @@ import 'package:ffi/ffi.dart' as pffi;
 import 'package:ffi/ffi.dart';
 
 /// Copies a dart list of integers into a c buffer.
-/// You MUST free the returned buffer by calling [pffi.malloc.free];
+/// You MUST free the returned buffer by calling malloc.free;
 ffi.Pointer<ffi.Int8> copyDartListToCBuff(List<int> buf) {
   final cBuf = pffi.malloc.allocate<ffi.Int8>(buf.length);
 

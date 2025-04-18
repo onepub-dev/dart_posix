@@ -163,7 +163,7 @@ _dart_write? _write;
 /// OFFSET without
 /// changing the file pointer.
 ///
-/// Returns a List<int> with the results. The length of the array will be
+/// Returns a `List<int>` with the results. The length of the array will be
 /// the number of bytes read which may be less than 'nbytes' if we hit the
 /// end of the file when reading.
 ///
@@ -390,6 +390,7 @@ void chmodWithMode(String filename, int mode) {
     ];
     return result.join();
   }
+
   chmod(filename, modeToOctalString(mode));
 }
 
@@ -1545,33 +1546,26 @@ String _getLogin_error(int error) {
     case EMFILE:
       message = 'The per-process limit on the number of open file descriptors '
           'has been reached.';
-      break;
 
     case ENFILE:
       message = 'The system-wide limit on the total number of open files has '
           'been reached.';
-      break;
 
     case ENXIO:
       message = 'The calling process has no controlling terminal.';
-      break;
     case ERANGE:
       message =
           '(getlogin_r) The length of the username, including the terminating '
           "null byte ('0'), is larger than bufsize.";
-      break;
 
     case ENOENT:
       message = 'There was no corresponding entry in the utmp-file.';
-      break;
 
     case ENOMEM:
       message = 'Insufficient memory to allocate passwd structure.';
-      break;
 
     case ENOTTY:
       message = "Standard input didn't refer to a terminal.  (See BUGS.)";
-      break;
 
     default:
       message = strerror(error);

@@ -5,7 +5,7 @@
  */
 
 // ignore_for_file:unused_element, constant_identifier_names
-part of mac;
+part of 'mac.dart';
 
 const int __DARWIN_ONLY_64_BIT_INO_T = 0;
 

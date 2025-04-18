@@ -5,7 +5,7 @@
  */
 
 // ignore_for_file: non_constant_identifier_names, unused_element, unused_field
-part of mac;
+part of 'mac.dart';
 
 final class _opaque_pthread_attr_t extends ffi.Struct {
   @ffi.Int64()
@@ -271,172 +271,116 @@ class _ArrayHelper__opaque_pthread_attr_t___opaque_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique___opaque_item_0 = value;
-        break;
       case 1:
         _struct._unique___opaque_item_1 = value;
-        break;
       case 2:
         _struct._unique___opaque_item_2 = value;
-        break;
       case 3:
         _struct._unique___opaque_item_3 = value;
-        break;
       case 4:
         _struct._unique___opaque_item_4 = value;
-        break;
       case 5:
         _struct._unique___opaque_item_5 = value;
-        break;
       case 6:
         _struct._unique___opaque_item_6 = value;
-        break;
       case 7:
         _struct._unique___opaque_item_7 = value;
-        break;
       case 8:
         _struct._unique___opaque_item_8 = value;
-        break;
       case 9:
         _struct._unique___opaque_item_9 = value;
-        break;
       case 10:
         _struct._unique___opaque_item_10 = value;
-        break;
       case 11:
         _struct._unique___opaque_item_11 = value;
-        break;
       case 12:
         _struct._unique___opaque_item_12 = value;
-        break;
       case 13:
         _struct._unique___opaque_item_13 = value;
-        break;
       case 14:
         _struct._unique___opaque_item_14 = value;
-        break;
       case 15:
         _struct._unique___opaque_item_15 = value;
-        break;
       case 16:
         _struct._unique___opaque_item_16 = value;
-        break;
       case 17:
         _struct._unique___opaque_item_17 = value;
-        break;
       case 18:
         _struct._unique___opaque_item_18 = value;
-        break;
       case 19:
         _struct._unique___opaque_item_19 = value;
-        break;
       case 20:
         _struct._unique___opaque_item_20 = value;
-        break;
       case 21:
         _struct._unique___opaque_item_21 = value;
-        break;
       case 22:
         _struct._unique___opaque_item_22 = value;
-        break;
       case 23:
         _struct._unique___opaque_item_23 = value;
-        break;
       case 24:
         _struct._unique___opaque_item_24 = value;
-        break;
       case 25:
         _struct._unique___opaque_item_25 = value;
-        break;
       case 26:
         _struct._unique___opaque_item_26 = value;
-        break;
       case 27:
         _struct._unique___opaque_item_27 = value;
-        break;
       case 28:
         _struct._unique___opaque_item_28 = value;
-        break;
       case 29:
         _struct._unique___opaque_item_29 = value;
-        break;
       case 30:
         _struct._unique___opaque_item_30 = value;
-        break;
       case 31:
         _struct._unique___opaque_item_31 = value;
-        break;
       case 32:
         _struct._unique___opaque_item_32 = value;
-        break;
       case 33:
         _struct._unique___opaque_item_33 = value;
-        break;
       case 34:
         _struct._unique___opaque_item_34 = value;
-        break;
       case 35:
         _struct._unique___opaque_item_35 = value;
-        break;
       case 36:
         _struct._unique___opaque_item_36 = value;
-        break;
       case 37:
         _struct._unique___opaque_item_37 = value;
-        break;
       case 38:
         _struct._unique___opaque_item_38 = value;
-        break;
       case 39:
         _struct._unique___opaque_item_39 = value;
-        break;
       case 40:
         _struct._unique___opaque_item_40 = value;
-        break;
       case 41:
         _struct._unique___opaque_item_41 = value;
-        break;
       case 42:
         _struct._unique___opaque_item_42 = value;
-        break;
       case 43:
         _struct._unique___opaque_item_43 = value;
-        break;
       case 44:
         _struct._unique___opaque_item_44 = value;
-        break;
       case 45:
         _struct._unique___opaque_item_45 = value;
-        break;
       case 46:
         _struct._unique___opaque_item_46 = value;
-        break;
       case 47:
         _struct._unique___opaque_item_47 = value;
-        break;
       case 48:
         _struct._unique___opaque_item_48 = value;
-        break;
       case 49:
         _struct._unique___opaque_item_49 = value;
-        break;
       case 50:
         _struct._unique___opaque_item_50 = value;
-        break;
       case 51:
         _struct._unique___opaque_item_51 = value;
-        break;
       case 52:
         _struct._unique___opaque_item_52 = value;
-        break;
       case 53:
         _struct._unique___opaque_item_53 = value;
-        break;
       case 54:
         _struct._unique___opaque_item_54 = value;
-        break;
       case 55:
         _struct._unique___opaque_item_55 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }
@@ -643,124 +587,84 @@ class _ArrayHelper__opaque_pthread_cond_t___opaque_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique___opaque_item_0 = value;
-        break;
       case 1:
         _struct._unique___opaque_item_1 = value;
-        break;
       case 2:
         _struct._unique___opaque_item_2 = value;
-        break;
       case 3:
         _struct._unique___opaque_item_3 = value;
-        break;
       case 4:
         _struct._unique___opaque_item_4 = value;
-        break;
       case 5:
         _struct._unique___opaque_item_5 = value;
-        break;
       case 6:
         _struct._unique___opaque_item_6 = value;
-        break;
       case 7:
         _struct._unique___opaque_item_7 = value;
-        break;
       case 8:
         _struct._unique___opaque_item_8 = value;
-        break;
       case 9:
         _struct._unique___opaque_item_9 = value;
-        break;
       case 10:
         _struct._unique___opaque_item_10 = value;
-        break;
       case 11:
         _struct._unique___opaque_item_11 = value;
-        break;
       case 12:
         _struct._unique___opaque_item_12 = value;
-        break;
       case 13:
         _struct._unique___opaque_item_13 = value;
-        break;
       case 14:
         _struct._unique___opaque_item_14 = value;
-        break;
       case 15:
         _struct._unique___opaque_item_15 = value;
-        break;
       case 16:
         _struct._unique___opaque_item_16 = value;
-        break;
       case 17:
         _struct._unique___opaque_item_17 = value;
-        break;
       case 18:
         _struct._unique___opaque_item_18 = value;
-        break;
       case 19:
         _struct._unique___opaque_item_19 = value;
-        break;
       case 20:
         _struct._unique___opaque_item_20 = value;
-        break;
       case 21:
         _struct._unique___opaque_item_21 = value;
-        break;
       case 22:
         _struct._unique___opaque_item_22 = value;
-        break;
       case 23:
         _struct._unique___opaque_item_23 = value;
-        break;
       case 24:
         _struct._unique___opaque_item_24 = value;
-        break;
       case 25:
         _struct._unique___opaque_item_25 = value;
-        break;
       case 26:
         _struct._unique___opaque_item_26 = value;
-        break;
       case 27:
         _struct._unique___opaque_item_27 = value;
-        break;
       case 28:
         _struct._unique___opaque_item_28 = value;
-        break;
       case 29:
         _struct._unique___opaque_item_29 = value;
-        break;
       case 30:
         _struct._unique___opaque_item_30 = value;
-        break;
       case 31:
         _struct._unique___opaque_item_31 = value;
-        break;
       case 32:
         _struct._unique___opaque_item_32 = value;
-        break;
       case 33:
         _struct._unique___opaque_item_33 = value;
-        break;
       case 34:
         _struct._unique___opaque_item_34 = value;
-        break;
       case 35:
         _struct._unique___opaque_item_35 = value;
-        break;
       case 36:
         _struct._unique___opaque_item_36 = value;
-        break;
       case 37:
         _struct._unique___opaque_item_37 = value;
-        break;
       case 38:
         _struct._unique___opaque_item_38 = value;
-        break;
       case 39:
         _struct._unique___opaque_item_39 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }
@@ -840,28 +744,20 @@ class _ArrayHelper__opaque_pthread_condattr_t___opaque_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique___opaque_item_0 = value;
-        break;
       case 1:
         _struct._unique___opaque_item_1 = value;
-        break;
       case 2:
         _struct._unique___opaque_item_2 = value;
-        break;
       case 3:
         _struct._unique___opaque_item_3 = value;
-        break;
       case 4:
         _struct._unique___opaque_item_4 = value;
-        break;
       case 5:
         _struct._unique___opaque_item_5 = value;
-        break;
       case 6:
         _struct._unique___opaque_item_6 = value;
-        break;
       case 7:
         _struct._unique___opaque_item_7 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }
@@ -1132,172 +1028,116 @@ class _ArrayHelper__opaque_pthread_mutex_t___opaque_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique___opaque_item_0 = value;
-        break;
       case 1:
         _struct._unique___opaque_item_1 = value;
-        break;
       case 2:
         _struct._unique___opaque_item_2 = value;
-        break;
       case 3:
         _struct._unique___opaque_item_3 = value;
-        break;
       case 4:
         _struct._unique___opaque_item_4 = value;
-        break;
       case 5:
         _struct._unique___opaque_item_5 = value;
-        break;
       case 6:
         _struct._unique___opaque_item_6 = value;
-        break;
       case 7:
         _struct._unique___opaque_item_7 = value;
-        break;
       case 8:
         _struct._unique___opaque_item_8 = value;
-        break;
       case 9:
         _struct._unique___opaque_item_9 = value;
-        break;
       case 10:
         _struct._unique___opaque_item_10 = value;
-        break;
       case 11:
         _struct._unique___opaque_item_11 = value;
-        break;
       case 12:
         _struct._unique___opaque_item_12 = value;
-        break;
       case 13:
         _struct._unique___opaque_item_13 = value;
-        break;
       case 14:
         _struct._unique___opaque_item_14 = value;
-        break;
       case 15:
         _struct._unique___opaque_item_15 = value;
-        break;
       case 16:
         _struct._unique___opaque_item_16 = value;
-        break;
       case 17:
         _struct._unique___opaque_item_17 = value;
-        break;
       case 18:
         _struct._unique___opaque_item_18 = value;
-        break;
       case 19:
         _struct._unique___opaque_item_19 = value;
-        break;
       case 20:
         _struct._unique___opaque_item_20 = value;
-        break;
       case 21:
         _struct._unique___opaque_item_21 = value;
-        break;
       case 22:
         _struct._unique___opaque_item_22 = value;
-        break;
       case 23:
         _struct._unique___opaque_item_23 = value;
-        break;
       case 24:
         _struct._unique___opaque_item_24 = value;
-        break;
       case 25:
         _struct._unique___opaque_item_25 = value;
-        break;
       case 26:
         _struct._unique___opaque_item_26 = value;
-        break;
       case 27:
         _struct._unique___opaque_item_27 = value;
-        break;
       case 28:
         _struct._unique___opaque_item_28 = value;
-        break;
       case 29:
         _struct._unique___opaque_item_29 = value;
-        break;
       case 30:
         _struct._unique___opaque_item_30 = value;
-        break;
       case 31:
         _struct._unique___opaque_item_31 = value;
-        break;
       case 32:
         _struct._unique___opaque_item_32 = value;
-        break;
       case 33:
         _struct._unique___opaque_item_33 = value;
-        break;
       case 34:
         _struct._unique___opaque_item_34 = value;
-        break;
       case 35:
         _struct._unique___opaque_item_35 = value;
-        break;
       case 36:
         _struct._unique___opaque_item_36 = value;
-        break;
       case 37:
         _struct._unique___opaque_item_37 = value;
-        break;
       case 38:
         _struct._unique___opaque_item_38 = value;
-        break;
       case 39:
         _struct._unique___opaque_item_39 = value;
-        break;
       case 40:
         _struct._unique___opaque_item_40 = value;
-        break;
       case 41:
         _struct._unique___opaque_item_41 = value;
-        break;
       case 42:
         _struct._unique___opaque_item_42 = value;
-        break;
       case 43:
         _struct._unique___opaque_item_43 = value;
-        break;
       case 44:
         _struct._unique___opaque_item_44 = value;
-        break;
       case 45:
         _struct._unique___opaque_item_45 = value;
-        break;
       case 46:
         _struct._unique___opaque_item_46 = value;
-        break;
       case 47:
         _struct._unique___opaque_item_47 = value;
-        break;
       case 48:
         _struct._unique___opaque_item_48 = value;
-        break;
       case 49:
         _struct._unique___opaque_item_49 = value;
-        break;
       case 50:
         _struct._unique___opaque_item_50 = value;
-        break;
       case 51:
         _struct._unique___opaque_item_51 = value;
-        break;
       case 52:
         _struct._unique___opaque_item_52 = value;
-        break;
       case 53:
         _struct._unique___opaque_item_53 = value;
-        break;
       case 54:
         _struct._unique___opaque_item_54 = value;
-        break;
       case 55:
         _struct._unique___opaque_item_55 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }
@@ -1376,28 +1216,20 @@ class _ArrayHelper__opaque_pthread_mutexattr_t___opaque_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique___opaque_item_0 = value;
-        break;
       case 1:
         _struct._unique___opaque_item_1 = value;
-        break;
       case 2:
         _struct._unique___opaque_item_2 = value;
-        break;
       case 3:
         _struct._unique___opaque_item_3 = value;
-        break;
       case 4:
         _struct._unique___opaque_item_4 = value;
-        break;
       case 5:
         _struct._unique___opaque_item_5 = value;
-        break;
       case 6:
         _struct._unique___opaque_item_6 = value;
-        break;
       case 7:
         _struct._unique___opaque_item_7 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }
@@ -1476,28 +1308,20 @@ class _ArrayHelper__opaque_pthread_once_t___opaque_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique___opaque_item_0 = value;
-        break;
       case 1:
         _struct._unique___opaque_item_1 = value;
-        break;
       case 2:
         _struct._unique___opaque_item_2 = value;
-        break;
       case 3:
         _struct._unique___opaque_item_3 = value;
-        break;
       case 4:
         _struct._unique___opaque_item_4 = value;
-        break;
       case 5:
         _struct._unique___opaque_item_5 = value;
-        break;
       case 6:
         _struct._unique___opaque_item_6 = value;
-        break;
       case 7:
         _struct._unique___opaque_item_7 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }
@@ -2312,580 +2136,388 @@ class _ArrayHelper__opaque_pthread_rwlock_t___opaque_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique___opaque_item_0 = value;
-        break;
       case 1:
         _struct._unique___opaque_item_1 = value;
-        break;
       case 2:
         _struct._unique___opaque_item_2 = value;
-        break;
       case 3:
         _struct._unique___opaque_item_3 = value;
-        break;
       case 4:
         _struct._unique___opaque_item_4 = value;
-        break;
       case 5:
         _struct._unique___opaque_item_5 = value;
-        break;
       case 6:
         _struct._unique___opaque_item_6 = value;
-        break;
       case 7:
         _struct._unique___opaque_item_7 = value;
-        break;
       case 8:
         _struct._unique___opaque_item_8 = value;
-        break;
       case 9:
         _struct._unique___opaque_item_9 = value;
-        break;
       case 10:
         _struct._unique___opaque_item_10 = value;
-        break;
       case 11:
         _struct._unique___opaque_item_11 = value;
-        break;
       case 12:
         _struct._unique___opaque_item_12 = value;
-        break;
       case 13:
         _struct._unique___opaque_item_13 = value;
-        break;
       case 14:
         _struct._unique___opaque_item_14 = value;
-        break;
       case 15:
         _struct._unique___opaque_item_15 = value;
-        break;
       case 16:
         _struct._unique___opaque_item_16 = value;
-        break;
       case 17:
         _struct._unique___opaque_item_17 = value;
-        break;
       case 18:
         _struct._unique___opaque_item_18 = value;
-        break;
       case 19:
         _struct._unique___opaque_item_19 = value;
-        break;
       case 20:
         _struct._unique___opaque_item_20 = value;
-        break;
       case 21:
         _struct._unique___opaque_item_21 = value;
-        break;
       case 22:
         _struct._unique___opaque_item_22 = value;
-        break;
       case 23:
         _struct._unique___opaque_item_23 = value;
-        break;
       case 24:
         _struct._unique___opaque_item_24 = value;
-        break;
       case 25:
         _struct._unique___opaque_item_25 = value;
-        break;
       case 26:
         _struct._unique___opaque_item_26 = value;
-        break;
       case 27:
         _struct._unique___opaque_item_27 = value;
-        break;
       case 28:
         _struct._unique___opaque_item_28 = value;
-        break;
       case 29:
         _struct._unique___opaque_item_29 = value;
-        break;
       case 30:
         _struct._unique___opaque_item_30 = value;
-        break;
       case 31:
         _struct._unique___opaque_item_31 = value;
-        break;
       case 32:
         _struct._unique___opaque_item_32 = value;
-        break;
       case 33:
         _struct._unique___opaque_item_33 = value;
-        break;
       case 34:
         _struct._unique___opaque_item_34 = value;
-        break;
       case 35:
         _struct._unique___opaque_item_35 = value;
-        break;
       case 36:
         _struct._unique___opaque_item_36 = value;
-        break;
       case 37:
         _struct._unique___opaque_item_37 = value;
-        break;
       case 38:
         _struct._unique___opaque_item_38 = value;
-        break;
       case 39:
         _struct._unique___opaque_item_39 = value;
-        break;
       case 40:
         _struct._unique___opaque_item_40 = value;
-        break;
       case 41:
         _struct._unique___opaque_item_41 = value;
-        break;
       case 42:
         _struct._unique___opaque_item_42 = value;
-        break;
       case 43:
         _struct._unique___opaque_item_43 = value;
-        break;
       case 44:
         _struct._unique___opaque_item_44 = value;
-        break;
       case 45:
         _struct._unique___opaque_item_45 = value;
-        break;
       case 46:
         _struct._unique___opaque_item_46 = value;
-        break;
       case 47:
         _struct._unique___opaque_item_47 = value;
-        break;
       case 48:
         _struct._unique___opaque_item_48 = value;
-        break;
       case 49:
         _struct._unique___opaque_item_49 = value;
-        break;
       case 50:
         _struct._unique___opaque_item_50 = value;
-        break;
       case 51:
         _struct._unique___opaque_item_51 = value;
-        break;
       case 52:
         _struct._unique___opaque_item_52 = value;
-        break;
       case 53:
         _struct._unique___opaque_item_53 = value;
-        break;
       case 54:
         _struct._unique___opaque_item_54 = value;
-        break;
       case 55:
         _struct._unique___opaque_item_55 = value;
-        break;
       case 56:
         _struct._unique___opaque_item_56 = value;
-        break;
       case 57:
         _struct._unique___opaque_item_57 = value;
-        break;
       case 58:
         _struct._unique___opaque_item_58 = value;
-        break;
       case 59:
         _struct._unique___opaque_item_59 = value;
-        break;
       case 60:
         _struct._unique___opaque_item_60 = value;
-        break;
       case 61:
         _struct._unique___opaque_item_61 = value;
-        break;
       case 62:
         _struct._unique___opaque_item_62 = value;
-        break;
       case 63:
         _struct._unique___opaque_item_63 = value;
-        break;
       case 64:
         _struct._unique___opaque_item_64 = value;
-        break;
       case 65:
         _struct._unique___opaque_item_65 = value;
-        break;
       case 66:
         _struct._unique___opaque_item_66 = value;
-        break;
       case 67:
         _struct._unique___opaque_item_67 = value;
-        break;
       case 68:
         _struct._unique___opaque_item_68 = value;
-        break;
       case 69:
         _struct._unique___opaque_item_69 = value;
-        break;
       case 70:
         _struct._unique___opaque_item_70 = value;
-        break;
       case 71:
         _struct._unique___opaque_item_71 = value;
-        break;
       case 72:
         _struct._unique___opaque_item_72 = value;
-        break;
       case 73:
         _struct._unique___opaque_item_73 = value;
-        break;
       case 74:
         _struct._unique___opaque_item_74 = value;
-        break;
       case 75:
         _struct._unique___opaque_item_75 = value;
-        break;
       case 76:
         _struct._unique___opaque_item_76 = value;
-        break;
       case 77:
         _struct._unique___opaque_item_77 = value;
-        break;
       case 78:
         _struct._unique___opaque_item_78 = value;
-        break;
       case 79:
         _struct._unique___opaque_item_79 = value;
-        break;
       case 80:
         _struct._unique___opaque_item_80 = value;
-        break;
       case 81:
         _struct._unique___opaque_item_81 = value;
-        break;
       case 82:
         _struct._unique___opaque_item_82 = value;
-        break;
       case 83:
         _struct._unique___opaque_item_83 = value;
-        break;
       case 84:
         _struct._unique___opaque_item_84 = value;
-        break;
       case 85:
         _struct._unique___opaque_item_85 = value;
-        break;
       case 86:
         _struct._unique___opaque_item_86 = value;
-        break;
       case 87:
         _struct._unique___opaque_item_87 = value;
-        break;
       case 88:
         _struct._unique___opaque_item_88 = value;
-        break;
       case 89:
         _struct._unique___opaque_item_89 = value;
-        break;
       case 90:
         _struct._unique___opaque_item_90 = value;
-        break;
       case 91:
         _struct._unique___opaque_item_91 = value;
-        break;
       case 92:
         _struct._unique___opaque_item_92 = value;
-        break;
       case 93:
         _struct._unique___opaque_item_93 = value;
-        break;
       case 94:
         _struct._unique___opaque_item_94 = value;
-        break;
       case 95:
         _struct._unique___opaque_item_95 = value;
-        break;
       case 96:
         _struct._unique___opaque_item_96 = value;
-        break;
       case 97:
         _struct._unique___opaque_item_97 = value;
-        break;
       case 98:
         _struct._unique___opaque_item_98 = value;
-        break;
       case 99:
         _struct._unique___opaque_item_99 = value;
-        break;
       case 100:
         _struct._unique___opaque_item_100 = value;
-        break;
       case 101:
         _struct._unique___opaque_item_101 = value;
-        break;
       case 102:
         _struct._unique___opaque_item_102 = value;
-        break;
       case 103:
         _struct._unique___opaque_item_103 = value;
-        break;
       case 104:
         _struct._unique___opaque_item_104 = value;
-        break;
       case 105:
         _struct._unique___opaque_item_105 = value;
-        break;
       case 106:
         _struct._unique___opaque_item_106 = value;
-        break;
       case 107:
         _struct._unique___opaque_item_107 = value;
-        break;
       case 108:
         _struct._unique___opaque_item_108 = value;
-        break;
       case 109:
         _struct._unique___opaque_item_109 = value;
-        break;
       case 110:
         _struct._unique___opaque_item_110 = value;
-        break;
       case 111:
         _struct._unique___opaque_item_111 = value;
-        break;
       case 112:
         _struct._unique___opaque_item_112 = value;
-        break;
       case 113:
         _struct._unique___opaque_item_113 = value;
-        break;
       case 114:
         _struct._unique___opaque_item_114 = value;
-        break;
       case 115:
         _struct._unique___opaque_item_115 = value;
-        break;
       case 116:
         _struct._unique___opaque_item_116 = value;
-        break;
       case 117:
         _struct._unique___opaque_item_117 = value;
-        break;
       case 118:
         _struct._unique___opaque_item_118 = value;
-        break;
       case 119:
         _struct._unique___opaque_item_119 = value;
-        break;
       case 120:
         _struct._unique___opaque_item_120 = value;
-        break;
       case 121:
         _struct._unique___opaque_item_121 = value;
-        break;
       case 122:
         _struct._unique___opaque_item_122 = value;
-        break;
       case 123:
         _struct._unique___opaque_item_123 = value;
-        break;
       case 124:
         _struct._unique___opaque_item_124 = value;
-        break;
       case 125:
         _struct._unique___opaque_item_125 = value;
-        break;
       case 126:
         _struct._unique___opaque_item_126 = value;
-        break;
       case 127:
         _struct._unique___opaque_item_127 = value;
-        break;
       case 128:
         _struct._unique___opaque_item_128 = value;
-        break;
       case 129:
         _struct._unique___opaque_item_129 = value;
-        break;
       case 130:
         _struct._unique___opaque_item_130 = value;
-        break;
       case 131:
         _struct._unique___opaque_item_131 = value;
-        break;
       case 132:
         _struct._unique___opaque_item_132 = value;
-        break;
       case 133:
         _struct._unique___opaque_item_133 = value;
-        break;
       case 134:
         _struct._unique___opaque_item_134 = value;
-        break;
       case 135:
         _struct._unique___opaque_item_135 = value;
-        break;
       case 136:
         _struct._unique___opaque_item_136 = value;
-        break;
       case 137:
         _struct._unique___opaque_item_137 = value;
-        break;
       case 138:
         _struct._unique___opaque_item_138 = value;
-        break;
       case 139:
         _struct._unique___opaque_item_139 = value;
-        break;
       case 140:
         _struct._unique___opaque_item_140 = value;
-        break;
       case 141:
         _struct._unique___opaque_item_141 = value;
-        break;
       case 142:
         _struct._unique___opaque_item_142 = value;
-        break;
       case 143:
         _struct._unique___opaque_item_143 = value;
-        break;
       case 144:
         _struct._unique___opaque_item_144 = value;
-        break;
       case 145:
         _struct._unique___opaque_item_145 = value;
-        break;
       case 146:
         _struct._unique___opaque_item_146 = value;
-        break;
       case 147:
         _struct._unique___opaque_item_147 = value;
-        break;
       case 148:
         _struct._unique___opaque_item_148 = value;
-        break;
       case 149:
         _struct._unique___opaque_item_149 = value;
-        break;
       case 150:
         _struct._unique___opaque_item_150 = value;
-        break;
       case 151:
         _struct._unique___opaque_item_151 = value;
-        break;
       case 152:
         _struct._unique___opaque_item_152 = value;
-        break;
       case 153:
         _struct._unique___opaque_item_153 = value;
-        break;
       case 154:
         _struct._unique___opaque_item_154 = value;
-        break;
       case 155:
         _struct._unique___opaque_item_155 = value;
-        break;
       case 156:
         _struct._unique___opaque_item_156 = value;
-        break;
       case 157:
         _struct._unique___opaque_item_157 = value;
-        break;
       case 158:
         _struct._unique___opaque_item_158 = value;
-        break;
       case 159:
         _struct._unique___opaque_item_159 = value;
-        break;
       case 160:
         _struct._unique___opaque_item_160 = value;
-        break;
       case 161:
         _struct._unique___opaque_item_161 = value;
-        break;
       case 162:
         _struct._unique___opaque_item_162 = value;
-        break;
       case 163:
         _struct._unique___opaque_item_163 = value;
-        break;
       case 164:
         _struct._unique___opaque_item_164 = value;
-        break;
       case 165:
         _struct._unique___opaque_item_165 = value;
-        break;
       case 166:
         _struct._unique___opaque_item_166 = value;
-        break;
       case 167:
         _struct._unique___opaque_item_167 = value;
-        break;
       case 168:
         _struct._unique___opaque_item_168 = value;
-        break;
       case 169:
         _struct._unique___opaque_item_169 = value;
-        break;
       case 170:
         _struct._unique___opaque_item_170 = value;
-        break;
       case 171:
         _struct._unique___opaque_item_171 = value;
-        break;
       case 172:
         _struct._unique___opaque_item_172 = value;
-        break;
       case 173:
         _struct._unique___opaque_item_173 = value;
-        break;
       case 174:
         _struct._unique___opaque_item_174 = value;
-        break;
       case 175:
         _struct._unique___opaque_item_175 = value;
-        break;
       case 176:
         _struct._unique___opaque_item_176 = value;
-        break;
       case 177:
         _struct._unique___opaque_item_177 = value;
-        break;
       case 178:
         _struct._unique___opaque_item_178 = value;
-        break;
       case 179:
         _struct._unique___opaque_item_179 = value;
-        break;
       case 180:
         _struct._unique___opaque_item_180 = value;
-        break;
       case 181:
         _struct._unique___opaque_item_181 = value;
-        break;
       case 182:
         _struct._unique___opaque_item_182 = value;
-        break;
       case 183:
         _struct._unique___opaque_item_183 = value;
-        break;
       case 184:
         _struct._unique___opaque_item_184 = value;
-        break;
       case 185:
         _struct._unique___opaque_item_185 = value;
-        break;
       case 186:
         _struct._unique___opaque_item_186 = value;
-        break;
       case 187:
         _struct._unique___opaque_item_187 = value;
-        break;
       case 188:
         _struct._unique___opaque_item_188 = value;
-        break;
       case 189:
         _struct._unique___opaque_item_189 = value;
-        break;
       case 190:
         _struct._unique___opaque_item_190 = value;
-        break;
       case 191:
         _struct._unique___opaque_item_191 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }
@@ -2996,52 +2628,36 @@ class _ArrayHelper__opaque_pthread_rwlockattr_t___opaque_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique___opaque_item_0 = value;
-        break;
       case 1:
         _struct._unique___opaque_item_1 = value;
-        break;
       case 2:
         _struct._unique___opaque_item_2 = value;
-        break;
       case 3:
         _struct._unique___opaque_item_3 = value;
-        break;
       case 4:
         _struct._unique___opaque_item_4 = value;
-        break;
       case 5:
         _struct._unique___opaque_item_5 = value;
-        break;
       case 6:
         _struct._unique___opaque_item_6 = value;
-        break;
       case 7:
         _struct._unique___opaque_item_7 = value;
-        break;
       case 8:
         _struct._unique___opaque_item_8 = value;
-        break;
       case 9:
         _struct._unique___opaque_item_9 = value;
-        break;
       case 10:
         _struct._unique___opaque_item_10 = value;
-        break;
       case 11:
         _struct._unique___opaque_item_11 = value;
-        break;
       case 12:
         _struct._unique___opaque_item_12 = value;
-        break;
       case 13:
         _struct._unique___opaque_item_13 = value;
-        break;
       case 14:
         _struct._unique___opaque_item_14 = value;
-        break;
       case 15:
         _struct._unique___opaque_item_15 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }

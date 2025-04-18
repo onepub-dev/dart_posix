@@ -5,7 +5,7 @@
  */
 
 // ignore_for_file: non_constant_identifier_names
-part of mac;
+part of 'mac.dart';
 
 /// Helper for array `__opaque` in struct `_opaque_pthread_t`.
 // class ArrayHelper__opaque_pthread_t___opaque_level0 {

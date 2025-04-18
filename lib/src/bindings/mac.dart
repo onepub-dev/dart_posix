@@ -7,7 +7,7 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names
 // ignore_for_file: unused_element, unused_field
 
-library mac;
+library ;
 
 import 'dart:ffi' as ffi;
 

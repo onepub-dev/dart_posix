@@ -12,6 +12,8 @@ linter:
     avoid_print: false  
     
 analyzer:
+  errors:
+    document_ignores: ignore
   exclude: test/*.dart    
 
 

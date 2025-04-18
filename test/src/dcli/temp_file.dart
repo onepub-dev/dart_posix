@@ -14,7 +14,6 @@ import 'delete.dart';
 import 'is.dart';
 import 'touch.dart';
 import 'utility.dart';
-import 'verbose.dart';
 
 /// Opens a File and calls [action] passing in the open file.
 /// When action completes the file is closed.
@@ -36,72 +35,6 @@ Future<R> withOpenFile<R>(
 }
 
 ///
-/// Creates a link at [linkPath] which points to an
-/// existing file or directory at [existingPath]
-///
-/// On Windows you need to be in developer mode or running as an Administrator
-/// to create a symlink.
-///
-/// To enable developer mode see:
-/// https://dcli.onepub.dev/getting-started/installing-on-windows
-///
-/// To check if your script is running as an administrator use:
-///
-/// [Shell.current.isPrivileged]
-///
-Future<void> symlink(
-  String existingPath,
-  String linkPath,
-) async {
-  verbose(() => 'symlink existingPath: $existingPath linkPath $linkPath');
-  await Link(linkPath).create(existingPath);
-}
-
-///
-/// Deletes the symlink at [linkPath]
-///
-/// On Windows you need to be in developer mode or running as an Administrator
-/// to delete a symlink.
-///
-/// To enable developer mode see:
-/// https://dcli.onepub.dev/getting-started/installing-on-windows
-///
-/// To check if your script is running as an administrator use:
-///
-/// [Shell.current.isPrivileged]
-///
-Future<void> deleteSymlink(String linkPath) async {
-  verbose(() => 'deleteSymlink linkPath: $linkPath');
-  await Link(linkPath).delete();
-}
-
-///
-/// Resolves the a symbolic link [pathToLink]
-/// to the ultimate target path.
-///
-/// The return path will be canonicalized.
-///
-/// e.g.
-/// ```dart
-/// resolveSymLink('/usr/bin/dart) == '/usr/lib/bin/dart'
-/// ```
-///
-/// throws a FileSystemException if the target path does not exist.
-Future<String> resolveSymLink(String pathToLink) async {
-  final normalised = canonicalize(pathToLink);
-
-  String resolved;
-  if (isDirectory(normalised)) {
-    resolved = Directory(normalised).resolveSymbolicLinksSync();
-  } else {
-    resolved = canonicalize(File(normalised).resolveSymbolicLinksSync());
-  }
-
-  verbose(() => 'resolveSymLink $pathToLink resolved: $resolved');
-  return resolved;
-}
-
-///
 ///
 /// Returns a FileStat instance describing the
 /// file or directory located by [path].
@@ -115,9 +48,9 @@ FileStat stat(String path) => File(path).statSync();
 ///
 /// This method does NOT create the file.
 ///
-/// The temp file name will be <uuid>.tmp
+/// The temp file name will be `<uuid>`.tmp
 /// unless you provide a [suffix] in which
-/// case the file name will be <uuid>.<suffix>
+/// case the file name will be `<uuid>.<suffix>`
 String createTempFilename({String? suffix, String? pathToTempDir}) {
   var finalsuffix = suffix ?? 'tmp';
 
@@ -134,9 +67,9 @@ String createTempFilename({String? suffix, String? pathToTempDir}) {
 ///
 /// This method does not create the file.
 ///
-/// The temp file name will be <uuid>.tmp
+/// The temp file name will be `<uuid>.tmp`
 /// unless you provide a [suffix] in which
-/// case the file name will be <uuid>.<suffix>
+/// case the file name will be `<uuid>.<suffix>`
 Future<String> createTempFile({String? suffix}) async {
   final filename = createTempFilename(suffix: suffix);
   touch(filename, create: true);
@@ -161,9 +94,9 @@ Future<int> fileLength(String pathToFile) => File(pathToFile).length();
 /// directory otherwise the file will be created in the system
 /// temp directory.
 ///
-/// The temp file name will be <uuid>.tmp
+/// The temp file name will be `<uuid>.tmp`
 /// unless you provide a [suffix] in which
-/// case the file name will be <uuid>.<suffix>
+/// case the file name will be `<uuid>.<suffix>`
 Future<R> withTempFile<R>(
   Future<R> Function(String tempFile) action, {
   String? suffix,

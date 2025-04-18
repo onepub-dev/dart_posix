@@ -6,7 +6,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of mac;
+part of 'mac.dart';
 
 final class accessx_descriptor extends ffi.Struct {
   @ffi.Uint32()
@@ -59,10 +59,8 @@ class ArrayHelper_accessx_descriptor_ad_pad_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique_ad_pad_item_0 = value;
-        break;
       case 1:
         _struct._unique_ad_pad_item_1 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }
@@ -234,100 +232,68 @@ class ArrayHelper_fd_set_fds_bits_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique_fds_bits_item_0 = value;
-        break;
       case 1:
         _struct._unique_fds_bits_item_1 = value;
-        break;
       case 2:
         _struct._unique_fds_bits_item_2 = value;
-        break;
       case 3:
         _struct._unique_fds_bits_item_3 = value;
-        break;
       case 4:
         _struct._unique_fds_bits_item_4 = value;
-        break;
       case 5:
         _struct._unique_fds_bits_item_5 = value;
-        break;
       case 6:
         _struct._unique_fds_bits_item_6 = value;
-        break;
       case 7:
         _struct._unique_fds_bits_item_7 = value;
-        break;
       case 8:
         _struct._unique_fds_bits_item_8 = value;
-        break;
       case 9:
         _struct._unique_fds_bits_item_9 = value;
-        break;
       case 10:
         _struct._unique_fds_bits_item_10 = value;
-        break;
       case 11:
         _struct._unique_fds_bits_item_11 = value;
-        break;
       case 12:
         _struct._unique_fds_bits_item_12 = value;
-        break;
       case 13:
         _struct._unique_fds_bits_item_13 = value;
-        break;
       case 14:
         _struct._unique_fds_bits_item_14 = value;
-        break;
       case 15:
         _struct._unique_fds_bits_item_15 = value;
-        break;
       case 16:
         _struct._unique_fds_bits_item_16 = value;
-        break;
       case 17:
         _struct._unique_fds_bits_item_17 = value;
-        break;
       case 18:
         _struct._unique_fds_bits_item_18 = value;
-        break;
       case 19:
         _struct._unique_fds_bits_item_19 = value;
-        break;
       case 20:
         _struct._unique_fds_bits_item_20 = value;
-        break;
       case 21:
         _struct._unique_fds_bits_item_21 = value;
-        break;
       case 22:
         _struct._unique_fds_bits_item_22 = value;
-        break;
       case 23:
         _struct._unique_fds_bits_item_23 = value;
-        break;
       case 24:
         _struct._unique_fds_bits_item_24 = value;
-        break;
       case 25:
         _struct._unique_fds_bits_item_25 = value;
-        break;
       case 26:
         _struct._unique_fds_bits_item_26 = value;
-        break;
       case 27:
         _struct._unique_fds_bits_item_27 = value;
-        break;
       case 28:
         _struct._unique_fds_bits_item_28 = value;
-        break;
       case 29:
         _struct._unique_fds_bits_item_29 = value;
-        break;
       case 30:
         _struct._unique_fds_bits_item_30 = value;
-        break;
       case 31:
         _struct._unique_fds_bits_item_31 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }

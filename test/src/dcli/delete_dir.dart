@@ -62,5 +62,6 @@ class _DeleteDir extends DCliFunction {
 /// Throw when [deleteDir] function encounters an error
 class DeleteDirException extends DCliFunctionException {
   /// Throw when [deleteDir] function encounters an error
+  // ignore: matching_super_parameters
   DeleteDirException(super.reason);
 }

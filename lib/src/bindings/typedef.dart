@@ -4,7 +4,7 @@
  * Written by Brett Sutton <bsutton@onepub.dev>, Jan 2022
  */
 
-part of mac;
+part of 'mac.dart';
 
 typedef _dart_getattrlistbulk = int Function(
   int arg0,

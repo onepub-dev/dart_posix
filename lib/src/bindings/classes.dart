@@ -6,7 +6,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of mac;
+part of 'mac.dart';
 
 final class timespec extends ffi.Struct {
   @ffi.Int64()
@@ -237,10 +237,8 @@ class ArrayHelper_stat_st_qspare_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique_st_qspare_item_0 = value;
-        break;
       case 1:
         _struct._unique_st_qspare_item_1 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }
@@ -338,10 +336,8 @@ class ArrayHelper_stat64_st_qspare_level0 {
     switch (_absoluteIndex + index) {
       case 0:
         _struct._unique_st_qspare_item_0 = value;
-        break;
       case 1:
         _struct._unique_st_qspare_item_1 = value;
-        break;
       default:
         throw Exception('Invalid Array Helper generated.');
     }
