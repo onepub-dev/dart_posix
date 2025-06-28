@@ -1,3 +1,6 @@
+# 6.0.3
+- updated copy right notice to reflect mit license.
+
 # 6.0.2
 - Removed deprecated `Pointer.elementAt`.
 

@@ -1,5 +1,5 @@
 name: posix
-version: 6.0.2
+version: 6.0.3
 homepage: https://github.com/onepub-dev/dart_posix
 description: Exposes the POSIX api on OSx and Linux
 environment:
