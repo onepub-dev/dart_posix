@@ -124,7 +124,7 @@ List<int> read(
 
   _throwIfErrno('read', result, cBuf);
 
-  final buf = cBuf.asTypedList(result);
+  final buf = List<int>.from(cBuf.asTypedList(result));
   malloc.free(cBuf);
 
   return buf;
@@ -188,7 +188,7 @@ List<int> pread(
 
   _throwIfErrno('pread', read, cBuf);
 
-  final buf = cBuf.asTypedList(read);
+  final buf = List<int>.from(cBuf.asTypedList(read));
   malloc.free(cBuf);
 
   return buf;
@@ -245,7 +245,7 @@ List<int> native_pipe(
 
   _throwIfErrno('pipe', result, cPipedes);
 
-  final pipedes = cPipedes.asTypedList(2);
+  final pipedes = List<int>.from(cPipedes.asTypedList(2));
 
   malloc.free(cPipedes);
 
