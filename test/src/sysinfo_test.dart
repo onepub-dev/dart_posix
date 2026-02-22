@@ -30,6 +30,6 @@ void main() {
     expect(info.freehigh, isNonNegative);
     expect(info.mem_unit, isPositive);
   },
-      skip: !Platform
-          .isLinux); // TODO(jpnurmi): fix macOS (undefined symbol "sysinfo")
+      // macOS currently skips this test due to missing sysinfo symbol.
+      skip: !Platform.isLinux);
 }
