@@ -1689,7 +1689,8 @@ _dart_getopt? _getopt;
 /// The result is null-terminated if LEN is large enough for the full
 /// name and the terminator.
 String gethostname() {
-  const bufSize = 64 + 1;
+  // POSIX HOST_NAME_MAX is 255 bytes; reserve one extra byte for '\0'.
+  const bufSize = 255 + 1;
   final cName = malloc.allocate<Utf8>(bufSize);
 
   _gethostname ??= Libc().dylib.lookupFunction<
