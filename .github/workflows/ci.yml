@@ -13,6 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.10.7"
       - run: dart pub get
       - run: dart analyze --fatal-infos .
 
@@ -21,6 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.10.7"
       - run: dart pub get
       - run: dart format --set-exit-if-changed .
 
@@ -33,5 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.10.7"
       - run: dart pub get
       - run: dart test

@@ -33,8 +33,22 @@ class MacStatCall extends OsStatCall {
     return stat;
   }
 
-  late final _call =
-      Libc().dylib.lookupFunction<MacStatCall_c, MacStatCall_dart>(name);
+  late final _call = _lookupCall(name);
+
+  MacStatCall_dart _lookupCall(String symbol) {
+    final dylib = Libc().dylib;
+    try {
+      return dylib.lookupFunction<MacStatCall_c, MacStatCall_dart>(symbol);
+    } on Object catch (error) {
+      if (error is! ArgumentError || !symbol.endsWith(r'$INODE64')) {
+        rethrow;
+      }
+      final fallbackSymbol = symbol.replaceFirst(r'$INODE64', '');
+      return dylib.lookupFunction<MacStatCall_c, MacStatCall_dart>(
+        fallbackSymbol,
+      );
+    }
+  }
 
   ffi.Pointer<MacStatStruct> _alloc() => malloc(ffi.sizeOf<MacStatStruct>());
 

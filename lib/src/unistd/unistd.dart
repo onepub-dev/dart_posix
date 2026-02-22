@@ -124,7 +124,7 @@ List<int> read(
 
   _throwIfErrno('read', result, cBuf);
 
-  final buf = cBuf.asTypedList(result);
+  final buf = List<int>.from(cBuf.asTypedList(result));
   malloc.free(cBuf);
 
   return buf;
@@ -188,7 +188,7 @@ List<int> pread(
 
   _throwIfErrno('pread', read, cBuf);
 
-  final buf = cBuf.asTypedList(read);
+  final buf = List<int>.from(cBuf.asTypedList(read));
   malloc.free(cBuf);
 
   return buf;
@@ -245,7 +245,7 @@ List<int> native_pipe(
 
   _throwIfErrno('pipe', result, cPipedes);
 
-  final pipedes = cPipedes.asTypedList(2);
+  final pipedes = List<int>.from(cPipedes.asTypedList(2));
 
   malloc.free(cPipedes);
 
@@ -1689,7 +1689,8 @@ _dart_getopt? _getopt;
 /// The result is null-terminated if LEN is large enough for the full
 /// name and the terminator.
 String gethostname() {
-  const bufSize = 64 + 1;
+  // POSIX HOST_NAME_MAX is 255 bytes; reserve one extra byte for '\0'.
+  const bufSize = 255 + 1;
   final cName = malloc.allocate<Utf8>(bufSize);
 
   _gethostname ??= Libc().dylib.lookupFunction<
