@@ -12,16 +12,26 @@ import 'package:test/test.dart';
 
 void main() {
   test('pwd ...', () async {
-    var passwd = getpwnam(Platform.environment['USER']!);
+    final passwd = getpwnam(Platform.environment['USER']!);
 
     print(passwd);
+    expect(passwd.username, equals(Platform.environment['USER']));
+    expect(passwd.uid, greaterThanOrEqualTo(0));
+    expect(passwd.gid, greaterThanOrEqualTo(0));
 
-    passwd = getpwuid(passwd.uid);
+    final byUid = getpwuid(passwd.uid);
 
-    print(passwd);
+    print(byUid);
+    expect(byUid.uid, equals(passwd.uid));
+    expect(byUid.username, equals(passwd.username));
+    expect(byUid.homePathTo, equals(passwd.homePathTo));
   }, skip: Platform.isWindows);
 
   test('pwd list users', () async {
-    getUsers().forEach(print);
+    final users = getUsers();
+    for (final user in users) {
+      print(user);
+    }
+    expect(users, isNotEmpty);
   }, skip: Platform.isWindows);
 }

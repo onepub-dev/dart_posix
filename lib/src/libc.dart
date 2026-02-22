@@ -61,8 +61,4 @@ class Libc {
           1);
     }
   }
-
-  // F lookupFunction<T extends Function, F extends Function>(String symbolName)
-  // =>
-  //     dylib.lookupFunction(symbolName);
 }

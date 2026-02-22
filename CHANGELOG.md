@@ -1,9 +1,18 @@
 # 6.0.4
 - Thanks to [@ardera](https://github.com/ardera) for reporting #19 (use-after-free in FFI buffer handling).
 - Thanks to [@cbenhagen](https://github.com/cbenhagen) for reporting #13 (macOS `stat$INODE64` symbol lookup failure).
-- Fixed macOS hostname truncation by increasing the `gethostname` buffer size.
-- Updated locked test dependencies for compatibility with current Dart CI runners.
-- Pinned CI SDK to Dart `3.10.7` for stable test execution.
+- PR #20:
+  - Fixed FFI lifetime bugs by copying native buffers before free in `read`, `pread`, and `native_pipe`.
+  - Fixed macOS hostname truncation by increasing the `gethostname` buffer size to `255 + 1`.
+- PR #21:
+  - Added macOS `stat`/`lstat` symbol fallback from `*stat$INODE64` to unsuffixed symbols when needed.
+  - Fixed lint blockers in `tool/replace_copyright.dart` and removed TODO-tag lint in `test/src/sysinfo_test.dart`.
+  - Applied repository formatting updates (`dart format`) required by CI.
+  - Updated locked test dependencies to current compatible versions (`test`, `test_core`, `test_api`, `frontend_server_client`).
+- PR #22:
+  - Finalized release prep by bumping package/version constants and publishing this changelog update.
+- CI/workflow:
+  - Pinned CI SDK to Dart `3.10.7` for stable test execution in GitHub Actions.
 
 # 6.0.3
 - updated copy right notice to reflect mit license.

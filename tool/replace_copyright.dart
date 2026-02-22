@@ -5,7 +5,7 @@ import 'dart:io';
 /// copyright holder.
 ///
 /// Usage:
-///   dart replace_copyright_header.dart `directory`
+///   dart tool/replace_copyright.dart `directory`
 ///
 /// If no directory is provided, the script runs in the current
 /// working directory.

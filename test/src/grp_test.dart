@@ -12,12 +12,19 @@ import 'package:test/test.dart';
 
 void main() {
   test('grp ...', () async {
-    var group = getgrnam(Platform.isMacOS ? 'admin' : 'adm');
+    final expectedName = Platform.isMacOS ? 'admin' : 'adm';
+    final group = getgrnam(expectedName);
 
     print(group);
+    expect(group.name, equals(expectedName));
+    expect(group.gid, greaterThan(0));
+    expect(group.members, isNotNull);
 
-    group = getgrgid(group.gid);
+    final byId = getgrgid(group.gid);
 
-    print(group);
+    print(byId);
+    expect(byId.gid, equals(group.gid));
+    expect(byId.name, equals(group.name));
+    expect(byId.members, isNotEmpty);
   });
 }

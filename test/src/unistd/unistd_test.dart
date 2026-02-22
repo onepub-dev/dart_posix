@@ -37,6 +37,22 @@ void main() {
     expect(getppid(), isNot(equals(pid)));
   });
 
+  test('sethostname reports correct syscall name on error ...', () {
+    // Hostnames over POSIX HOST_NAME_MAX should fail and exercise
+    // error reporting without mutating host state.
+    final invalidHostname = 'a' * 300;
+    expect(
+      () => sethostname(invalidHostname),
+      throwsA(
+        isA<PosixException>().having(
+          (e) => e.message,
+          'message',
+          contains('sethostname'),
+        ),
+      ),
+    );
+  });
+
   /// This test requires sudo to run
   test('chown', () {
     chown('/tmp', 1000, 1000);
