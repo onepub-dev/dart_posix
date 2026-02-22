@@ -1,4 +1,9 @@
-# 6.0.4
+# 6.5.0
+- Refactor large modules and add regression tests
+- Fix macOS CI failures in hostname and stat
+- Fix #13: fallback to stat symbols without INODE64
+- Fix #19: copy FFI buffers before free
+- Fix #13: fallback to stat symbols without INODE64
 - Thanks to [@ardera](https://github.com/ardera) for reporting #19 (use-after-free in FFI buffer handling).
 - Thanks to [@cbenhagen](https://github.com/cbenhagen) for reporting #13 (macOS `stat$INODE64` symbol lookup failure).
 - PR #20:
@@ -6,13 +11,6 @@
   - Fixed macOS hostname truncation by increasing the `gethostname` buffer size to `255 + 1`.
 - PR #21:
   - Added macOS `stat`/`lstat` symbol fallback from `*stat$INODE64` to unsuffixed symbols when needed.
-  - Fixed lint blockers in `tool/replace_copyright.dart` and removed TODO-tag lint in `test/src/sysinfo_test.dart`.
-  - Applied repository formatting updates (`dart format`) required by CI.
-  - Updated locked test dependencies to current compatible versions (`test`, `test_core`, `test_api`, `frontend_server_client`).
-- PR #22:
-  - Finalized release prep by bumping package/version constants and publishing this changelog update.
-- CI/workflow:
-  - Pinned CI SDK to Dart `3.10.7` for stable test execution in GitHub Actions.
 
 # 6.0.3
 - updated copy right notice to reflect mit license.
