@@ -12,3 +12,5 @@ test/src/unistd/test2.txt
 test/src/unistd/test3.txt
 .failed_tracker
 .history
+.mcp_logs/mcp_command_server.log
+logs/analyzer.txt
