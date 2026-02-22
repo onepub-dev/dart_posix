@@ -1,3 +1,10 @@
+# 6.0.4
+- Thanks to [@ardera](https://github.com/ardera) for reporting #19 (use-after-free in FFI buffer handling).
+- Thanks to [@cbenhagen](https://github.com/cbenhagen) for reporting #13 (macOS `stat$INODE64` symbol lookup failure).
+- Fixed macOS hostname truncation by increasing the `gethostname` buffer size.
+- Updated locked test dependencies for compatibility with current Dart CI runners.
+- Pinned CI SDK to Dart `3.10.7` for stable test execution.
+
 # 6.0.3
 - updated copy right notice to reflect mit license.
 
@@ -147,4 +154,3 @@ generated code using ffigen.
 
 # 0.1.0
 Initial commit
-
