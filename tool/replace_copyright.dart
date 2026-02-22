@@ -7,7 +7,8 @@ import 'dart:io';
 /// Usage:
 ///   dart replace_copyright_header.dart `directory`
 ///
-/// If no directory is provided, the script runs in the current working directory.
+/// If no directory is provided, the script runs in the current
+/// working directory.
 
 void main(List<String> args) {
   // Determine the target directory: CLI arg or current directory
