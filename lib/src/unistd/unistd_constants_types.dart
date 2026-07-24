@@ -33,6 +33,50 @@ const int F_TEST = 3;
 
 const int PATH_MAX = 4096;
 
+/// A signal that can be sent to a process with [kill].
+///
+/// Signal numbers are an implementation detail and differ between Linux and
+/// macOS. Using this enum ensures that [kill] passes the correct number for
+/// the current platform.
+enum Signal {
+  /// Do not send a signal.
+  ///
+  /// This can be used to check whether a process exists and whether the
+  /// caller has permission to signal it.
+  none(0, 0),
+
+  sighup(1, 1),
+  sigint(2, 2),
+  sigquit(3, 3),
+  sigill(4, 4),
+  sigtrap(5, 5),
+  sigabrt(6, 6),
+  sigbus(7, 10),
+  sigfpe(8, 8),
+  sigkill(9, 9),
+  sigusr1(10, 30),
+  sigsegv(11, 11),
+  sigusr2(12, 31),
+  sigpipe(13, 13),
+  sigalrm(14, 14),
+  sigterm(15, 15),
+  sigchld(17, 20),
+  sigcont(18, 19),
+  sigstop(19, 17),
+  sigtstp(20, 18),
+  sigttin(21, 21),
+  sigttou(22, 22),
+  sigxcpu(24, 24),
+  sigxfsz(25, 25);
+
+  const Signal(this._linuxNumber, this._macOSNumber);
+
+  final int _linuxNumber;
+  final int _macOSNumber;
+
+  int get _number => Platform.isMacOS ? _macOSNumber : _linuxNumber;
+}
+
 typedef _dart_access = int Function(
   ffi.Pointer<Utf8> name,
   int __type,
@@ -227,6 +271,11 @@ typedef _dart_confstr = int Function(
 );
 
 typedef _dart_getpid = int Function();
+
+typedef _dart_kill = int Function(
+  int pid,
+  int signal,
+);
 
 typedef _dart_getppid = int Function();
 

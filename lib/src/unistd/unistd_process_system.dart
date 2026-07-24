@@ -11,6 +11,35 @@ int getpid() {
 
 _dart_getpid? _getpid;
 
+/// Send [signal] to the process or process group identified by [pid].
+///
+/// A positive [pid] targets one process. A [pid] of zero targets every process
+/// in the caller's process group. A negative [pid] targets the process group
+/// whose ID is the absolute value of [pid], except that `-1` targets every
+/// process the caller is permitted to signal.
+///
+/// Use [Signal.none] to check that a process exists and that the caller has
+/// permission to signal it without actually sending a signal.
+///
+/// Throws a [PosixException] if the operation fails.
+void kill(
+  int pid,
+  Signal signal,
+) {
+  _kill ??= Libc()
+      .dylib
+      .lookupFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32), _dart_kill>(
+          'kill');
+  final result = _kill!(
+    pid,
+    signal._number,
+  );
+
+  _throwIfErrno('kill', result);
+}
+
+_dart_kill? _kill;
+
 /// Get the process ID of the calling process's parent.
 int getppid() {
   _getppid ??= Libc()

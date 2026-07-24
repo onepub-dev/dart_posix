@@ -32,6 +32,35 @@ void main() {
     expect(getpid(), equals(pid));
   });
 
+  test('kill with no signal checks the process ...', () {
+    expect(() => kill(pid, Signal.none), returnsNormally);
+  });
+
+  test('kill sends a signal ...', () async {
+    final process = await Process.start('sleep', ['30']);
+
+    try {
+      kill(process.pid, Signal.sigterm);
+      expect(
+        await process.exitCode.timeout(const Duration(seconds: 5)),
+        equals(-15),
+      );
+    } finally {
+      process.kill(ProcessSignal.sigkill);
+    }
+  });
+
+  test('kill reports errors ...', () {
+    expect(
+      () => kill(2147483647, Signal.none),
+      throwsA(
+        isA<PosixException>()
+            .having((e) => e.code, 'code', ESRCH)
+            .having((e) => e.message, 'message', contains('kill')),
+      ),
+    );
+  });
+
   test('getppid ...', () async {
     expect(getppid(), equals(isPositive));
     expect(getppid(), isNot(equals(pid)));

@@ -1,3 +1,6 @@
+# 6.5.1
+- Added 'kill' function with associatd signal enum
+
 # 6.5.0
 - Refactor large modules and add regression tests
 - Fix macOS CI failures in hostname and stat
