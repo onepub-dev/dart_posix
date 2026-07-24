@@ -45,28 +45,89 @@ enum Signal {
   /// caller has permission to signal it.
   none(0, 0),
 
+  /// Tells a process that its controlling terminal was closed.
+  ///
+  /// Daemons commonly interpret this as a request to reload configuration.
   sighup(1, 1),
+
+  /// Interrupts a process, normally in response to the user pressing Ctrl+C.
   sigint(2, 2),
+
+  /// Asks a process to quit and usually produces a diagnostic core dump.
+  ///
+  /// A terminal normally sends this when the user presses Ctrl+\.
   sigquit(3, 3),
+
+  /// Reports that a process attempted to execute an illegal instruction.
   sigill(4, 4),
+
+  /// Reports a breakpoint or other debugging trap.
   sigtrap(5, 5),
+
+  /// Aborts a process, usually because it detected an unrecoverable error.
+  ///
+  /// This signal commonly produces a diagnostic core dump.
   sigabrt(6, 6),
+
+  /// Reports invalid access to memory or another hardware bus error.
   sigbus(7, 10),
+
+  /// Reports an invalid arithmetic operation, such as division by zero.
   sigfpe(8, 8),
+
+  /// Immediately terminates a process.
+  ///
+  /// The target process cannot catch, block, or perform cleanup for this
+  /// signal. Prefer [sigterm] when the process should shut down gracefully.
   sigkill(9, 9),
+
+  /// An application-defined signal with no standard meaning.
   sigusr1(10, 30),
+
+  /// Reports that a process accessed an invalid memory address.
+  ///
+  /// This signal commonly produces a diagnostic core dump.
   sigsegv(11, 11),
+
+  /// A second application-defined signal with no standard meaning.
   sigusr2(12, 31),
+
+  /// Reports that a process wrote to a pipe or socket with no reader.
   sigpipe(13, 13),
+
+  /// Notifies a process that a timer created by `alarm` has expired.
   sigalrm(14, 14),
+
+  /// Requests that a process terminate gracefully.
+  ///
+  /// Unlike [sigkill], the process can catch this signal and perform cleanup.
   sigterm(15, 15),
+
+  /// Notifies a parent process that a child stopped, continued, or exited.
   sigchld(17, 20),
+
+  /// Resumes a process that was previously stopped.
   sigcont(18, 19),
+
+  /// Immediately pauses a process.
+  ///
+  /// The target process cannot catch or block this signal. It can be resumed
+  /// with [sigcont].
   sigstop(19, 17),
+
+  /// Requests that a process pause, normally when the user presses Ctrl+Z.
   sigtstp(20, 18),
+
+  /// Pauses a background process that tries to read from its terminal.
   sigttin(21, 21),
+
+  /// Pauses a background process that tries to write to its terminal.
   sigttou(22, 22),
+
+  /// Reports that a process exceeded its CPU-time limit.
   sigxcpu(24, 24),
+
+  /// Reports that a process exceeded its maximum output-file size.
   sigxfsz(25, 25);
 
   const Signal(this._linuxNumber, this._macOSNumber);

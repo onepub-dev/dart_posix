@@ -1,3 +1,6 @@
+# 6.5.2
+- documented the Signal enum
+
 # 6.5.1
 - Added 'kill' function with associatd signal enum
 
