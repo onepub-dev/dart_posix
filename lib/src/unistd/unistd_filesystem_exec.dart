@@ -8,7 +8,7 @@ void chown(
   int owner,
   int group,
 ) {
-  final cFilename = filename.toNativeUtf8();
+  final cFilename = toNativeUtf8Checked(filename);
 
   clearErrno();
 
@@ -56,7 +56,7 @@ void chmod(
   String permissions,
 ) {
   final _permissions = int.parse(permissions, radix: 8);
-  final cFilename = filename.toNativeUtf8();
+  final cFilename = toNativeUtf8Checked(filename);
 
   clearErrno();
 
@@ -101,7 +101,7 @@ int lchown(
   int owner,
   int group,
 ) {
-  final cFilename = filename.toNativeUtf8();
+  final cFilename = toNativeUtf8Checked(filename);
 
   _lchown ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint32, ffi.Uint32),
@@ -132,7 +132,7 @@ int fchownat(
           ffi.Int32, ffi.Pointer<Utf8>, ffi.Uint32, ffi.Uint32, ffi.Int32),
       _dart_fchownat>('fchownat');
 
-  final cFilename = filename.toNativeUtf8();
+  final cFilename = toNativeUtf8Checked(filename);
   final result = _fchownat!(
     fd,
     cFilename,
@@ -150,7 +150,7 @@ _dart_fchownat? _fchownat;
 /// Change the process's working directory to PATH.
 int chdir(String path // ffi.Pointer<Utf8> __path,
     ) {
-  final cPath = path.toNativeUtf8();
+  final cPath = toNativeUtf8Checked(path);
   _chdir ??= Libc()
       .dylib
       .lookupFunction<ffi.Int32 Function(ffi.Pointer<Utf8>), _dart_chdir>(
@@ -253,7 +253,7 @@ int native_execve(
   ffi.Pointer<ffi.Pointer<Utf8>> __argv,
   ffi.Pointer<ffi.Pointer<Utf8>> __envp,
 ) {
-  final cPath = path.toNativeUtf8();
+  final cPath = toNativeUtf8Checked(path);
 
   _execve ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<ffi.Pointer<Utf8>>,
@@ -297,7 +297,7 @@ int native_execv(
   String path, // ffi.Pointer<Utf8> __path,
   ffi.Pointer<ffi.Pointer<Utf8>> __argv,
 ) {
-  final cPath = path.toNativeUtf8();
+  final cPath = toNativeUtf8Checked(path);
 
   _execv ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<ffi.Pointer<Utf8>>),
@@ -314,59 +314,42 @@ int native_execv(
 
 _dart_execv? _execv;
 
-/// Execute PATH with all arguments after PATH until a NULL pointer,
-/// and the argument after that for environment.
+/// Execute PATH with ARG as argv[0] and the current Dart environment.
+///
+/// The variadic libc function cannot safely be called through a fixed-arity
+/// FFI binding, so this uses execve with terminated argument vectors.
 int execle(
-  String path, // ffi.Pointer<Utf8> __path,
-  String arg, // ffi.Pointer<Utf8> __arg,
-) {
-  final cPath = path.toNativeUtf8();
+  String path,
+  String arg,
+) =>
+    using((arena) {
+      final argv = arena<ffi.Pointer<Utf8>>(2);
+      argv[0] = toNativeUtf8Checked(arg, allocator: arena);
+      argv[1] = ffi.nullptr;
+      final environment = Platform.environment.entries.toList();
+      final envp = arena<ffi.Pointer<Utf8>>(environment.length + 1);
+      for (var i = 0; i < environment.length; i++) {
+        final entry = environment[i];
+        envp[i] = toNativeUtf8Checked('${entry.key}=${entry.value}',
+            allocator: arena);
+      }
+      envp[environment.length] = ffi.nullptr;
+      return native_execve(path, argv, envp);
+    });
 
-  final cArg = arg.toNativeUtf8();
-
-  _execle ??= Libc().dylib.lookupFunction<
-      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>),
-      _dart_execle>('execle');
-  final result = _execle!(
-    cPath,
-    cArg,
-  );
-
-  malloc
-    ..free(cPath)
-    ..free(cArg);
-
-  return result;
-}
-
-_dart_execle? _execle;
-
-/// Execute PATH with all arguments after PATH until
-/// a NULL pointer and environment from `environ'.
+/// Execute PATH with ARG as argv[0] and the current environment.
+///
+/// Uses execv to supply a correctly terminated argument vector.
 int execl(
-  String path, // ffi.Pointer<Utf8> __path,
-  String arg, // ffi.Pointer<Utf8> __arg,
-) {
-  final cPath = path.toNativeUtf8();
-
-  final cArg = arg.toNativeUtf8();
-
-  _execl ??= Libc().dylib.lookupFunction<
-      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>),
-      _dart_execl>('execl');
-  final result = _execl!(
-    cPath,
-    cArg,
-  );
-
-  malloc
-    ..free(cPath)
-    ..free(cArg);
-
-  return result;
-}
-
-_dart_execl? _execl;
+  String path,
+  String arg,
+) =>
+    using((arena) {
+      final argv = arena<ffi.Pointer<Utf8>>(2);
+      argv[0] = toNativeUtf8Checked(arg, allocator: arena);
+      argv[1] = ffi.nullptr;
+      return native_execv(path, argv);
+    });
 
 /// Execute FILE, searching in the `PATH' environment variable if it contains
 /// no slashes, with arguments ARGV and environment from `environ'.
@@ -374,7 +357,7 @@ int native_execvp(
   String file, // ffi.Pointer<Utf8> file,
   ffi.Pointer<ffi.Pointer<Utf8>> __argv,
 ) {
-  final cFile = file.toNativeUtf8();
+  final cFile = toNativeUtf8Checked(file);
 
   _execvp ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<ffi.Pointer<Utf8>>),
@@ -391,32 +374,19 @@ int native_execvp(
 
 _dart_execvp? _execvp;
 
-/// Execute FILE, searching in the `PATH' environment variable if
-/// it contains no slashes, with all arguments after FILE until a
-/// NULL pointer and environment from `environ'.
+/// Execute FILE, searching PATH, with ARG as argv[0].
+///
+/// Uses execvp to supply a correctly terminated argument vector.
 int execlp(
-  String file, // ffi.Pointer<Utf8> file,
-  String arg, // ffi.Pointer<Utf8> __arg,
-) {
-  final cFile = file.toNativeUtf8();
-
-  final cArg = arg.toNativeUtf8();
-
-  _execlp ??= Libc().dylib.lookupFunction<
-      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>),
-      _dart_execlp>('execlp');
-  final result = _execlp!(
-    cFile,
-    cArg,
-  );
-  malloc
-    ..free(cFile)
-    ..free(cArg);
-
-  return result;
-}
-
-_dart_execlp? _execlp;
+  String file,
+  String arg,
+) =>
+    using((arena) {
+      final argv = arena<ffi.Pointer<Utf8>>(2);
+      argv[0] = toNativeUtf8Checked(arg, allocator: arena);
+      argv[1] = ffi.nullptr;
+      return native_execvp(file, argv);
+    });
 
 /// Add [increment]] to priority of the current process
 /// and returns the new process priority.
@@ -452,7 +422,7 @@ int pathconf(
   String path, // ffi.Pointer<Utf8> __path,
   int name,
 ) {
-  final cPath = path.toNativeUtf8();
+  final cPath = toNativeUtf8Checked(path);
   _pathconf ??= Libc().dylib.lookupFunction<
       ffi.Int64 Function(ffi.Pointer<Utf8>, ffi.Int32),
       _dart_pathconf>('pathconf');

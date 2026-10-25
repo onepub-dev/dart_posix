@@ -114,7 +114,7 @@ Group getgrnam(
 ) {
   clearErrno();
 
-  final cName = group.toNativeUtf8();
+  final cName = toNativeUtf8Checked(group);
   try {
     _getgrnam ??=
         Libc().dylib.lookupFunction<_c_getgrnam, _dart_getgrnam>('getgrnam');
@@ -150,7 +150,7 @@ void initgroups(String user, {int? group}) {
   // We do this as we can't find any doco on what group should
   // be set to if you don't wont' to add a group (-1 doesn't work).
   group ??= getegid();
-  final cUser = user.toNativeUtf8();
+  final cUser = toNativeUtf8Checked(user);
 
   _initgroups ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint32),

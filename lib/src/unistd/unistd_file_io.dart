@@ -10,7 +10,7 @@ int access(
   _access ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Int32), _dart_access>('access');
 
-  final cName = name.toNativeUtf8();
+  final cName = toNativeUtf8Checked(name);
   final result = _access!(
     cName,
     type,
@@ -36,7 +36,7 @@ int faccessat(
       ffi.Int32 Function(ffi.Int32, ffi.Pointer<Utf8>, ffi.Int32, ffi.Int32),
       _dart_faccessat>('faccessat');
 
-  final cFilename = filename.toNativeUtf8();
+  final cFilename = toNativeUtf8Checked(filename);
   final result = _faccessat!(
     fd,
     cFilename,

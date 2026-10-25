@@ -135,7 +135,7 @@ _dart_getpwuid? _getpwuid;
 /// marked with __THROW.
 Passwd getpwnam(String username) {
   clearErrno();
-  final cName = username.toNativeUtf8();
+  final cName = toNativeUtf8Checked(username);
   try {
     _getpwnam ??= Libc().dylib.lookupFunction<
         ffi.Pointer<_passwd> Function(ffi.Pointer<Utf8>),

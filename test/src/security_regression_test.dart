@@ -53,4 +53,16 @@ void main() {
     expect(() => posix.getdomainname('', 1000000), throwsRangeError);
     expect(() => posix.setdomainname('a', 1000000), throwsRangeError);
   });
+
+  test('filesystem paths reject embedded NUL bytes', () {
+    expect(() => posix.stat('/tmp/allowed\x00/other'), throwsArgumentError);
+    expect(() => posix.unlink('/tmp/allowed\x00/other'), throwsArgumentError);
+  });
+
+  test('execl wrappers pass terminated vectors on failure', () {
+    const missing = '/no/such/posix-security-executable';
+    expect(posix.execl(missing, 'missing'), -1);
+    expect(posix.execle(missing, 'missing'), -1);
+    expect(posix.execlp('no-such-posix-security-executable', 'missing'), -1);
+  });
 }

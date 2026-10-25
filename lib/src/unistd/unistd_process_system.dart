@@ -398,8 +398,10 @@ void link(
   String from,
   String to,
 ) {
-  final cFrom = from.toNativeUtf8();
-  final cTo = to.toNativeUtf8();
+  validateNativeCString(from);
+  validateNativeCString(to);
+  final cFrom = toNativeUtf8Checked(from);
+  final cTo = toNativeUtf8Checked(to);
 
   _link ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>),
@@ -429,8 +431,10 @@ void linkat(
   String to,
   int flags,
 ) {
-  final cFrom = from.toNativeUtf8();
-  final cTo = to.toNativeUtf8();
+  validateNativeCString(from);
+  validateNativeCString(to);
+  final cFrom = toNativeUtf8Checked(from);
+  final cTo = toNativeUtf8Checked(to);
 
   _linkat ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Int32, ffi.Pointer<Utf8>, ffi.Int32,
@@ -460,8 +464,10 @@ void symlink(
   String from,
   String to,
 ) {
-  final cFrom = from.toNativeUtf8();
-  final cTo = to.toNativeUtf8();
+  validateNativeCString(from);
+  validateNativeCString(to);
+  final cFrom = toNativeUtf8Checked(from);
+  final cTo = toNativeUtf8Checked(to);
 
   _symlink ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>),
@@ -488,7 +494,7 @@ int native_readlink(
   ffi.Pointer<Utf8> buf,
   int len,
 ) {
-  final cPath = path.toNativeUtf8();
+  final cPath = toNativeUtf8Checked(path);
 
   _readlink ??= Libc().dylib.lookupFunction<
       ffi.Int64 Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>, ffi.Uint64),
@@ -518,8 +524,10 @@ void symlinkat(
   int tofd,
   String to,
 ) {
-  final cFrom = from.toNativeUtf8();
-  final cTo = to.toNativeUtf8();
+  validateNativeCString(from);
+  validateNativeCString(to);
+  final cFrom = toNativeUtf8Checked(from);
+  final cTo = toNativeUtf8Checked(to);
   _symlinkat ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Int32, ffi.Pointer<Utf8>),
       _dart_symlinkat>('symlinkat');
@@ -545,7 +553,7 @@ void native_readlinkat(
   ffi.Pointer<Utf8> buf,
   int len,
 ) {
-  final cPath = path.toNativeUtf8();
+  final cPath = toNativeUtf8Checked(path);
 
   _readlinkat ??= Libc().dylib.lookupFunction<
       ffi.Int64 Function(
@@ -569,7 +577,7 @@ _dart_readlinkat? _readlinkat;
 void unlink(
   String name,
 ) {
-  final cName = name.toNativeUtf8();
+  final cName = toNativeUtf8Checked(name);
 
   _unlink ??= Libc()
       .dylib
@@ -594,7 +602,7 @@ void unlinkat(
   String name,
   int flag,
 ) {
-  final cName = name.toNativeUtf8();
+  final cName = toNativeUtf8Checked(name);
   _unlinkat ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Int32, ffi.Pointer<Utf8>, ffi.Int32),
       _dart_unlinkat>('unlinkat');
@@ -614,7 +622,7 @@ _dart_unlinkat? _unlinkat;
 ///
 /// Throws a [PosixException] if the delete fails.
 void rmdir(String path) {
-  final cPath = path.toNativeUtf8();
+  final cPath = toNativeUtf8Checked(path);
   _rmdir ??= Libc()
       .dylib
       .lookupFunction<ffi.Int32 Function(ffi.Pointer<Utf8>), _dart_rmdir>(
@@ -753,7 +761,7 @@ _dart_getlogin_r? _getlogin_r;
 void setlogin(
   String name, // ffi.Pointer<Utf8> name,
 ) {
-  final cName = name.toNativeUtf8();
+  final cName = toNativeUtf8Checked(name);
   _setlogin ??= Libc()
       .dylib
       .lookupFunction<ffi.Int32 Function(ffi.Pointer<Utf8>), _dart_setlogin>(
@@ -863,7 +871,7 @@ _dart_gethostname? _gethostname;
 int sethostname(
   String name, // ffi.Pointer<Utf8> name,
 ) {
-  final cName = name.toNativeUtf8();
+  final cName = toNativeUtf8Checked(name);
 
   _sethostname ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint64),
@@ -906,7 +914,7 @@ int getdomainname(
   if (len < 0 || len > utf8.encode(name).length + 1) {
     throw RangeError.value(len, 'len', 'exceeds the supplied buffer');
   }
-  final cName = name.toNativeUtf8();
+  final cName = toNativeUtf8Checked(name);
   _getdomainname ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint64),
       _dart_getdomainname>('getdomainname');
@@ -928,7 +936,7 @@ int setdomainname(
   if (len < 0 || len > utf8.encode(name).length) {
     throw RangeError.value(len, 'len', 'exceeds the supplied buffer');
   }
-  final cName = name.toNativeUtf8();
+  final cName = toNativeUtf8Checked(name);
 
   _setdomainname ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint64),
@@ -959,7 +967,7 @@ _dart_vhangup? _vhangup;
 int revoke(
   String filename, // ffi.Pointer<Utf8> file,
 ) {
-  final cFilename = filename.toNativeUtf8();
+  final cFilename = toNativeUtf8Checked(filename);
   _revoke ??= Libc()
       .dylib
       .lookupFunction<ffi.Int32 Function(ffi.Pointer<Utf8>), _dart_revoke>(
@@ -1005,7 +1013,7 @@ _dart_profil? _profil;
 int acct(
   String name, // ffi.Pointer<Utf8> name,
 ) {
-  final cName = name.toNativeUtf8();
+  final cName = toNativeUtf8Checked(name);
 
   _acct ??= Libc()
       .dylib
@@ -1074,7 +1082,7 @@ _dart_daemon? _daemon;
 int chroot(
   String path, // ffi.Pointer<Utf8> __path,
 ) {
-  final cPath = path.toNativeUtf8();
+  final cPath = toNativeUtf8Checked(path);
   _chroot ??= Libc()
       .dylib
       .lookupFunction<ffi.Int32 Function(ffi.Pointer<Utf8>), _dart_chroot>(
@@ -1166,7 +1174,7 @@ int truncate(
   String filename, // ffi.Pointer<Utf8> file,
   int length,
 ) {
-  final cFilename = filename.toNativeUtf8();
+  final cFilename = toNativeUtf8Checked(filename);
   _truncate ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Int64),
       _dart_truncate>('truncate');

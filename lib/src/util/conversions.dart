@@ -11,6 +11,19 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart' as pffi;
 import 'package:ffi/ffi.dart';
 
+/// Encodes a C string without silently truncating embedded NUL bytes.
+void validateNativeCString(String value) {
+  if (value.contains('\x00')) {
+    throw ArgumentError.value(value, 'value', 'must not contain a NUL byte');
+  }
+}
+
+ffi.Pointer<Utf8> toNativeUtf8Checked(String value,
+    {ffi.Allocator allocator = pffi.malloc}) {
+  validateNativeCString(value);
+  return value.toNativeUtf8(allocator: allocator);
+}
+
 /// Copies a dart list of integers into a c buffer.
 /// You MUST free the returned buffer by calling malloc.free;
 ffi.Pointer<ffi.Int8> copyDartListToCBuff(List<int> buf) {
@@ -73,7 +86,8 @@ String copyCBuffToDartString<T extends ffi.NativeType>(ffi.Pointer<T> cBuf,
 
 extension Utf8String on ffi.Array<ffi.Int8> {
   String toDartString(int maxLength) {
-    final codeUnits = asTypedList(maxLength).takeWhile((c) => c != 0);
+    final codeUnits =
+        asTypedList(maxLength).takeWhile((c) => c != 0).map((c) => c & 0xff);
     return utf8.decode(codeUnits.toList());
   }
 }

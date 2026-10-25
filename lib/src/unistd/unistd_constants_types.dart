@@ -283,24 +283,9 @@ typedef _dart_execv = int Function(
   ffi.Pointer<ffi.Pointer<Utf8>> __argv,
 );
 
-typedef _dart_execle = int Function(
-  ffi.Pointer<Utf8> __path,
-  ffi.Pointer<Utf8> __arg,
-);
-
-typedef _dart_execl = int Function(
-  ffi.Pointer<Utf8> __path,
-  ffi.Pointer<Utf8> __arg,
-);
-
 typedef _dart_execvp = int Function(
   ffi.Pointer<Utf8> file,
   ffi.Pointer<ffi.Pointer<Utf8>> __argv,
-);
-
-typedef _dart_execlp = int Function(
-  ffi.Pointer<Utf8> file,
-  ffi.Pointer<Utf8> __arg,
 );
 
 typedef _dart_nice = int Function(

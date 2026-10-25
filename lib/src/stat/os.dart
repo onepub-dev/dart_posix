@@ -10,6 +10,7 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../../posix.dart';
+import '../util/conversions.dart';
 
 abstract class OsStatCall {
   OsStatCall(this.name);
@@ -17,7 +18,7 @@ abstract class OsStatCall {
   final String name;
 
   Stat call(String pathToFile) {
-    final pathToFilePtr = pathToFile.toNativeUtf8();
+    final pathToFilePtr = toNativeUtf8Checked(pathToFile);
     try {
       return sysCall(pathToFilePtr);
     } finally {
