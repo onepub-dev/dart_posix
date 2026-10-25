@@ -42,7 +42,7 @@ void main() {
         nested = Directory('${nested.path}/${'a' * 40}')..createSync();
       }
       Directory.current = nested;
-      expect(posix.getcwd(), nested.absolute.path);
+      expect(posix.getcwd(), nested.resolveSymbolicLinksSync());
     } finally {
       Directory.current = original;
       root.deleteSync(recursive: true);

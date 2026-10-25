@@ -182,6 +182,9 @@ List<int> getgroups() {
   if (size == -1) {
     throw PosixException('getgroups call failed', errno());
   }
+  if (size == 0) {
+    return groups;
+  }
 
   using((arena) {
     // allocate the list.

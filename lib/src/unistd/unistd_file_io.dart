@@ -203,22 +203,18 @@ _dart_pwrite? _pwrite;
 List<int> native_pipe(
   ffi.Pointer<ffi.Int32> __pipedes,
 ) {
-  final cPipedes = malloc.allocate<ffi.Int32>(2);
-  _pipe ??= Libc()
-      .dylib
-      .lookupFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int32>), _dart_pipe>(
-          'pipe');
-  final result = _pipe!(
-    cPipedes,
-  );
-
-  _throwIfErrno('pipe', result, cPipedes);
-
-  final pipedes = List<int>.from(cPipedes.asTypedList(2));
-
-  malloc.free(cPipedes);
-
-  return pipedes;
+  final cPipedes = malloc<ffi.Int32>(2);
+  try {
+    _pipe ??= Libc()
+        .dylib
+        .lookupFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int32>), _dart_pipe>(
+            'pipe');
+    final result = _pipe!(cPipedes);
+    _throwIfErrno('pipe', result);
+    return List<int>.from(cPipedes.asTypedList(2));
+  } finally {
+    malloc.free(cPipedes);
+  }
 }
 
 _dart_pipe? _pipe;
