@@ -6,6 +6,7 @@
  */
 
 import 'dart:ffi' as ffi;
+import 'dart:io' show Platform;
 
 import 'package:ffi/ffi.dart';
 
@@ -198,21 +199,50 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> pwPasswd, String error) {
     throw PosixException(error, errno());
   }
 
-  final username = copyCBuffToDartString(pwPasswd.ref.name, free: false);
-  final password = pwPasswd.ref.password == ffi.nullptr
+  if (Platform.isMacOS) {
+    final mac = pwPasswd.cast<_passwdMac>().ref;
+    return _copyPasswd(
+      mac.name,
+      mac.password,
+      mac.uid,
+      mac.gid,
+      mac.gecos,
+      mac.dir,
+      mac.shell,
+    );
+  }
+  final linux = pwPasswd.ref;
+  return _copyPasswd(
+    linux.name,
+    linux.password,
+    linux.uid,
+    linux.gid,
+    linux.gecos,
+    linux.dir,
+    linux.shell,
+  );
+}
+
+Passwd _copyPasswd(
+  ffi.Pointer<ffi.Int8> name,
+  ffi.Pointer<ffi.Int8> passwordPointer,
+  int uid,
+  int gid,
+  ffi.Pointer<ffi.Int8> gecos,
+  ffi.Pointer<ffi.Int8> dir,
+  ffi.Pointer<ffi.Int8> shell,
+) {
+  final username = copyCBuffToDartString(name, free: false);
+  final password = passwordPointer == ffi.nullptr
       ? ''
-      : copyCBuffToDartString(pwPasswd.ref.password, free: false);
+      : copyCBuffToDartString(passwordPointer, free: false);
 
-  final userInfo = pwPasswd.ref.gecos == ffi.nullptr
-      ? ''
-      : copyCBuffToDartString(pwPasswd.ref.gecos, free: false);
+  final userInfo =
+      gecos == ffi.nullptr ? '' : copyCBuffToDartString(gecos, free: false);
 
-  final uid = pwPasswd.ref.uid;
-  final gid = pwPasswd.ref.gid;
+  final homePathTo = copyCBuffToDartString(dir, free: false);
 
-  final homePathTo = copyCBuffToDartString(pwPasswd.ref.dir, free: false);
-
-  final shellPathTo = copyCBuffToDartString(pwPasswd.ref.shell, free: false);
+  final shellPathTo = copyCBuffToDartString(shell, free: false);
 
   /// We don't own the pointer so no need to free it.
   /// free(_pw_passwd);
@@ -252,6 +282,33 @@ final class _passwd extends ffi.Struct {
 
   /// Shell program.
   external ffi.Pointer<ffi.Int8> shell;
+}
+
+/// Darwin's passwd layout includes fields absent from glibc's layout.
+final class _passwdMac extends ffi.Struct {
+  external ffi.Pointer<ffi.Int8> name;
+
+  external ffi.Pointer<ffi.Int8> password;
+
+  @ffi.Uint32()
+  external int uid;
+
+  @ffi.Uint32()
+  external int gid;
+
+  @ffi.Int64()
+  external int change;
+
+  external ffi.Pointer<ffi.Int8> userClass;
+
+  external ffi.Pointer<ffi.Int8> gecos;
+
+  external ffi.Pointer<ffi.Int8> dir;
+
+  external ffi.Pointer<ffi.Int8> shell;
+
+  @ffi.Int64()
+  external int expire;
 }
 
 // class _IO_FILE extends ffi.Struct {}

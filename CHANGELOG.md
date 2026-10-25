@@ -4,6 +4,7 @@
 - Reject embedded NUL bytes before passing Dart strings to native C APIs.
 - Preserve byte values in `write` and `pwrite`, and release native buffers on errors.
 - Correct the native `pipe` descriptor allocation size.
+- Decode macOS account records with the Darwin `passwd` layout.
 - Add regression tests for buffer bounds, byte writes, and long working directories.
 
 # 6.5.2
