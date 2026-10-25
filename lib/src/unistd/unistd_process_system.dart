@@ -731,21 +731,19 @@ _dart_getlogin? _getlogin;
 /// Throws a [PosixException] if the name cannot be retrieved.
 String getlogin_r() {
   const maxLength = 32 + 1;
-  final cName = malloc.allocate<Utf8>(maxLength);
-  _getlogin_r ??= Libc().dylib.lookupFunction<
-      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint64),
-      _dart_getlogin_r>('getlogin_r');
-  final result = _getlogin_r!(
-    cName,
-    maxLength,
-  );
-
-  _throwIfErrno('getlogin_r', result, cName);
-
-  final name = cName.toDartString();
-  malloc.free(cName);
-
-  return name;
+  final cName = calloc.allocate<Utf8>(maxLength);
+  try {
+    _getlogin_r ??= Libc().dylib.lookupFunction<
+        ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint64),
+        _dart_getlogin_r>('getlogin_r');
+    final result = _getlogin_r!(cName, maxLength);
+    if (result != 0) {
+      throw PosixException('getlogin_r failed: ${strerror(result)}', result);
+    }
+    return cName.toDartString();
+  } finally {
+    calloc.free(cName);
+  }
 }
 
 _dart_getlogin_r? _getlogin_r;
@@ -841,22 +839,21 @@ _dart_getopt? _getopt;
 String gethostname() {
   // POSIX HOST_NAME_MAX is 255 bytes; reserve one extra byte for '\0'.
   const bufSize = 255 + 1;
-  final cName = malloc.allocate<Utf8>(bufSize);
+  final cName = calloc.allocate<Utf8>(bufSize + 1);
+  try {
+    _gethostname ??= Libc().dylib.lookupFunction<
+        ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint64),
+        _dart_gethostname>('gethostname');
+    final result = _gethostname!(
+      cName,
+      bufSize,
+    );
 
-  _gethostname ??= Libc().dylib.lookupFunction<
-      ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint64),
-      _dart_gethostname>('gethostname');
-  final result = _gethostname!(
-    cName,
-    bufSize,
-  );
-
-  _throwIfErrno('gethostname', result, cName);
-
-  final hostname = cName.toDartString();
-  malloc.free(cName);
-
-  return hostname;
+    _throwIfErrno('gethostname', result);
+    return cName.toDartString();
+  } finally {
+    calloc.free(cName);
+  }
 }
 
 _dart_gethostname? _gethostname;
@@ -873,7 +870,7 @@ int sethostname(
       _dart_sethostname>('sethostname');
   final result = _sethostname!(
     cName,
-    name.length,
+    utf8.encode(name).length,
   );
 
   _throwIfErrno('sethostname', result, cName);
@@ -906,6 +903,9 @@ int getdomainname(
   String name, // ffi.Pointer<Utf8> name,
   int len,
 ) {
+  if (len < 0 || len > utf8.encode(name).length + 1) {
+    throw RangeError.value(len, 'len', 'exceeds the supplied buffer');
+  }
   final cName = name.toNativeUtf8();
   _getdomainname ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint64),
@@ -925,6 +925,9 @@ int setdomainname(
   String name, // ffi.Pointer<Utf8> name,
   int len,
 ) {
+  if (len < 0 || len > utf8.encode(name).length) {
+    throw RangeError.value(len, 'len', 'exceeds the supplied buffer');
+  }
   final cName = name.toNativeUtf8();
 
   _setdomainname ??= Libc().dylib.lookupFunction<

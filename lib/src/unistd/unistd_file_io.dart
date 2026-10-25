@@ -97,23 +97,20 @@ List<int> read(
   int fd,
   int nbytes,
 ) {
+  if (nbytes < 0) {
+    throw RangeError.value(nbytes, 'nbytes', 'must be non-negative');
+  }
   final cBuf = malloc.allocate<ffi.Int8>(nbytes);
-
-  _read ??= Libc().dylib.lookupFunction<
-      ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64),
-      _dart_read>('read');
-  final result = _read!(
-    fd,
-    cBuf,
-    nbytes,
-  );
-
-  _throwIfErrno('read', result, cBuf);
-
-  final buf = List<int>.from(cBuf.asTypedList(result));
-  malloc.free(cBuf);
-
-  return buf;
+  try {
+    _read ??= Libc().dylib.lookupFunction<
+        ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64),
+        _dart_read>('read');
+    final result = _read!(fd, cBuf, nbytes);
+    _throwIfErrno('read', result);
+    return List<int>.from(cBuf.cast<ffi.Uint8>().asTypedList(result));
+  } finally {
+    malloc.free(cBuf);
+  }
 }
 
 _dart_read? _read;
@@ -127,21 +124,16 @@ int write(
   List<int> buf, // ffi.Pointer<ffi.Void> buf,
 ) {
   final cBuf = copyDartListToCBuff(buf);
-
-  _write ??= Libc().dylib.lookupFunction<
-      ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64),
-      _dart_write>('write');
-  final written = _write!(
-    fd,
-    cBuf,
-    buf.length,
-  );
-
-  _throwIfErrno('pwrite', written, cBuf);
-
-  malloc.free(cBuf);
-
-  return written;
+  try {
+    _write ??= Libc().dylib.lookupFunction<
+        ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64),
+        _dart_write>('write');
+    final written = _write!(fd, cBuf, buf.length);
+    _throwIfErrno('write', written);
+    return written;
+  } finally {
+    malloc.free(cBuf);
+  }
 }
 
 _dart_write? _write;
@@ -160,24 +152,21 @@ List<int> pread(
   int nbytes,
   int offset,
 ) {
+  if (nbytes < 0) {
+    throw RangeError.value(nbytes, 'nbytes', 'must be non-negative');
+  }
   final cBuf = malloc.allocate<ffi.Int8>(nbytes);
-  _pread ??= Libc().dylib.lookupFunction<
-      ffi.Int64 Function(
-          ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Int64),
-      _dart_pread>('pread');
-  final read = _pread!(
-    fd,
-    cBuf,
-    nbytes,
-    offset,
-  );
-
-  _throwIfErrno('pread', read, cBuf);
-
-  final buf = List<int>.from(cBuf.asTypedList(read));
-  malloc.free(cBuf);
-
-  return buf;
+  try {
+    _pread ??= Libc().dylib.lookupFunction<
+        ffi.Int64 Function(
+            ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Int64),
+        _dart_pread>('pread');
+    final bytesRead = _pread!(fd, cBuf, nbytes, offset);
+    _throwIfErrno('pread', bytesRead);
+    return List<int>.from(cBuf.cast<ffi.Uint8>().asTypedList(bytesRead));
+  } finally {
+    malloc.free(cBuf);
+  }
 }
 
 _dart_pread? _pread;
@@ -192,23 +181,17 @@ int pwrite(
   int offset,
 ) {
   final cBuf = copyDartListToCBuff(buf);
-
-  _pwrite ??= Libc().dylib.lookupFunction<
-      ffi.Int64 Function(
-          ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Int64),
-      _dart_pwrite>('pwrite');
-  final written = _pwrite!(
-    fd,
-    cBuf,
-    buf.length,
-    offset,
-  );
-
-  _throwIfErrno('pwrite', written, cBuf);
-
-  malloc.free(cBuf);
-
-  return written;
+  try {
+    _pwrite ??= Libc().dylib.lookupFunction<
+        ffi.Int64 Function(
+            ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Int64),
+        _dart_pwrite>('pwrite');
+    final written = _pwrite!(fd, cBuf, buf.length, offset);
+    _throwIfErrno('pwrite', written);
+    return written;
+  } finally {
+    malloc.free(cBuf);
+  }
 }
 
 _dart_pwrite? _pwrite;

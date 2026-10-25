@@ -8,6 +8,7 @@
 // ignore: lines_longer_than_80_chars
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names, camel_case_types
 
+import 'dart:convert';
 import 'dart:ffi' as ffi;
 import 'dart:io' show Platform;
 

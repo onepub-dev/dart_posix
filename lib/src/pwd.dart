@@ -136,19 +136,18 @@ _dart_getpwuid? _getpwuid;
 Passwd getpwnam(String username) {
   clearErrno();
   final cName = username.toNativeUtf8();
-
-  _getpwnam ??= Libc().dylib.lookupFunction<
-      ffi.Pointer<_passwd> Function(ffi.Pointer<Utf8>),
-      _dart_getpwnam>('getpwnam');
-  final passwd = _buildPasswd(
-      _getpwnam!(
-        cName,
-      ),
-      'Error occured attempting to retrieve Passwd for username: $username');
-
-  malloc.free(cName);
-
-  return passwd;
+  try {
+    _getpwnam ??= Libc().dylib.lookupFunction<
+        ffi.Pointer<_passwd> Function(ffi.Pointer<Utf8>),
+        _dart_getpwnam>('getpwnam');
+    return _buildPasswd(
+        _getpwnam!(
+          cName,
+        ),
+        'Error occured attempting to retrieve Passwd for username: $username');
+  } finally {
+    malloc.free(cName);
+  }
 }
 
 _dart_getpwnam? _getpwnam;
@@ -200,7 +199,9 @@ Passwd _buildPasswd(ffi.Pointer<_passwd> pwPasswd, String error) {
   }
 
   final username = copyCBuffToDartString(pwPasswd.ref.name, free: false);
-  final password = copyCBuffToDartString(pwPasswd.ref.password, free: false);
+  final password = pwPasswd.ref.password == ffi.nullptr
+      ? ''
+      : copyCBuffToDartString(pwPasswd.ref.password, free: false);
 
   final userInfo = pwPasswd.ref.gecos == ffi.nullptr
       ? ''

@@ -503,29 +503,27 @@ String confstr(
   _confstr ??= Libc().dylib.lookupFunction<
       ffi.Uint64 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64),
       _dart_confstr>('confstr');
-  final len = _confstr!(
-    name,
-    ffi.nullptr,
-    0,
-  );
-
-  if (len == 0) {
-    throw PosixException(strerror(errno()), errno());
+  var len = _confstr!(name, ffi.nullptr, 0);
+  while (true) {
+    if (len == 0) {
+      final error = errno();
+      throw PosixException(strerror(error), error);
+    }
+    final cBuf = malloc.allocate<Utf8>(len);
+    try {
+      final result = _confstr!(name, cBuf.cast<ffi.Void>(), len);
+      if (result <= len) {
+        if (result == 0) {
+          final error = errno();
+          throw PosixException(strerror(error), error);
+        }
+        return cBuf.toDartString();
+      }
+      len = result;
+    } finally {
+      malloc.free(cBuf);
+    }
   }
-
-  final cBuf = malloc.allocate<ffi.Void>(len);
-
-  final result = _confstr!(
-    name,
-    cBuf,
-    len,
-  );
-
-  if (result == 0) {
-    throw PosixException(strerror(errno()), errno());
-  }
-
-  return copyCBuffToDartString(cBuf);
 }
 
 _dart_confstr? _confstr;

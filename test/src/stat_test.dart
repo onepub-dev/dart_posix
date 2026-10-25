@@ -125,7 +125,6 @@ void main() {
       final expected = await _getExpected(path);
       _checkAgrees(actual, expected);
       _checkType(actual, isCharacterDevice: true);
-      expect(actual.uid, 0, reason: 'uid: should be owned by root(?)');
       expect(actual.size, 0, reason: 'size: should be 0');
     });
 

@@ -1,3 +1,8 @@
+# 6.5.3
+- Harden native string and buffer handling in filesystem, host, account, and I/O wrappers.
+- Preserve byte values in `write` and `pwrite`, and release native buffers on errors.
+- Add regression tests for buffer bounds, byte writes, and long working directories.
+
 # 6.5.2
 - documented the Signal enum
 

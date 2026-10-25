@@ -23,28 +23,28 @@ Sysinfo sysinfo() {
       _dart_sysinfo>('sysinfo');
 
   final ptr = ffi.malloc<_sysinfo_t>();
-  final res = _sysinfo!(ptr);
-  if (res != 0) {
+  try {
+    final res = _sysinfo!(ptr);
+    if (res != 0) {
+      throw PosixException('sysinfo call failed', errno());
+    }
+
+    return Sysinfo(
+      uptime: Duration(seconds: ptr.ref.uptime),
+      loads: [ptr.ref.loads[0], ptr.ref.loads[1], ptr.ref.loads[2]],
+      totalram: ptr.ref.totalram,
+      sharedram: ptr.ref.sharedram,
+      bufferram: ptr.ref.bufferram,
+      totalswap: ptr.ref.totalswap,
+      freeswap: ptr.ref.freeswap,
+      procs: ptr.ref.procs,
+      totalhigh: ptr.ref.totalhigh,
+      freehigh: ptr.ref.freehigh,
+      mem_unit: ptr.ref.mem_unit,
+    );
+  } finally {
     ffi.malloc.free(ptr);
-    throw PosixException('sysinfo call failed', errno());
   }
-
-  final info = Sysinfo(
-    uptime: Duration(seconds: ptr.ref.uptime),
-    loads: [ptr.ref.loads[0], ptr.ref.loads[1], ptr.ref.loads[2]],
-    totalram: ptr.ref.totalram,
-    sharedram: ptr.ref.sharedram,
-    bufferram: ptr.ref.bufferram,
-    totalswap: ptr.ref.totalswap,
-    freeswap: ptr.ref.freeswap,
-    procs: ptr.ref.procs,
-    totalhigh: ptr.ref.totalhigh,
-    freehigh: ptr.ref.freehigh,
-    mem_unit: ptr.ref.mem_unit,
-  );
-
-  ffi.malloc.free(ptr);
-  return info;
 }
 
 _dart_sysinfo? _sysinfo;

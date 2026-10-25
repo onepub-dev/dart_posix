@@ -35,14 +35,15 @@ Utsname _unameBsd() {
       _dart_utsname_bsd>('uname');
 
   final buf = ffi.malloc<_utsname_bsd_t>();
-  final res = f(buf);
-  if (res != 0) {
-    throw PosixException('uname', errno());
+  try {
+    final res = f(buf);
+    if (res != 0) {
+      throw PosixException('uname', errno());
+    }
+    return buf.toUtsname();
+  } finally {
+    ffi.malloc.free(buf);
   }
-  final utsName = buf.toUtsname();
-
-  ffi.malloc.free(buf);
-  return utsName;
 }
 
 Utsname _unameGnu() {
@@ -51,14 +52,15 @@ Utsname _unameGnu() {
       _dart_utsname_gnu>('uname');
 
   final buf = ffi.malloc<_utsname_gnu_t>();
-  final res = f(buf);
-  if (res != 0) {
-    throw PosixException('uname', errno());
+  try {
+    final res = f(buf);
+    if (res != 0) {
+      throw PosixException('uname', errno());
+    }
+    return buf.toUtsname();
+  } finally {
+    ffi.malloc.free(buf);
   }
-  final utsName = buf.toUtsname();
-
-  ffi.malloc.free(buf);
-  return utsName;
 }
 
 /// Name and information about current kernel.

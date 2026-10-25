@@ -115,19 +115,19 @@ Group getgrnam(
   clearErrno();
 
   final cName = group.toNativeUtf8();
+  try {
+    _getgrnam ??=
+        Libc().dylib.lookupFunction<_c_getgrnam, _dart_getgrnam>('getgrnam');
 
-  _getgrnam ??=
-      Libc().dylib.lookupFunction<_c_getgrnam, _dart_getgrnam>('getgrnam');
-
-  final _group = _buildGroup(
-      _getgrnam!(
-        cName,
-      ),
-      'Error occured attempting to get the next group entry for group: $group');
-
-  malloc.free(cName);
-
-  return _group;
+    return _buildGroup(
+        _getgrnam!(
+          cName,
+        ),
+        'Error occured attempting to get the next group entry for group: '
+        '$group');
+  } finally {
+    malloc.free(cName);
+  }
 }
 
 _dart_getgrnam? _getgrnam;
@@ -179,6 +179,9 @@ List<int> getgroups() {
 
   /// get how many groups there are.
   final size = _getgroups!(0, ffi.nullptr);
+  if (size == -1) {
+    throw PosixException('getgroups call failed', errno());
+  }
 
   using((arena) {
     // allocate the list.
@@ -193,7 +196,7 @@ List<int> getgroups() {
       throw PosixException('getgroups call failed', errno());
     }
 
-    for (var i = 0; i < size; i++) {
+    for (var i = 0; i < count; i++) {
       groups.add(list[i]);
     }
   });
@@ -235,9 +238,13 @@ Group _buildGroup(ffi.Pointer<group> grGroup, String error) {
   }
 
   final name = copyCBuffToDartString(grGroup.ref.name, free: false);
-  final password = copyCBuffToDartString(grGroup.ref.passwd, free: false);
+  final password = grGroup.ref.passwd == ffi.nullptr
+      ? ''
+      : copyCBuffToDartString(grGroup.ref.passwd, free: false);
   final gid = grGroup.ref.gid;
-  final members = copyCStringListToDartList(grGroup.ref.mem, free: false);
+  final members = grGroup.ref.mem == ffi.nullptr
+      ? <String>[]
+      : copyCStringListToDartList(grGroup.ref.mem, free: false);
 
   /// We don't own the pointer so no need to free it.
   /// free(_gr_group);

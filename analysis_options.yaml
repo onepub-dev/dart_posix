@@ -14,7 +14,8 @@ linter:
 analyzer:
   errors:
     document_ignores: ignore
-  exclude: test/*.dart    
+  exclude:
+    - test/*.dart
 
 
 

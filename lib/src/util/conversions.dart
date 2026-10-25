@@ -17,7 +17,12 @@ ffi.Pointer<ffi.Int8> copyDartListToCBuff(List<int> buf) {
   final cBuf = pffi.malloc.allocate<ffi.Int8>(buf.length);
 
   for (var i = 0; i < buf.length; i++) {
-    cBuf[i] = buf.indexOf(i);
+    final byte = buf[i];
+    if (byte < 0 || byte > 255) {
+      pffi.malloc.free(cBuf);
+      throw RangeError.range(byte, 0, 255, 'buf[$i]');
+    }
+    cBuf[i] = byte;
   }
 
   return cBuf;
@@ -26,6 +31,9 @@ ffi.Pointer<ffi.Int8> copyDartListToCBuff(List<int> buf) {
 List<String> copyCStringListToDartList(
     ffi.Pointer<ffi.Pointer<ffi.Int8>> cStringList,
     {bool free = true}) {
+  if (cStringList == ffi.nullptr) {
+    return <String>[];
+  }
   final list = <String>[];
 
   var count = 0;
@@ -51,13 +59,16 @@ List<String> copyCStringListToDartList(
 /// its contents of [cBuf] as a Dart String.
 String copyCBuffToDartString<T extends ffi.NativeType>(ffi.Pointer<T> cBuf,
     {bool free = true}) {
-  final string = cBuf.cast<Utf8>().toDartString();
-
-  if (free) {
-    pffi.malloc.free(cBuf);
+  if (cBuf == ffi.nullptr) {
+    throw ArgumentError.value(cBuf, 'cBuf', 'must not be null');
   }
-
-  return string;
+  try {
+    return cBuf.cast<Utf8>().toDartString();
+  } finally {
+    if (free) {
+      pffi.malloc.free(cBuf);
+    }
+  }
 }
 
 extension Utf8String on ffi.Array<ffi.Int8> {

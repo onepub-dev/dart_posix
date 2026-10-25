@@ -10,7 +10,6 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import '../posix.dart';
-import 'util/conversions.dart';
 
 /// We provide a wrapper for each posix method that takes and return dart types.
 ///
@@ -21,18 +20,23 @@ import 'util/conversions.dart';
 /// Gets the absolute pathname of the current working directory.
 /// If an error occurs a a [PosixException] is thrown with the error.
 String getcwd() {
-  final cBuf = malloc.allocate<ffi.Int8>(PATH_MAX);
-
-  final result = native_getwd(
-    cBuf,
-  );
-
-  if (result == ffi.nullptr) {
-    final error = copyCBuffToDartString(cBuf);
-    throw PosixException(error, -1);
+  var size = 256;
+  while (true) {
+    final cBuf = malloc.allocate<ffi.Int8>(size);
+    try {
+      final result = native_getcwd(cBuf, size);
+      if (result != ffi.nullptr) {
+        return cBuf.cast<Utf8>().toDartString();
+      }
+      final error = errno();
+      if (error != ERANGE) {
+        throw PosixException('getcwd failed: ${strerror(error)}', error);
+      }
+    } finally {
+      malloc.free(cBuf);
+    }
+    size *= 2;
   }
-
-  return copyCBuffToDartString(cBuf);
 }
 
 /// Return the session ID of the given process.
