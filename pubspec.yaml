@@ -10,8 +10,8 @@ dependencies:
   path: ^1.8.3
 dev_dependencies:
   cli_script: ^1.0.0
-  ffigen: ^18.1.0
-  lint_hard: ^6.0.0
+  ffigen: ^23.0.0
+  lint_hard: ^8.0.1
   logger: ^2.5.0
   logging: ^1.1.1
   stack_trace: ^1.11.0
