@@ -44,5 +44,5 @@ extension _UtsnameGnu on ffi.Pointer<_utsname_gnu_t> {
 
 // ignore: avoid_private_typedef_functions
 typedef _dart_utsname_gnu = int Function(
-  ffi.Pointer<_utsname_gnu_t> __info,
+  ffi.Pointer<_utsname_gnu_t> info,
 );

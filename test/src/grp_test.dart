@@ -11,7 +11,7 @@ import 'package:posix/posix.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('grp ...', () async {
+  test('grp ...', () {
     final expectedName = Platform.isMacOS ? 'admin' : 'adm';
     final group = getgrnam(expectedName);
 

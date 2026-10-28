@@ -292,5 +292,6 @@ const ENOTSUP = 95;
 
 final _name = Platform.isMacOS ? '__error' : '__errno_location';
 
-final ffi.Pointer<ffi.Int32> Function() _func = Libc().dylib.lookupFunction<ffi.Pointer<ffi.Int32> Function(),
+final ffi.Pointer<ffi.Int32> Function() _func = Libc().dylib.lookupFunction<
+    ffi.Pointer<ffi.Int32> Function(),
     ffi.Pointer<ffi.Int32> Function()>(_name);

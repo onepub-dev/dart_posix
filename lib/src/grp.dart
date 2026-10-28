@@ -208,7 +208,7 @@ List<int> getgroups() {
 
 typedef _dart_getgroups = int Function(
   int size,
-  ffi.Pointer<ffi.Uint32> __list,
+  ffi.Pointer<ffi.Uint32> list,
 );
 
 _dart_getgroups? _getgroups;
@@ -276,22 +276,22 @@ typedef _dart_endgrent = void Function();
 typedef _dart_getgrent = ffi.Pointer<group> Function();
 
 typedef _dart_fgetgrent = ffi.Pointer<group> Function(
-  ffi.Pointer<IO_FILE> __stream,
+  ffi.Pointer<IO_FILE> stream,
 );
 
 typedef _dart_getgrgid = ffi.Pointer<group> Function(
-  int __gid,
+  int gid,
 );
 
 typedef _dart_getgrnam = ffi.Pointer<group> Function(
-  ffi.Pointer<Utf8> __name,
+  ffi.Pointer<Utf8> name,
 );
 // ignore: avoid_private_typedef_functions
 typedef _c_getgrnam = ffi.Pointer<group> Function(
-  ffi.Pointer<Utf8> __name,
+  ffi.Pointer<Utf8> name,
 );
 
 typedef _dart_initgroups = int Function(
-  ffi.Pointer<Utf8> __user,
-  int __group,
+  ffi.Pointer<Utf8> user,
+  int group,
 );

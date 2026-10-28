@@ -290,5 +290,5 @@ class _ArrayHelper_sysinfo__f_level0 {
 const SI_LOAD_SHIFT = 16;
 
 typedef _dart_sysinfo = int Function(
-  ffi.Pointer<_sysinfo_t> __info,
+  ffi.Pointer<_sysinfo_t> info,
 );

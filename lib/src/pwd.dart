@@ -320,9 +320,9 @@ typedef _dart_endpwent = void Function();
 typedef _dart_getpwent = ffi.Pointer<_passwd> Function();
 
 typedef _dart_getpwuid = ffi.Pointer<_passwd> Function(
-  int __uid,
+  int uid,
 );
 
 typedef _dart_getpwnam = ffi.Pointer<_passwd> Function(
-  ffi.Pointer<Utf8> __name,
+  ffi.Pointer<Utf8> name,
 );

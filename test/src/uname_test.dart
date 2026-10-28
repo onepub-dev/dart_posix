@@ -9,7 +9,7 @@ import 'package:posix/src/uname/uname.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('uname', () async {
+  test('uname', () {
     final utsname = uname();
     print(utsname);
 

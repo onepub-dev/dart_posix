@@ -33,7 +33,7 @@ import 'utility.dart';
 /// See [isDirectory]
 ///     [exists]
 ///
-Future<void> deleteDir(String path, {bool recursive = true}) async =>
+Future<void> deleteDir(String path, {bool recursive = true}) =>
     _DeleteDir().deleteDir(path, recursive: recursive);
 
 class _DeleteDir extends DCliFunction {
@@ -50,8 +50,7 @@ class _DeleteDir extends DCliFunction {
 
     try {
       await Directory(path).delete(recursive: recursive);
-    }
-    catch (e) {
+    } catch (e) {
       throw DeleteDirException(
         'Unable to delete the directory ${truepath(path)}. Error: $e',
       );

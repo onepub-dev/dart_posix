@@ -14,13 +14,13 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-part 'mac_part2.dart';
-part 'typedef.dart';
-part 'constants.dart';
+part 'accessx.dart';
 part 'classes.dart';
+part 'constants.dart';
+part 'mac_part2.dart';
 part 'opaque.dart';
 part 'opaque_thread.dart';
-part 'accessx.dart';
+part 'typedef.dart';
 
 /// Mac bindings to all posix apis
 class mac_posix {
@@ -53,7 +53,14 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Uint64)>> _getattrlistbulk_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Int32,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Uint64,
+              ffi.Uint64)>> _getattrlistbulk_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Int32,
@@ -81,7 +88,15 @@ class mac_posix {
         arg5,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Uint64)>> _getattrlistat_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Int32,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Uint64,
+              ffi.Uint64)>> _getattrlistat_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Int32,
@@ -110,7 +125,15 @@ class mac_posix {
         arg5,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Uint32)>> _setattrlistat_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Int32,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Uint64,
+              ffi.Uint32)>> _setattrlistat_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Int32,
@@ -135,10 +158,14 @@ class mac_posix {
         arg3,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32)>> _faccessat_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32,
-              ffi.Int32)>>('faccessat');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32)>>
+      _faccessat_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32,
+                  ffi.Int32)>>('faccessat');
   late final _dart_faccessat _faccessat =
       _faccessat_ptr.asFunction<_dart_faccessat>();
 
@@ -157,7 +184,10 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint32, ffi.Uint32, ffi.Int32)>> _fchownat_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint32,
+              ffi.Uint32, ffi.Int32)>> _fchownat_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint32,
               ffi.Uint32, ffi.Int32)>>('fchownat');
@@ -179,7 +209,10 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32)>> _linkat_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32,
+              ffi.Pointer<ffi.Int8>, ffi.Int32)>> _linkat_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32,
               ffi.Pointer<ffi.Int8>, ffi.Int32)>>('linkat');
@@ -198,7 +231,10 @@ class mac_posix {
         arg3,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Uint64)>> _readlinkat_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Int8>, ffi.Uint64)>> _readlinkat_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Int8>,
               ffi.Pointer<ffi.Int8>, ffi.Uint64)>>('readlinkat');
@@ -216,10 +252,14 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Pointer<ffi.Int8>)>> _symlinkat_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32,
-              ffi.Pointer<ffi.Int8>)>>('symlinkat');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Pointer<ffi.Int8>)>>
+      _symlinkat_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32,
+                  ffi.Pointer<ffi.Int8>)>>('symlinkat');
   late final _dart_symlinkat _symlinkat =
       _symlinkat_ptr.asFunction<_dart_symlinkat>();
 
@@ -234,10 +274,13 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32)>> _unlinkat_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32)>>('unlinkat');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32)>>
+      _unlinkat_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32)>>('unlinkat');
   late final _dart_unlinkat _unlinkat =
       _unlinkat_ptr.asFunction<_dart_unlinkat>();
 
@@ -249,7 +292,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Int32)>> __exit_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Int32)>>
+      __exit_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int32)>>('_exit');
   late final _dart__exit __exit = __exit_ptr.asFunction<_dart__exit>();
 
@@ -262,9 +306,12 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>> _access_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>('access');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>
+      _access_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>('access');
   late final _dart_access _access = _access_ptr.asFunction<_dart_access>();
 
   int alarm(
@@ -274,7 +321,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint32 Function(ffi.Uint32)>> _alarm_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint32 Function(ffi.Uint32)>>
+      _alarm_ptr =
       _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Uint32)>>('alarm');
   late final _dart_alarm _alarm = _alarm_ptr.asFunction<_dart_alarm>();
 
@@ -285,7 +333,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>> _chdir_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>
+      _chdir_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>(
           'chdir');
   late final _dart_chdir _chdir = _chdir_ptr.asFunction<_dart_chdir>();
@@ -301,10 +351,14 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint32, ffi.Uint32)>> _chown_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Uint32, ffi.Uint32)>>('chown');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Uint32, ffi.Uint32)>> _chown_ptr =
+      _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Uint32, ffi.Uint32)>>('chown');
   late final _dart_chown _chown = _chown_ptr.asFunction<_dart_chown>();
 
   int close(
@@ -314,7 +368,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>> _close_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>
+      _close_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('close');
   late final _dart_close _close = _close_ptr.asFunction<_dart_close>();
 
@@ -325,7 +380,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>> _dup_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>
+      _dup_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('dup');
   late final _dart_dup _dup = _dup_ptr.asFunction<_dart_dup>();
 
@@ -338,7 +394,9 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32)>> _dup2_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32)>>
+      _dup2_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32)>>(
           'dup2');
   late final _dart_dup2 _dup2 = _dup2_ptr.asFunction<_dart_dup2>();
@@ -352,10 +410,13 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>> _execl_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('execl');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>
+      _execl_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('execl');
   late final _dart_execl _execl = _execl_ptr.asFunction<_dart_execl>();
 
   int execle(
@@ -367,10 +428,13 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>> _execle_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('execle');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>
+      _execle_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('execle');
   late final _dart_execle _execle = _execle_ptr.asFunction<_dart_execle>();
 
   int execlp(
@@ -382,10 +446,13 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>> _execlp_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('execlp');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>
+      _execlp_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('execlp');
   late final _dart_execlp _execlp = _execlp_ptr.asFunction<_dart_execlp>();
 
   int execv(
@@ -397,10 +464,14 @@ class mac_posix {
         argv,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Pointer<ffi.Int8>>)>> _execv_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<ffi.Pointer<ffi.Int8>>)>>('execv');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Pointer<ffi.Int8>>)>>
+      _execv_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>,
+                  ffi.Pointer<ffi.Pointer<ffi.Int8>>)>>('execv');
   late final _dart_execv _execv = _execv_ptr.asFunction<_dart_execv>();
 
   int execve(
@@ -414,7 +485,12 @@ class mac_posix {
         envp,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Pointer<ffi.Int8>>, ffi.Pointer<ffi.Pointer<ffi.Int8>>)>> _execve_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Pointer<ffi.Int8>>,
+              ffi.Pointer<ffi.Pointer<ffi.Int8>>)>> _execve_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<ffi.Int8>,
@@ -431,10 +507,14 @@ class mac_posix {
         argv,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Pointer<ffi.Int8>>)>> _execvp_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<ffi.Pointer<ffi.Int8>>)>>('execvp');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Pointer<ffi.Int8>>)>>
+      _execvp_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>,
+                  ffi.Pointer<ffi.Pointer<ffi.Int8>>)>>('execvp');
   late final _dart_execvp _execvp = _execvp_ptr.asFunction<_dart_execvp>();
 
   int fork() => _fork();
@@ -452,7 +532,9 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int64 Function(ffi.Int32, ffi.Int32)>> _fpathconf_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int64 Function(ffi.Int32, ffi.Int32)>>
+      _fpathconf_ptr =
       _lookup<ffi.NativeFunction<ffi.Int64 Function(ffi.Int32, ffi.Int32)>>(
           'fpathconf');
   late final _dart_fpathconf _fpathconf =
@@ -467,7 +549,10 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>, ffi.Uint64)>> _getcwd_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Int8> Function(
+              ffi.Pointer<ffi.Int8>, ffi.Uint64)>> _getcwd_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<ffi.Int8> Function(
               ffi.Pointer<ffi.Int8>, ffi.Uint64)>>('getcwd');
@@ -475,19 +560,22 @@ class mac_posix {
 
   int getegid() => _getegid();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint32 Function()>> _getegid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint32 Function()>>
+      _getegid_ptr =
       _lookup<ffi.NativeFunction<ffi.Uint32 Function()>>('getegid');
   late final _dart_getegid _getegid = _getegid_ptr.asFunction<_dart_getegid>();
 
   int geteuid() => _geteuid();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint32 Function()>> _geteuid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint32 Function()>>
+      _geteuid_ptr =
       _lookup<ffi.NativeFunction<ffi.Uint32 Function()>>('geteuid');
   late final _dart_geteuid _geteuid = _geteuid_ptr.asFunction<_dart_geteuid>();
 
   int getgid() => _getgid();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint32 Function()>> _getgid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint32 Function()>>
+      _getgid_ptr =
       _lookup<ffi.NativeFunction<ffi.Uint32 Function()>>('getgid');
   late final _dart_getgid _getgid = _getgid_ptr.asFunction<_dart_getgid>();
 
@@ -500,7 +588,10 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint32>)>> _getgroups_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Int32, ffi.Pointer<ffi.Uint32>)>> _getgroups_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint32>)>>('getgroups');
   late final _dart_getgroups _getgroups =
@@ -508,14 +599,16 @@ class mac_posix {
 
   ffi.Pointer<ffi.Int8> getlogin() => _getlogin();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>> _getlogin_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>>
+      _getlogin_ptr =
       _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>>('getlogin');
   late final _dart_getlogin _getlogin =
       _getlogin_ptr.asFunction<_dart_getlogin>();
 
   int getpgrp() => _getpgrp();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>> _getpgrp_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>>
+      _getpgrp_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function()>>('getpgrp');
   late final _dart_getpgrp _getpgrp = _getpgrp_ptr.asFunction<_dart_getpgrp>();
 
@@ -527,13 +620,15 @@ class mac_posix {
 
   int getppid() => _getppid();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>> _getppid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>>
+      _getppid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function()>>('getppid');
   late final _dart_getppid _getppid = _getppid_ptr.asFunction<_dart_getppid>();
 
   int getuid() => _getuid();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint32 Function()>> _getuid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint32 Function()>>
+      _getuid_ptr =
       _lookup<ffi.NativeFunction<ffi.Uint32 Function()>>('getuid');
   late final _dart_getuid _getuid = _getuid_ptr.asFunction<_dart_getuid>();
 
@@ -544,7 +639,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>> _isatty_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>
+      _isatty_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('isatty');
   late final _dart_isatty _isatty = _isatty_ptr.asFunction<_dart_isatty>();
 
@@ -557,10 +653,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>> _link_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('link');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>
+      _link_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('link');
   late final _dart_link _link = _link_ptr.asFunction<_dart_link>();
 
   int lseek(
@@ -574,9 +673,12 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int64 Function(ffi.Int32, ffi.Int64, ffi.Int32)>> _lseek_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int64 Function(ffi.Int32, ffi.Int64, ffi.Int32)>>('lseek');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int64 Function(ffi.Int32, ffi.Int64, ffi.Int32)>>
+      _lseek_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int64 Function(ffi.Int32, ffi.Int64, ffi.Int32)>>('lseek');
   late final _dart_lseek _lseek = _lseek_ptr.asFunction<_dart_lseek>();
 
   int pathconf(
@@ -588,9 +690,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int64 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>> _pathconf_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int64 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>('pathconf');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int64 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>
+      _pathconf_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int64 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Int32)>>('pathconf');
   late final _dart_pathconf _pathconf =
       _pathconf_ptr.asFunction<_dart_pathconf>();
 
@@ -607,7 +713,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int32>)>> _pipe_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int32>)>>
+      _pipe_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int32>)>>(
           'pipe');
   late final _dart_pipe _pipe = _pipe_ptr.asFunction<_dart_pipe>();
@@ -623,10 +731,13 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64)>> _read_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int64 Function(
-              ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64)>>('read');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64)>>
+      _read_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int64 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64)>>('read');
   late final _dart_read _read = _read_ptr.asFunction<_dart_read>();
 
   int rmdir(
@@ -636,7 +747,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>> _rmdir_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>
+      _rmdir_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>(
           'rmdir');
   late final _dart_rmdir _rmdir = _rmdir_ptr.asFunction<_dart_rmdir>();
@@ -648,7 +761,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>> _setgid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>
+      _setgid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>('setgid');
   late final _dart_setgid _setgid = _setgid_ptr.asFunction<_dart_setgid>();
 
@@ -661,7 +775,9 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32)>> _setpgid_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32)>>
+      _setpgid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32)>>(
           'setpgid');
   late final _dart_setpgid _setpgid = _setpgid_ptr.asFunction<_dart_setpgid>();
@@ -679,7 +795,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>> _setuid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>
+      _setuid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>('setuid');
   late final _dart_setuid _setuid = _setuid_ptr.asFunction<_dart_setuid>();
 
@@ -690,7 +807,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint32 Function(ffi.Uint32)>> _sleep_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint32 Function(ffi.Uint32)>>
+      _sleep_ptr =
       _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Uint32)>>('sleep');
   late final _dart_sleep _sleep = _sleep_ptr.asFunction<_dart_sleep>();
 
@@ -701,7 +819,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int64 Function(ffi.Int32)>> _sysconf_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int64 Function(ffi.Int32)>>
+      _sysconf_ptr =
       _lookup<ffi.NativeFunction<ffi.Int64 Function(ffi.Int32)>>('sysconf');
   late final _dart_sysconf _sysconf = _sysconf_ptr.asFunction<_dart_sysconf>();
 
@@ -712,7 +831,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>> _tcgetpgrp_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>
+      _tcgetpgrp_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('tcgetpgrp');
   late final _dart_tcgetpgrp _tcgetpgrp =
       _tcgetpgrp_ptr.asFunction<_dart_tcgetpgrp>();
@@ -726,7 +846,9 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32)>> _tcsetpgrp_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32)>>
+      _tcsetpgrp_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32)>>(
           'tcsetpgrp');
   late final _dart_tcsetpgrp _tcsetpgrp =
@@ -739,7 +861,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Int32)>> _ttyname_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Int32)>>
+      _ttyname_ptr =
       _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Int32)>>(
           'ttyname');
   late final _dart_ttyname _ttyname = _ttyname_ptr.asFunction<_dart_ttyname>();
@@ -755,10 +879,13 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64)>> _ttyname_r_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64)>>('ttyname_r');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64)>>
+      _ttyname_r_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64)>>('ttyname_r');
   late final _dart_ttyname_r _ttyname_r =
       _ttyname_r_ptr.asFunction<_dart_ttyname_r>();
 
@@ -769,7 +896,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>> _unlink_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>
+      _unlink_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>(
           'unlink');
   late final _dart_unlink _unlink = _unlink_ptr.asFunction<_dart_unlink>();
@@ -785,10 +914,13 @@ class mac_posix {
         nbyte,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64)>> _write_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int64 Function(
-              ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64)>>('write');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64)>>
+      _write_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int64 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64)>>('write');
   late final _dart_write _write = _write_ptr.asFunction<_dart_write>();
 
   int confstr(
@@ -802,10 +934,14 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint64 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64)>> _confstr_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint64 Function(
-              ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64)>>('confstr');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Uint64 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64)>> _confstr_ptr =
+      _lookup<
+          ffi.NativeFunction<
+              ffi.Uint64 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint64)>>('confstr');
   late final _dart_confstr _confstr = _confstr_ptr.asFunction<_dart_confstr>();
 
   int getopt(
@@ -819,7 +955,10 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Pointer<ffi.Int8>>, ffi.Pointer<ffi.Int8>)>> _getopt_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Pointer<ffi.Int8>>,
+              ffi.Pointer<ffi.Int8>)>> _getopt_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Pointer<ffi.Int8>>,
               ffi.Pointer<ffi.Int8>)>>('getopt');
@@ -858,7 +997,10 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>> _ctermid_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Int8> Function(
+              ffi.Pointer<ffi.Int8>)>> _ctermid_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>>('ctermid');
   late final _dart_ctermid _ctermid = _ctermid_ptr.asFunction<_dart_ctermid>();
@@ -870,9 +1012,12 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Void>)>> _brk_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Void>)>>('brk');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Void>)>> _brk_ptr =
+      _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Void>)>>('brk');
   late final _dart_brk _brk = _brk_ptr.asFunction<_dart_brk>();
 
   int chroot(
@@ -882,7 +1027,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>> _chroot_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>
+      _chroot_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>(
           'chroot');
   late final _dart_chroot _chroot = _chroot_ptr.asFunction<_dart_chroot>();
@@ -896,10 +1043,14 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>> _crypt_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('crypt');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Int8> Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>> _crypt_ptr =
+      _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Int8> Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('crypt');
   late final _dart_crypt _crypt = _crypt_ptr.asFunction<_dart_crypt>();
 
   void encrypt(
@@ -911,9 +1062,12 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>> _encrypt_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>('encrypt');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>
+      _encrypt_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>('encrypt');
   late final _dart_encrypt _encrypt = _encrypt_ptr.asFunction<_dart_encrypt>();
 
   int fchdir(
@@ -923,13 +1077,15 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>> _fchdir_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>
+      _fchdir_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('fchdir');
   late final _dart_fchdir _fchdir = _fchdir_ptr.asFunction<_dart_fchdir>();
 
   int gethostid() => _gethostid();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int64 Function()>> _gethostid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int64 Function()>>
+      _gethostid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int64 Function()>>('gethostid');
   late final _dart_gethostid _gethostid =
       _gethostid_ptr.asFunction<_dart_gethostid>();
@@ -941,7 +1097,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>> _getpgid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>
+      _getpgid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('getpgid');
   late final _dart_getpgid _getpgid = _getpgid_ptr.asFunction<_dart_getpgid>();
 
@@ -952,20 +1109,23 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>> _getsid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>
+      _getsid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('getsid');
   late final _dart_getsid _getsid = _getsid_ptr.asFunction<_dart_getsid>();
 
   int getdtablesize() => _getdtablesize();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>> _getdtablesize_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>>
+      _getdtablesize_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function()>>('getdtablesize');
   late final _dart_getdtablesize _getdtablesize =
       _getdtablesize_ptr.asFunction<_dart_getdtablesize>();
 
   int getpagesize() => _getpagesize();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>> _getpagesize_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>>
+      _getpagesize_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function()>>('getpagesize');
   late final _dart_getpagesize _getpagesize =
       _getpagesize_ptr.asFunction<_dart_getpagesize>();
@@ -977,7 +1137,10 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>> _getpass_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Int8> Function(
+              ffi.Pointer<ffi.Int8>)>> _getpass_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>>('getpass');
   late final _dart_getpass _getpass = _getpass_ptr.asFunction<_dart_getpass>();
@@ -989,9 +1152,12 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>> _getwd_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>>('getwd');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>>
+      _getwd_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>>('getwd');
   late final _dart_getwd _getwd = _getwd_ptr.asFunction<_dart_getwd>();
 
   int lchown(
@@ -1005,10 +1171,14 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint32, ffi.Uint32)>> _lchown_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Uint32, ffi.Uint32)>>('lchown');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Uint32, ffi.Uint32)>> _lchown_ptr =
+      _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Uint32, ffi.Uint32)>>('lchown');
   late final _dart_lchown _lchown = _lchown_ptr.asFunction<_dart_lchown>();
 
   int lockf(
@@ -1022,9 +1192,12 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32, ffi.Int64)>> _lockf_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Int32, ffi.Int64)>>('lockf');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32, ffi.Int64)>>
+      _lockf_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Int32, ffi.Int64)>>('lockf');
   late final _dart_lockf _lockf = _lockf_ptr.asFunction<_dart_lockf>();
 
   int nice(
@@ -1034,7 +1207,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>> _nice_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>
+      _nice_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('nice');
   late final _dart_nice _nice = _nice_ptr.asFunction<_dart_nice>();
 
@@ -1051,10 +1225,14 @@ class mac_posix {
         offset,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Int64)>> _pread_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64,
-              ffi.Int64)>>('pread');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int64 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Int64)>>
+      _pread_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64,
+                  ffi.Int64)>>('pread');
   late final _dart_pread _pread = _pread_ptr.asFunction<_dart_pread>();
 
   int pwrite(
@@ -1070,10 +1248,14 @@ class mac_posix {
         offset,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Int64)>> _pwrite_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64,
-              ffi.Int64)>>('pwrite');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int64 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Int64)>>
+      _pwrite_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int64 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Uint64,
+                  ffi.Int64)>>('pwrite');
   late final _dart_pwrite _pwrite = _pwrite_ptr.asFunction<_dart_pwrite>();
 
   ffi.Pointer<ffi.Void> sbrk(
@@ -1083,14 +1265,17 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Int32)>> _sbrk_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Int32)>>
+      _sbrk_ptr =
       _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Int32)>>(
           'sbrk');
   late final _dart_sbrk _sbrk = _sbrk_ptr.asFunction<_dart_sbrk>();
 
   int setpgrp() => _setpgrp();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>> _setpgrp_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>>
+      _setpgrp_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function()>>('setpgrp');
   late final _dart_setpgrp _setpgrp = _setpgrp_ptr.asFunction<_dart_setpgrp>();
 
@@ -1103,7 +1288,9 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32, ffi.Uint32)>> _setregid_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32, ffi.Uint32)>>
+      _setregid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32, ffi.Uint32)>>(
           'setregid');
   late final _dart_setregid _setregid =
@@ -1118,7 +1305,9 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32, ffi.Uint32)>> _setreuid_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32, ffi.Uint32)>>
+      _setreuid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32, ffi.Uint32)>>(
           'setreuid');
   late final _dart_setreuid _setreuid =
@@ -1135,10 +1324,14 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Int64)>> _swab_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>,
-              ffi.Int64)>>('swab');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Int64)>>
+      _swab_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>,
+                  ffi.Int64)>>('swab');
   late final _dart_swab _swab = _swab_ptr.asFunction<_dart_swab>();
 
   void sync_1() => _sync_1();
@@ -1156,9 +1349,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int64)>> _truncate_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int64)>>('truncate');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int64)>>
+      _truncate_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Int64)>>('truncate');
   late final _dart_truncate _truncate =
       _truncate_ptr.asFunction<_dart_truncate>();
 
@@ -1171,7 +1368,9 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint32 Function(ffi.Uint32, ffi.Uint32)>> _ualarm_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Uint32 Function(ffi.Uint32, ffi.Uint32)>>
+      _ualarm_ptr =
       _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Uint32, ffi.Uint32)>>(
           'ualarm');
   late final _dart_ualarm _ualarm = _ualarm_ptr.asFunction<_dart_ualarm>();
@@ -1183,7 +1382,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>> _usleep_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>
+      _usleep_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>('usleep');
   late final _dart_usleep _usleep = _usleep_ptr.asFunction<_dart_usleep>();
 
@@ -1201,7 +1401,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>> _fsync_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>
+      _fsync_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('fsync');
   late final _dart_fsync _fsync = _fsync_ptr.asFunction<_dart_fsync>();
 
@@ -1214,7 +1415,9 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int64)>> _ftruncate_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int64)>>
+      _ftruncate_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int64)>>(
           'ftruncate');
   late final _dart_ftruncate _ftruncate =
@@ -1229,7 +1432,10 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64)>> _getlogin_r_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Int8>, ffi.Uint64)>> _getlogin_r_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64)>>('getlogin_r');
   late final _dart_getlogin_r _getlogin_r =
@@ -1246,9 +1452,12 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Uint32, ffi.Uint32)>> _fchown_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Uint32, ffi.Uint32)>>('fchown');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Uint32, ffi.Uint32)>>
+      _fchown_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Uint32, ffi.Uint32)>>('fchown');
   late final _dart_fchown _fchown = _fchown_ptr.asFunction<_dart_fchown>();
 
   int gethostname(
@@ -1260,10 +1469,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64)>> _gethostname_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Uint64)>>('gethostname');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64)>>
+      _gethostname_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Uint64)>>('gethostname');
   late final _dart_gethostname _gethostname =
       _gethostname_ptr.asFunction<_dart_gethostname>();
 
@@ -1278,10 +1490,14 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int64 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Uint64)>> _readlink_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int64 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
-              ffi.Uint64)>>('readlink');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int64 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Uint64)>>
+      _readlink_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int64 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
+                  ffi.Uint64)>>('readlink');
   late final _dart_readlink _readlink =
       _readlink_ptr.asFunction<_dart_readlink>();
 
@@ -1292,7 +1508,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>> _setegid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>
+      _setegid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>('setegid');
   late final _dart_setegid _setegid = _setegid_ptr.asFunction<_dart_setegid>();
 
@@ -1303,7 +1520,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>> _seteuid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>
+      _seteuid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>('seteuid');
   late final _dart_seteuid _seteuid = _seteuid_ptr.asFunction<_dart_seteuid>();
 
@@ -1316,10 +1534,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>> _symlink_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('symlink');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>
+      _symlink_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('symlink');
   late final _dart_symlink _symlink = _symlink_ptr.asFunction<_dart_symlink>();
 
   int __darwin_check_fd_set_overflow(
@@ -1333,10 +1554,13 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Int32)>> ___darwin_check_fd_set_overflow_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>,
-              ffi.Int32)>>('__darwin_check_fd_set_overflow');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Int32)>>
+      ___darwin_check_fd_set_overflow_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>,
+                  ffi.Int32)>>('__darwin_check_fd_set_overflow');
   late final _dart___darwin_check_fd_set_overflow
       ___darwin_check_fd_set_overflow = ___darwin_check_fd_set_overflow_ptr
           .asFunction<_dart___darwin_check_fd_set_overflow>();
@@ -1358,7 +1582,15 @@ class mac_posix {
         arg5,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<fd_set>, ffi.Pointer<fd_set>, ffi.Pointer<fd_set>, ffi.Pointer<timespec>, ffi.Pointer<ffi.Uint32>)>> _pselect_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Int32,
+              ffi.Pointer<fd_set>,
+              ffi.Pointer<fd_set>,
+              ffi.Pointer<fd_set>,
+              ffi.Pointer<timespec>,
+              ffi.Pointer<ffi.Uint32>)>> _pselect_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Int32,
@@ -1384,7 +1616,14 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<fd_set>, ffi.Pointer<fd_set>, ffi.Pointer<fd_set>, ffi.Pointer<timeval>)>> _select_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Int32,
+              ffi.Pointer<fd_set>,
+              ffi.Pointer<fd_set>,
+              ffi.Pointer<fd_set>,
+              ffi.Pointer<timeval>)>> _select_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Int32,
@@ -1401,7 +1640,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Int32)>> __Exit_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Int32)>>
+      __Exit_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int32)>>('_Exit');
   late final _dart__Exit __Exit = __Exit_ptr.asFunction<_dart__Exit>();
 
@@ -1418,7 +1658,10 @@ class mac_posix {
         arg3,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<accessx_descriptor>, ffi.Uint64, ffi.Pointer<ffi.Int32>, ffi.Uint32)>> _accessx_np_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<accessx_descriptor>, ffi.Uint64,
+              ffi.Pointer<ffi.Int32>, ffi.Uint32)>> _accessx_np_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<accessx_descriptor>, ffi.Uint64,
               ffi.Pointer<ffi.Int32>, ffi.Uint32)>>('accessx_np');
@@ -1432,7 +1675,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>> _acct_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>
+      _acct_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>(
           'acct');
   late final _dart_acct _acct = _acct_ptr.asFunction<_dart_acct>();
@@ -1450,16 +1695,21 @@ class mac_posix {
         arg3,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Uint64, ffi.Uint32)>> _add_profil_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Uint64,
-              ffi.Uint32)>>('add_profil');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Uint64, ffi.Uint32)>>
+      _add_profil_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Uint64,
+                  ffi.Uint32)>>('add_profil');
   late final _dart_add_profil _add_profil =
       _add_profil_ptr.asFunction<_dart_add_profil>();
 
   void endusershell() => _endusershell();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>> _endusershell_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>
+      _endusershell_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function()>>('endusershell');
   late final _dart_endusershell _endusershell =
       _endusershell_ptr.asFunction<_dart_endusershell>();
@@ -1475,7 +1725,10 @@ class mac_posix {
         argv,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Pointer<ffi.Int8>>)>> _execvP_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Pointer<ffi.Int8>>)>> _execvP_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
               ffi.Pointer<ffi.Pointer<ffi.Int8>>)>>('execvP');
@@ -1488,7 +1741,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Uint64)>> _fflagstostr_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Uint64)>>
+      _fflagstostr_ptr =
       _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Uint64)>>(
           'fflagstostr');
   late final _dart_fflagstostr _fflagstostr =
@@ -1503,10 +1758,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>> _getdomainname_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Int32)>>('getdomainname');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>
+      _getdomainname_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Int32)>>('getdomainname');
   late final _dart_getdomainname _getdomainname =
       _getdomainname_ptr.asFunction<_dart_getdomainname>();
 
@@ -1523,7 +1781,13 @@ class mac_posix {
         arg3,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>> _getgrouplist_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Int8>,
+              ffi.Int32,
+              ffi.Pointer<ffi.Int32>,
+              ffi.Pointer<ffi.Int32>)>> _getgrouplist_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32,
               ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>>('getgrouplist');
@@ -1539,7 +1803,10 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Uint8>, ffi.Pointer<timespec>)>> _gethostuuid_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ffi.Uint8>,
+              ffi.Pointer<timespec>)>> _gethostuuid_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<ffi.Uint8>, ffi.Pointer<timespec>)>>('gethostuuid');
@@ -1555,7 +1822,10 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint16 Function(ffi.Pointer<ffi.Void>, ffi.Uint16)>> _getmode_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Uint16 Function(
+              ffi.Pointer<ffi.Void>, ffi.Uint16)>> _getmode_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Uint16 Function(ffi.Pointer<ffi.Void>, ffi.Uint16)>>('getmode');
   late final _dart_getmode _getmode = _getmode_ptr.asFunction<_dart_getmode>();
@@ -1571,10 +1841,14 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>> _getpeereid_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint32>,
-              ffi.Pointer<ffi.Uint32>)>>('getpeereid');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>>
+      _getpeereid_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint32>,
+                  ffi.Pointer<ffi.Uint32>)>>('getpeereid');
   late final _dart_getpeereid _getpeereid =
       _getpeereid_ptr.asFunction<_dart_getpeereid>();
 
@@ -1587,16 +1861,21 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Uint8>)>> _getsgroups_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int32>,
-              ffi.Pointer<ffi.Uint8>)>>('getsgroups_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Uint8>)>>
+      _getsgroups_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int32>,
+                  ffi.Pointer<ffi.Uint8>)>>('getsgroups_np');
   late final _dart_getsgroups_np _getsgroups_np =
       _getsgroups_np_ptr.asFunction<_dart_getsgroups_np>();
 
   ffi.Pointer<ffi.Int8> getusershell() => _getusershell();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>> _getusershell_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>>
+      _getusershell_ptr =
       _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>>(
           'getusershell');
   late final _dart_getusershell _getusershell =
@@ -1611,10 +1890,14 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Uint8>)>> _getwgroups_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int32>,
-              ffi.Pointer<ffi.Uint8>)>>('getwgroups_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Uint8>)>>
+      _getwgroups_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int32>,
+                  ffi.Pointer<ffi.Uint8>)>>('getwgroups_np');
   late final _dart_getwgroups_np _getwgroups_np =
       _getwgroups_np_ptr.asFunction<_dart_getwgroups_np>();
 
@@ -1631,16 +1914,19 @@ class mac_posix {
     return err;
   }
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Int32)>> _initgroups_ptr = _lookup<
-          ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Int32)>>(
-      'initgroups');
+  late final ffi.Pointer<
+          ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Int32)>>
+      _initgroups_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Int32)>>('initgroups');
 
   late final _dart_initgroups _initgroups =
       _initgroups_ptr.asFunction<_dart_initgroups>();
 
   int issetugid() => _issetugid();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>> _issetugid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>>
+      _issetugid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function()>>('issetugid');
   late final _dart_issetugid _issetugid =
       _issetugid_ptr.asFunction<_dart_issetugid>();
@@ -1652,7 +1938,10 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>> _mkdtemp_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Int8> Function(
+              ffi.Pointer<ffi.Int8>)>> _mkdtemp_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>>('mkdtemp');
   late final _dart_mkdtemp _mkdtemp = _mkdtemp_ptr.asFunction<_dart_mkdtemp>();
@@ -1668,10 +1957,13 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16, ffi.Int32)>> _mknod_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Uint16, ffi.Int32)>>('mknod');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16, ffi.Int32)>>
+      _mknod_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Uint16, ffi.Int32)>>('mknod');
   late final _dart_mknod _mknod = _mknod_ptr.asFunction<_dart_mknod>();
 
   int mkpath_np(
@@ -1683,7 +1975,10 @@ class mac_posix {
         omode,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>> _mkpath_np_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Int8>, ffi.Uint16)>> _mkpath_np_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>>('mkpath_np');
   late final _dart_mkpath_np _mkpath_np =
@@ -1700,10 +1995,13 @@ class mac_posix {
         omode,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint16)>> _mkpathat_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint16)>>('mkpathat_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint16)>>
+      _mkpathat_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>,
+                  ffi.Uint16)>>('mkpathat_np');
   late final _dart_mkpathat_np _mkpathat_np =
       _mkpathat_np_ptr.asFunction<_dart_mkpathat_np>();
 
@@ -1714,7 +2012,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>> _mkstemp_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>
+      _mkstemp_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>(
           'mkstemp');
   late final _dart_mkstemp _mkstemp = _mkstemp_ptr.asFunction<_dart_mkstemp>();
@@ -1728,9 +2028,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>> _mkstemps_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>('mkstemps');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>
+      _mkstemps_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Int32)>>('mkstemps');
   late final _dart_mkstemps _mkstemps =
       _mkstemps_ptr.asFunction<_dart_mkstemps>();
 
@@ -1741,9 +2045,12 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>> _mktemp_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>>('mktemp');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>>
+      _mktemp_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ffi.Int8>)>>('mktemp');
   late final _dart_mktemp _mktemp = _mktemp_ptr.asFunction<_dart_mktemp>();
 
   int mkostemp(
@@ -1755,9 +2062,13 @@ class mac_posix {
         oflags,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>> _mkostemp_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>('mkostemp');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>
+      _mkostemp_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Int32)>>('mkostemp');
   late final _dart_mkostemp _mkostemp =
       _mkostemp_ptr.asFunction<_dart_mkostemp>();
 
@@ -1772,10 +2083,13 @@ class mac_posix {
         oflags,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32)>> _mkostemps_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32)>>('mkostemps');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32)>>
+      _mkostemps_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32)>>('mkostemps');
   late final _dart_mkostemps _mkostemps =
       _mkostemps_ptr.asFunction<_dart_mkostemps>();
 
@@ -1791,10 +2105,13 @@ class mac_posix {
         dpflags,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32)>> _mkstemp_dprotected_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32,
-              ffi.Int32)>>('mkstemp_dprotected_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32)>>
+      _mkstemp_dprotected_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32,
+                  ffi.Int32)>>('mkstemp_dprotected_np');
   late final _dart_mkstemp_dprotected_np _mkstemp_dprotected_np =
       _mkstemp_dprotected_np_ptr.asFunction<_dart_mkstemp_dprotected_np>();
 
@@ -1807,10 +2124,13 @@ class mac_posix {
         path,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Int32, ffi.Pointer<ffi.Int8>)>> _mkdtempat_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Int32, ffi.Pointer<ffi.Int8>)>>('mkdtempat_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Int8> Function(ffi.Int32, ffi.Pointer<ffi.Int8>)>>
+      _mkdtempat_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Int8> Function(
+                  ffi.Int32, ffi.Pointer<ffi.Int8>)>>('mkdtempat_np');
   late final _dart_mkdtempat_np _mkdtempat_np =
       _mkdtempat_np_ptr.asFunction<_dart_mkdtempat_np>();
 
@@ -1825,10 +2145,13 @@ class mac_posix {
         slen,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32)>> _mkstempsat_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32)>>('mkstempsat_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32)>>
+      _mkstempsat_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>,
+                  ffi.Int32)>>('mkstempsat_np');
   late final _dart_mkstempsat_np _mkstempsat_np =
       _mkstempsat_np_ptr.asFunction<_dart_mkstempsat_np>();
 
@@ -1845,10 +2168,14 @@ class mac_posix {
         oflags,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32)>> _mkostempsat_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32,
-              ffi.Int32)>>('mkostempsat_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32)>>
+      _mkostempsat_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Int32,
+                  ffi.Int32)>>('mkostempsat_np');
   late final _dart_mkostempsat_np _mkostempsat_np =
       _mkostempsat_np_ptr.asFunction<_dart_mkostempsat_np>();
 
@@ -1861,9 +2188,12 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>)>> _nfssvc_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>)>>('nfssvc');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>)>>
+      _nfssvc_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>)>>('nfssvc');
   late final _dart_nfssvc _nfssvc = _nfssvc_ptr.asFunction<_dart_nfssvc>();
 
   int profil(
@@ -1879,10 +2209,14 @@ class mac_posix {
         arg3,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Uint64, ffi.Uint32)>> _profil_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Uint64,
-              ffi.Uint32)>>('profil');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Uint64, ffi.Uint32)>>
+      _profil_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Uint64,
+                  ffi.Uint32)>>('profil');
   late final _dart_profil _profil = _profil_ptr.asFunction<_dart_profil>();
 
   int pthread_setugid_np(
@@ -1894,7 +2228,9 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32, ffi.Uint32)>> _pthread_setugid_np_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32, ffi.Uint32)>>
+      _pthread_setugid_np_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32, ffi.Uint32)>>(
           'pthread_setugid_np');
   late final _dart_pthread_setugid_np _pthread_setugid_np =
@@ -1909,10 +2245,14 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>> _pthread_getugid_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Uint32>,
-              ffi.Pointer<ffi.Uint32>)>>('pthread_getugid_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>>
+      _pthread_getugid_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Uint32>,
+                  ffi.Pointer<ffi.Uint32>)>>('pthread_getugid_np');
   late final _dart_pthread_getugid_np _pthread_getugid_np =
       _pthread_getugid_np_ptr.asFunction<_dart_pthread_getugid_np>();
 
@@ -1923,7 +2263,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>> _reboot_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>
+      _reboot_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('reboot');
   late final _dart_reboot _reboot = _reboot_ptr.asFunction<_dart_reboot>();
 
@@ -1934,7 +2275,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>> _revoke_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>
+      _revoke_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>(
           'revoke');
   late final _dart_revoke _revoke = _revoke_ptr.asFunction<_dart_revoke>();
@@ -1956,7 +2299,15 @@ class mac_posix {
         arg5,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Pointer<ffi.Int8>>, ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>)>> _rcmd_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Pointer<ffi.Int8>>,
+              ffi.Int32,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Int32>)>> _rcmd_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<ffi.Pointer<ffi.Int8>>,
@@ -1986,7 +2337,16 @@ class mac_posix {
         arg6,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Pointer<ffi.Int8>>, ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>, ffi.Int32)>> _rcmd_af_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Pointer<ffi.Int8>>,
+              ffi.Int32,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Int32>,
+              ffi.Int32)>> _rcmd_af_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<ffi.Pointer<ffi.Int8>>,
@@ -2005,7 +2365,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int32>)>> _rresvport_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int32>)>>
+      _rresvport_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int32>)>>(
           'rresvport');
   late final _dart_rresvport _rresvport =
@@ -2020,10 +2382,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int32>, ffi.Int32)>> _rresvport_af_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int32>, ffi.Int32)>>('rresvport_af');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int32>, ffi.Int32)>>
+      _rresvport_af_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int32>, ffi.Int32)>>('rresvport_af');
   late final _dart_rresvport_af _rresvport_af =
       _rresvport_af_ptr.asFunction<_dart_rresvport_af>();
 
@@ -2040,7 +2405,10 @@ class mac_posix {
         arg3,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint64, ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>> _iruserok_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Uint64, ffi.Int32, ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Int8>)>> _iruserok_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Uint64, ffi.Int32, ffi.Pointer<ffi.Int8>,
               ffi.Pointer<ffi.Int8>)>>('iruserok');
@@ -2062,7 +2430,14 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Void>, ffi.Int32, ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>> _iruserok_sa_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Void>,
+              ffi.Int32,
+              ffi.Int32,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Int8>)>> _iruserok_sa_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Void>, ffi.Int32, ffi.Int32,
               ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('iruserok_sa');
@@ -2082,7 +2457,13 @@ class mac_posix {
         arg3,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>> _ruserok_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Int8>,
+              ffi.Int32,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Int8>)>> _ruserok_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32,
               ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>('ruserok');
@@ -2097,10 +2478,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>> _setdomainname_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Int32)>>('setdomainname');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>
+      _setdomainname_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Int32)>>('setdomainname');
   late final _dart_setdomainname _setdomainname =
       _setdomainname_ptr.asFunction<_dart_setdomainname>();
 
@@ -2113,7 +2497,10 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint32>)>> _setgroups_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Int32, ffi.Pointer<ffi.Uint32>)>> _setgroups_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint32>)>>('setgroups');
   late final _dart_setgroups _setgroups =
@@ -2126,7 +2513,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>> _sethostid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>
+      _sethostid_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>('sethostid');
   late final _dart_sethostid _sethostid =
       _sethostid_ptr.asFunction<_dart_sethostid>();
@@ -2140,9 +2528,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>> _sethostname_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>('sethostname');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>
+      _sethostname_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Int32)>>('sethostname');
   late final _dart_sethostname _sethostname =
       _sethostname_ptr.asFunction<_dart_sethostname>();
 
@@ -2153,7 +2545,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Int8>)>> _setkey_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Int8>)>>
+      _setkey_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Int8>)>>(
           'setkey');
   late final _dart_setkey _setkey = _setkey_ptr.asFunction<_dart_setkey>();
@@ -2165,7 +2559,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>> _setlogin_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>
+      _setlogin_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>(
           'setlogin');
   late final _dart_setlogin _setlogin =
@@ -2178,7 +2574,10 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Int8>)>> _setmode_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Void> Function(
+              ffi.Pointer<ffi.Int8>)>> _setmode_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Int8>)>>('setmode');
   late final _dart_setmode _setmode = _setmode_ptr.asFunction<_dart_setmode>();
@@ -2190,7 +2589,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>> _setrgid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>
+      _setrgid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>('setrgid');
   late final _dart_setrgid _setrgid = _setrgid_ptr.asFunction<_dart_setrgid>();
 
@@ -2201,7 +2601,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>> _setruid_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>
+      _setruid_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32)>>('setruid');
   late final _dart_setruid _setruid = _setruid_ptr.asFunction<_dart_setruid>();
 
@@ -2214,16 +2615,20 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint8>)>> _setsgroups_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Int32, ffi.Pointer<ffi.Uint8>)>>('setsgroups_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint8>)>>
+      _setsgroups_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Uint8>)>>('setsgroups_np');
   late final _dart_setsgroups_np _setsgroups_np =
       _setsgroups_np_ptr.asFunction<_dart_setsgroups_np>();
 
   void setusershell() => _setusershell();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>> _setusershell_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>
+      _setusershell_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function()>>('setusershell');
   late final _dart_setusershell _setusershell =
       _setusershell_ptr.asFunction<_dart_setusershell>();
@@ -2237,10 +2642,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint8>)>> _setwgroups_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Int32, ffi.Pointer<ffi.Uint8>)>>('setwgroups_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Uint8>)>>
+      _setwgroups_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Uint8>)>>('setwgroups_np');
   late final _dart_setwgroups_np _setwgroups_np =
       _setwgroups_np_ptr.asFunction<_dart_setwgroups_np>();
 
@@ -2255,7 +2663,12 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Pointer<ffi.Int8>>, ffi.Pointer<ffi.Uint64>, ffi.Pointer<ffi.Uint64>)>> _strtofflags_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Pointer<ffi.Int8>>,
+              ffi.Pointer<ffi.Uint64>,
+              ffi.Pointer<ffi.Uint64>)>> _strtofflags_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<ffi.Pointer<ffi.Int8>>,
@@ -2271,14 +2684,17 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>> _swapon_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>
+      _swapon_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>(
           'swapon');
   late final _dart_swapon _swapon = _swapon_ptr.asFunction<_dart_swapon>();
 
   int ttyslot() => _ttyslot();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>> _ttyslot_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function()>>
+      _ttyslot_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function()>>('ttyslot');
   late final _dart_ttyslot _ttyslot = _ttyslot_ptr.asFunction<_dart_ttyslot>();
 
@@ -2289,7 +2705,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>> _undelete_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>
+      _undelete_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>(
           'undelete');
   late final _dart_undelete _undelete =
@@ -2302,7 +2720,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>> _unwhiteout_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>
+      _unwhiteout_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>)>>(
           'unwhiteout');
   late final _dart_unwhiteout _unwhiteout =
@@ -2315,7 +2735,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Uint64)>> _valloc_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Uint64)>>
+      _valloc_ptr =
       _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Uint64)>>(
           'valloc');
   late final _dart_valloc _valloc = _valloc_ptr.asFunction<_dart_valloc>();
@@ -2327,7 +2749,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>> _syscall_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>
+      _syscall_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('syscall');
   late final _dart_syscall _syscall = _syscall_ptr.asFunction<_dart_syscall>();
 
@@ -2350,7 +2773,12 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Pointer<ffi.Int8>>, ffi.Pointer<ffi.Pointer<ffi.Int8>>, ffi.Pointer<ffi.Pointer<ffi.Int8>>)>> _getsubopt_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Pointer<ffi.Int8>>,
+              ffi.Pointer<ffi.Pointer<ffi.Int8>>,
+              ffi.Pointer<ffi.Pointer<ffi.Int8>>)>> _getsubopt_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<ffi.Pointer<ffi.Int8>>,
@@ -2374,7 +2802,14 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Uint32)>> _fgetattrlist_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Int32,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Uint64,
+              ffi.Uint32)>> _fgetattrlist_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>,
               ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Uint32)>>('fgetattrlist');
@@ -2396,7 +2831,14 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Uint32)>> _fsetattrlist_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Int32,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Uint64,
+              ffi.Uint32)>> _fsetattrlist_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>,
               ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Uint32)>>('fsetattrlist');
@@ -2418,7 +2860,14 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Uint32)>> _getattrlist_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Uint64,
+              ffi.Uint32)>> _getattrlist_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Void>,
               ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Uint32)>>('getattrlist');
@@ -2440,7 +2889,14 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Uint32)>> _setattrlist_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Uint64,
+              ffi.Uint32)>> _setattrlist_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Void>,
               ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Uint32)>>('setattrlist');
@@ -2458,10 +2914,14 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Uint32)>> _exchangedata_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
-              ffi.Uint32)>>('exchangedata');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Uint32)>>
+      _exchangedata_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>,
+                  ffi.Uint32)>>('exchangedata');
   late final _dart_exchangedata _exchangedata =
       _exchangedata_ptr.asFunction<_dart_exchangedata>();
 
@@ -2486,7 +2946,17 @@ class mac_posix {
         arg7,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Uint64, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>, ffi.Uint32)>> _getdirentriesattr_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Int32,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Uint64,
+              ffi.Pointer<ffi.Uint32>,
+              ffi.Pointer<ffi.Uint32>,
+              ffi.Pointer<ffi.Uint32>,
+              ffi.Uint32)>> _getdirentriesattr_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Int32,
@@ -2517,7 +2987,15 @@ class mac_posix {
         arg5,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<fssearchblock>, ffi.Pointer<ffi.Uint64>, ffi.Uint32, ffi.Uint32, ffi.Pointer<searchstate>)>> _searchfs_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<fssearchblock>,
+              ffi.Pointer<ffi.Uint64>,
+              ffi.Uint32,
+              ffi.Uint32,
+              ffi.Pointer<searchstate>)>> _searchfs_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<ffi.Int8>,
@@ -2542,7 +3020,10 @@ class mac_posix {
         arg3,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Pointer<ffi.Void>, ffi.Uint32)>> _fsctl_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64,
+              ffi.Pointer<ffi.Void>, ffi.Uint32)>> _fsctl_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint64,
               ffi.Pointer<ffi.Void>, ffi.Uint32)>>('fsctl');
@@ -2561,10 +3042,14 @@ class mac_posix {
         arg3,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Uint64, ffi.Pointer<ffi.Void>, ffi.Uint32)>> _ffsctl_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Uint64, ffi.Pointer<ffi.Void>,
-              ffi.Uint32)>>('ffsctl');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Uint64, ffi.Pointer<ffi.Void>, ffi.Uint32)>>
+      _ffsctl_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Uint64, ffi.Pointer<ffi.Void>,
+                  ffi.Uint32)>>('ffsctl');
   late final _dart_ffsctl _ffsctl = _ffsctl_ptr.asFunction<_dart_ffsctl>();
 
   int fsync_volume_np(
@@ -2576,7 +3061,9 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32)>> _fsync_volume_np_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32)>>
+      _fsync_volume_np_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Int32)>>(
           'fsync_volume_np');
   late final _dart_fsync_volume_np _fsync_volume_np =
@@ -2591,10 +3078,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>> _sync_volume_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Int32)>>('sync_volume_np');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>
+      _sync_volume_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Int32)>>('sync_volume_np');
   late final _dart_sync_volume_np _sync_volume_np =
       _sync_volume_np_ptr.asFunction<_dart_sync_volume_np>();
 
@@ -2611,7 +3101,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<passwd> Function(ffi.Uint32)>> _getpwuid_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Pointer<passwd> Function(ffi.Uint32)>>
+      _getpwuid_ptr =
       _lookup<ffi.NativeFunction<ffi.Pointer<passwd> Function(ffi.Uint32)>>(
           'getpwuid');
   late final _dart_getpwuid _getpwuid =
@@ -2624,9 +3116,12 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<passwd> Function(ffi.Pointer<ffi.Int8>)>> _getpwnam_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<passwd> Function(ffi.Pointer<ffi.Int8>)>>('getpwnam');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Pointer<passwd> Function(ffi.Pointer<ffi.Int8>)>>
+      _getpwnam_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<passwd> Function(ffi.Pointer<ffi.Int8>)>>('getpwnam');
   late final _dart_getpwnam _getpwnam =
       _getpwnam_ptr.asFunction<_dart_getpwnam>();
 
@@ -2645,7 +3140,14 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32, ffi.Pointer<passwd>, ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Pointer<ffi.Pointer<passwd>>)>> _getpwuid_r_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Uint32,
+              ffi.Pointer<passwd>,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Uint64,
+              ffi.Pointer<ffi.Pointer<passwd>>)>> _getpwuid_r_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Uint32,
@@ -2671,7 +3173,14 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<passwd>, ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Pointer<ffi.Pointer<passwd>>)>> _getpwnam_r_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<passwd>,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Uint64,
+              ffi.Pointer<ffi.Pointer<passwd>>)>> _getpwnam_r_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<ffi.Int8>,
@@ -2684,21 +3193,24 @@ class mac_posix {
 
   ffi.Pointer<passwd> getpwent() => _getpwent();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<passwd> Function()>> _getpwent_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<passwd> Function()>>
+      _getpwent_ptr =
       _lookup<ffi.NativeFunction<ffi.Pointer<passwd> Function()>>('getpwent');
   late final _dart_getpwent _getpwent =
       _getpwent_ptr.asFunction<_dart_getpwent>();
 
   void setpwent() => _setpwent();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>> _setpwent_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>
+      _setpwent_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function()>>('setpwent');
   late final _dart_setpwent _setpwent =
       _setpwent_ptr.asFunction<_dart_setpwent>();
 
   void endpwent() => _endpwent();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>> _endpwent_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>
+      _endpwent_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function()>>('endpwent');
   late final _dart_endpwent _endpwent =
       _endpwent_ptr.asFunction<_dart_endpwent>();
@@ -2717,7 +3229,9 @@ class mac_posix {
         uu,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>)>> _uuid_clear_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>)>>
+      _uuid_clear_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>)>>(
           'uuid_clear');
   late final _dart_uuid_clear _uuid_clear =
@@ -2732,7 +3246,10 @@ class mac_posix {
         uu2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Uint8>, ffi.Pointer<ffi.Uint8>)>> _uuid_compare_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ffi.Uint8>,
+              ffi.Pointer<ffi.Uint8>)>> _uuid_compare_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<ffi.Uint8>, ffi.Pointer<ffi.Uint8>)>>('uuid_compare');
@@ -2748,7 +3265,10 @@ class mac_posix {
         src,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>, ffi.Pointer<ffi.Uint8>)>> _uuid_copy_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<ffi.Uint8>,
+              ffi.Pointer<ffi.Uint8>)>> _uuid_copy_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Void Function(
               ffi.Pointer<ffi.Uint8>, ffi.Pointer<ffi.Uint8>)>>('uuid_copy');
@@ -2762,7 +3282,9 @@ class mac_posix {
         out,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>)>> _uuid_generate_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>)>>
+      _uuid_generate_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>)>>(
           'uuid_generate');
   late final _dart_uuid_generate _uuid_generate =
@@ -2775,7 +3297,9 @@ class mac_posix {
         out,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>)>> _uuid_generate_random_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>)>>
+      _uuid_generate_random_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>)>>(
           'uuid_generate_random');
   late final _dart_uuid_generate_random _uuid_generate_random =
@@ -2788,7 +3312,9 @@ class mac_posix {
         out,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>)>> _uuid_generate_time_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>)>>
+      _uuid_generate_time_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>)>>(
           'uuid_generate_time');
   late final _dart_uuid_generate_time _uuid_generate_time =
@@ -2801,7 +3327,9 @@ class mac_posix {
         uu,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Uint8>)>> _uuid_is_null_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Uint8>)>>
+      _uuid_is_null_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Uint8>)>>(
           'uuid_is_null');
   late final _dart_uuid_is_null _uuid_is_null =
@@ -2816,7 +3344,10 @@ class mac_posix {
         uu,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Uint8>)>> _uuid_parse_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Uint8>)>> _uuid_parse_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Uint8>)>>('uuid_parse');
@@ -2832,10 +3363,13 @@ class mac_posix {
         out,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>, ffi.Pointer<ffi.Int8>)>> _uuid_unparse_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<ffi.Uint8>, ffi.Pointer<ffi.Int8>)>>('uuid_unparse');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<ffi.Uint8>, ffi.Pointer<ffi.Int8>)>>
+      _uuid_unparse_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<ffi.Uint8>,
+                  ffi.Pointer<ffi.Int8>)>>('uuid_unparse');
   late final _dart_uuid_unparse _uuid_unparse =
       _uuid_unparse_ptr.asFunction<_dart_uuid_unparse>();
 
@@ -2848,10 +3382,13 @@ class mac_posix {
         out,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>, ffi.Pointer<ffi.Int8>)>> _uuid_unparse_lower_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ffi.Uint8>,
-              ffi.Pointer<ffi.Int8>)>>('uuid_unparse_lower');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<ffi.Uint8>, ffi.Pointer<ffi.Int8>)>>
+      _uuid_unparse_lower_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<ffi.Uint8>,
+                  ffi.Pointer<ffi.Int8>)>>('uuid_unparse_lower');
   late final _dart_uuid_unparse_lower _uuid_unparse_lower =
       _uuid_unparse_lower_ptr.asFunction<_dart_uuid_unparse_lower>();
 
@@ -2864,10 +3401,13 @@ class mac_posix {
         out,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Uint8>, ffi.Pointer<ffi.Int8>)>> _uuid_unparse_upper_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ffi.Uint8>,
-              ffi.Pointer<ffi.Int8>)>>('uuid_unparse_upper');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<ffi.Uint8>, ffi.Pointer<ffi.Int8>)>>
+      _uuid_unparse_upper_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<ffi.Uint8>,
+                  ffi.Pointer<ffi.Int8>)>>('uuid_unparse_upper');
   late final _dart_uuid_unparse_upper _uuid_unparse_upper =
       _uuid_unparse_upper_ptr.asFunction<_dart_uuid_unparse_upper>();
 
@@ -2878,7 +3418,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>> _setpassent_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>
+      _setpassent_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('setpassent');
   late final _dart_setpassent _setpassent =
       _setpassent_ptr.asFunction<_dart_setpassent>();
@@ -2892,10 +3433,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Uint32, ffi.Int32)>> _user_from_uid_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Uint32, ffi.Int32)>>('user_from_uid');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Int8> Function(ffi.Uint32, ffi.Int32)>>
+      _user_from_uid_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Int8> Function(
+                  ffi.Uint32, ffi.Int32)>>('user_from_uid');
   late final _dart_user_from_uid _user_from_uid =
       _user_from_uid_ptr.asFunction<_dart_user_from_uid>();
 
@@ -2906,9 +3450,13 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<passwd> Function(ffi.Pointer<ffi.Uint8>)>> _getpwuuid_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<passwd> Function(ffi.Pointer<ffi.Uint8>)>>('getpwuuid');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Pointer<passwd> Function(ffi.Pointer<ffi.Uint8>)>>
+      _getpwuuid_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<passwd> Function(
+                  ffi.Pointer<ffi.Uint8>)>>('getpwuuid');
   late final _dart_getpwuuid _getpwuuid =
       _getpwuuid_ptr.asFunction<_dart_getpwuuid>();
 
@@ -2927,7 +3475,14 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Uint8>, ffi.Pointer<passwd>, ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Pointer<ffi.Pointer<passwd>>)>> _getpwuuid_r_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Uint8>,
+              ffi.Pointer<passwd>,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Uint64,
+              ffi.Pointer<ffi.Pointer<passwd>>)>> _getpwuuid_r_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<ffi.Uint8>,
@@ -2946,7 +3501,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<group> Function(ffi.Uint32)>> _getgrgid_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Pointer<group> Function(ffi.Uint32)>>
+      _getgrgid_ptr =
       _lookup<ffi.NativeFunction<ffi.Pointer<group> Function(ffi.Uint32)>>(
           'getgrgid');
   late final _dart_getgrgid _getgrgid =
@@ -2959,9 +3516,12 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<group> Function(ffi.Pointer<ffi.Int8>)>> _getgrnam_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<group> Function(ffi.Pointer<ffi.Int8>)>>('getgrnam');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Pointer<group> Function(ffi.Pointer<ffi.Int8>)>>
+      _getgrnam_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<group> Function(ffi.Pointer<ffi.Int8>)>>('getgrnam');
   late final _dart_getgrnam _getgrnam =
       _getgrnam_ptr.asFunction<_dart_getgrnam>();
 
@@ -2981,7 +3541,14 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Uint32, ffi.Pointer<group>, ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Pointer<ffi.Pointer<group>>)>> _getgrgid_r_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Uint32,
+              ffi.Pointer<group>,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Uint64,
+              ffi.Pointer<ffi.Pointer<group>>)>> _getgrgid_r_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Uint32,
@@ -3007,7 +3574,14 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<group>, ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Pointer<ffi.Pointer<group>>)>> _getgrnam_r_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<group>,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Uint64,
+              ffi.Pointer<ffi.Pointer<group>>)>> _getgrnam_r_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<ffi.Int8>,
@@ -3021,21 +3595,24 @@ class mac_posix {
   /// XSI
   ffi.Pointer<group> getgrent() => _getgrent();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<group> Function()>> _getgrent_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<group> Function()>>
+      _getgrent_ptr =
       _lookup<ffi.NativeFunction<ffi.Pointer<group> Function()>>('getgrent');
   late final _dart_getgrent _getgrent =
       _getgrent_ptr.asFunction<_dart_getgrent>();
 
   void setgrent() => _setgrent();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>> _setgrent_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>
+      _setgrent_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function()>>('setgrent');
   late final _dart_setgrent _setgrent =
       _setgrent_ptr.asFunction<_dart_setgrent>();
 
   void endgrent() => _endgrent();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>> _endgrent_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>
+      _endgrent_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function()>>('endgrent');
   late final _dart_endgrent _endgrent =
       _endgrent_ptr.asFunction<_dart_endgrent>();
@@ -3049,10 +3626,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Uint32, ffi.Int32)>> _group_from_gid_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Uint32, ffi.Int32)>>('group_from_gid');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Int8> Function(ffi.Uint32, ffi.Int32)>>
+      _group_from_gid_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Int8> Function(
+                  ffi.Uint32, ffi.Int32)>>('group_from_gid');
   late final _dart_group_from_gid _group_from_gid =
       _group_from_gid_ptr.asFunction<_dart_group_from_gid>();
 
@@ -3063,9 +3643,13 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<group> Function(ffi.Pointer<ffi.Uint8>)>> _getgruuid_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<group> Function(ffi.Pointer<ffi.Uint8>)>>('getgruuid');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Pointer<group> Function(ffi.Pointer<ffi.Uint8>)>>
+      _getgruuid_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<group> Function(
+                  ffi.Pointer<ffi.Uint8>)>>('getgruuid');
   late final _dart_getgruuid _getgruuid =
       _getgruuid_ptr.asFunction<_dart_getgruuid>();
 
@@ -3084,7 +3668,14 @@ class mac_posix {
         arg4,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Uint8>, ffi.Pointer<group>, ffi.Pointer<ffi.Int8>, ffi.Uint64, ffi.Pointer<ffi.Pointer<group>>)>> _getgruuid_r_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Uint8>,
+              ffi.Pointer<group>,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Uint64,
+              ffi.Pointer<ffi.Pointer<group>>)>> _getgruuid_r_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<ffi.Uint8>,
@@ -3102,7 +3693,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Int8>)>> _setgrfile_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Int8>)>>
+      _setgrfile_ptr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Int8>)>>(
           'setgrfile');
   late final _dart_setgrfile _setgrfile =
@@ -3115,14 +3708,16 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>> _setgroupent_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>
+      _setgroupent_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('setgroupent');
   late final _dart_setgroupent _setgroupent =
       _setgroupent_ptr.asFunction<_dart_setgroupent>();
 
   ffi.Pointer<ffi.Int32> __error() => ___error();
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int32> Function()>> ___error_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Int32> Function()>>
+      ___error_ptr =
       _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int32> Function()>>('__error');
   late final _dart___error ___error = ___error_ptr.asFunction<_dart___error>();
 
@@ -3136,9 +3731,12 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>> _chmod_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>>('chmod');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>>
+      _chmod_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>>('chmod');
   late final _dart_chmod _chmod = _chmod_ptr.asFunction<_dart_chmod>();
 
   int fchmod(
@@ -3150,7 +3748,9 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Uint16)>> _fchmod_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Uint16)>>
+      _fchmod_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Uint16)>>(
           'fchmod');
   late final _dart_fchmod _fchmod = _fchmod_ptr.asFunction<_dart_fchmod>();
@@ -3164,9 +3764,11 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat>)>> _fstat_ptr = _lookup<
-          ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat>)>>(
-      'fstat');
+  late final ffi.Pointer<
+          ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat>)>>
+      _fstat_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat>)>>('fstat');
   late final _dart_fstat _fstat = _fstat_ptr.asFunction<_dart_fstat>();
 
   int lstat(
@@ -3178,10 +3780,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>)>> _lstat_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>)>>('lstat');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>)>>
+      _lstat_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>)>>('lstat');
   late final _dart_lstat _lstat = _lstat_ptr.asFunction<_dart_lstat>();
 
   int mkdir(
@@ -3193,9 +3798,12 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>> _mkdir_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>>('mkdir');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>>
+      _mkdir_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>>('mkdir');
   late final _dart_mkdir _mkdir = _mkdir_ptr.asFunction<_dart_mkdir>();
 
   int mkfifo(
@@ -3207,9 +3815,12 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>> _mkfifo_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>>('mkfifo');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>>
+      _mkfifo_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>>('mkfifo');
   late final _dart_mkfifo _mkfifo = _mkfifo_ptr.asFunction<_dart_mkfifo>();
 
   int stat_1(
@@ -3221,10 +3832,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>)>> _stat_1_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>)>>('stat');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>)>>
+      _stat_1_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>)>>('stat');
   late final _dart_stat_1 _stat_1 = _stat_1_ptr.asFunction<_dart_stat_1>();
 
   int umask(
@@ -3234,7 +3848,8 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint16 Function(ffi.Uint16)>> _umask_ptr =
+  late final ffi.Pointer<ffi.NativeFunction<ffi.Uint16 Function(ffi.Uint16)>>
+      _umask_ptr =
       _lookup<ffi.NativeFunction<ffi.Uint16 Function(ffi.Uint16)>>('umask');
   late final _dart_umask _umask = _umask_ptr.asFunction<_dart_umask>();
 
@@ -3251,10 +3866,14 @@ class mac_posix {
         arg3,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint16, ffi.Int32)>> _fchmodat_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint16,
-              ffi.Int32)>>('fchmodat');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint16, ffi.Int32)>>
+      _fchmodat_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint16,
+                  ffi.Int32)>>('fchmodat');
   late final _dart_fchmodat _fchmodat =
       _fchmodat_ptr.asFunction<_dart_fchmodat>();
 
@@ -3271,7 +3890,10 @@ class mac_posix {
         arg3,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>, ffi.Int32)>> _fstatat_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<stat>, ffi.Int32)>> _fstatat_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>,
               ffi.Pointer<stat>, ffi.Int32)>>('fstatat');
@@ -3288,10 +3910,13 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint16)>> _mkdirat_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint16)>>('mkdirat');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint16)>>
+      _mkdirat_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Uint16)>>('mkdirat');
   late final _dart_mkdirat _mkdirat = _mkdirat_ptr.asFunction<_dart_mkdirat>();
 
   int futimens(
@@ -3303,9 +3928,13 @@ class mac_posix {
         times,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<timespec>)>> _futimens_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Pointer<timespec>)>>('futimens');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<timespec>)>>
+      _futimens_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Pointer<timespec>)>>('futimens');
   late final _dart_futimens _futimens =
       _futimens_ptr.asFunction<_dart_futimens>();
 
@@ -3322,7 +3951,10 @@ class mac_posix {
         flag,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>, ffi.Pointer<timespec>, ffi.Int32)>> _utimensat_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<timespec>, ffi.Int32)>> _utimensat_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Int8>,
               ffi.Pointer<timespec>, ffi.Int32)>>('utimensat');
@@ -3338,7 +3970,10 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint32)>> _chflags_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Int8>, ffi.Uint32)>> _chflags_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint32)>>('chflags');
   late final _dart_chflags _chflags = _chflags_ptr.asFunction<_dart_chflags>();
@@ -3352,10 +3987,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<filesec>)>> _chmodx_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<filesec>)>>('chmodx_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<filesec>)>>
+      _chmodx_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<filesec>)>>('chmodx_np');
   late final _dart_chmodx_np _chmodx_np =
       _chmodx_np_ptr.asFunction<_dart_chmodx_np>();
 
@@ -3368,7 +4006,9 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Uint32)>> _fchflags_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Uint32)>>
+      _fchflags_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Uint32)>>(
           'fchflags');
   late final _dart_fchflags _fchflags =
@@ -3383,9 +4023,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<filesec>)>> _fchmodx_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Pointer<filesec>)>>('fchmodx_np');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<filesec>)>>
+      _fchmodx_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Pointer<filesec>)>>('fchmodx_np');
   late final _dart_fchmodx_np _fchmodx_np =
       _fchmodx_np_ptr.asFunction<_dart_fchmodx_np>();
 
@@ -3400,10 +4044,14 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat>, ffi.Pointer<filesec>)>> _fstatx_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat>,
-              ffi.Pointer<filesec>)>>('fstatx_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Pointer<stat>, ffi.Pointer<filesec>)>>
+      _fstatx_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat>,
+                  ffi.Pointer<filesec>)>>('fstatx_np');
   late final _dart_fstatx_np _fstatx_np =
       _fstatx_np_ptr.asFunction<_dart_fstatx_np>();
 
@@ -3416,7 +4064,10 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint32)>> _lchflags_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ffi.Int8>, ffi.Uint32)>> _lchflags_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint32)>>('lchflags');
   late final _dart_lchflags _lchflags =
@@ -3431,9 +4082,12 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>> _lchmod_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>>('lchmod');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>>
+      _lchmod_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Uint16)>>('lchmod');
   late final _dart_lchmod _lchmod = _lchmod_ptr.asFunction<_dart_lchmod>();
 
   int lstatx_np(
@@ -3447,7 +4101,10 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>, ffi.Pointer<filesec>)>> _lstatx_np_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>,
+              ffi.Pointer<filesec>)>> _lstatx_np_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>,
               ffi.Pointer<filesec>)>>('lstatx_np');
@@ -3463,10 +4120,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<filesec>)>> _mkdirx_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<filesec>)>>('mkdirx_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<filesec>)>>
+      _mkdirx_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<filesec>)>>('mkdirx_np');
   late final _dart_mkdirx_np _mkdirx_np =
       _mkdirx_np_ptr.asFunction<_dart_mkdirx_np>();
 
@@ -3479,10 +4139,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<filesec>)>> _mkfifox_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<filesec>)>>('mkfifox_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<filesec>)>>
+      _mkfifox_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<filesec>)>>('mkfifox_np');
   late final _dart_mkfifox_np _mkfifox_np =
       _mkfifox_np_ptr.asFunction<_dart_mkfifox_np>();
 
@@ -3497,7 +4160,10 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>, ffi.Pointer<filesec>)>> _statx_np_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>,
+              ffi.Pointer<filesec>)>> _statx_np_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat>,
               ffi.Pointer<filesec>)>>('statx_np');
@@ -3511,7 +4177,9 @@ class mac_posix {
         arg0,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<filesec>)>> _umaskx_np_ptr =
+  late final ffi
+      .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<filesec>)>>
+      _umaskx_np_ptr =
       _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<filesec>)>>(
           'umaskx_np');
   late final _dart_umaskx_np _umaskx_np =
@@ -3530,10 +4198,14 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat64>, ffi.Pointer<filesec>)>> _fstatx64_np_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat64>,
-              ffi.Pointer<filesec>)>>('fstatx64_np');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Int32, ffi.Pointer<stat64>, ffi.Pointer<filesec>)>>
+      _fstatx64_np_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat64>,
+                  ffi.Pointer<filesec>)>>('fstatx64_np');
   late final _dart_fstatx64_np _fstatx64_np =
       _fstatx64_np_ptr.asFunction<_dart_fstatx64_np>();
 
@@ -3548,7 +4220,10 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>, ffi.Pointer<filesec>)>> _lstatx64_np_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>,
+              ffi.Pointer<filesec>)>> _lstatx64_np_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>,
               ffi.Pointer<filesec>)>>('lstatx64_np');
@@ -3566,7 +4241,10 @@ class mac_posix {
         arg2,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>, ffi.Pointer<filesec>)>> _statx64_np_ptr = _lookup<
+  late final ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>,
+              ffi.Pointer<filesec>)>> _statx64_np_ptr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>,
               ffi.Pointer<filesec>)>>('statx64_np');
@@ -3582,9 +4260,12 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat64>)>> _fstat64_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat64>)>>('fstat64');
+  late final ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat64>)>>
+      _fstat64_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Int32, ffi.Pointer<stat64>)>>('fstat64');
   late final _dart_fstat64 _fstat64 = _fstat64_ptr.asFunction<_dart_fstat64>();
 
   int lstat64(
@@ -3596,10 +4277,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>)>> _lstat64_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>)>>('lstat64');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>)>>
+      _lstat64_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>)>>('lstat64');
   late final _dart_lstat64 _lstat64 = _lstat64_ptr.asFunction<_dart_lstat64>();
 
   int stat64_1(
@@ -3611,10 +4295,13 @@ class mac_posix {
         arg1,
       );
 
-  late final ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>)>> _stat64_1_ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>)>>('stat64');
+  late final ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>)>>
+      _stat64_1_ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<stat64>)>>('stat64');
   late final _dart_stat64_1 _stat64_1 =
       _stat64_1_ptr.asFunction<_dart_stat64_1>();
 }

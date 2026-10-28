@@ -225,5 +225,5 @@ Future<Stat> _getExpected(String path) async {
   );
 }
 
-Future<List<String>> _runScript(String name, String args) async =>
+Future<List<String>> _runScript(String name, String args) =>
     cli.lines('test/scripts/$name $args').toList();

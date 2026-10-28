@@ -41,5 +41,5 @@ extension _UtsnameBsd on ffi.Pointer<_utsname_bsd_t> {
 
 // ignore: avoid_private_typedef_functions
 typedef _dart_utsname_bsd = int Function(
-  ffi.Pointer<_utsname_bsd_t> __info,
+  ffi.Pointer<_utsname_bsd_t> info,
 );

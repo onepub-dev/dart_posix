@@ -11,7 +11,7 @@ import 'package:posix/src/sysinfo.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('sysinfo', () async {
+  test('sysinfo', () {
     final info = sysinfo();
     print(info);
 

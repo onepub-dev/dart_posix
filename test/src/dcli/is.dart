@@ -91,8 +91,7 @@ void setLastModifed(String path, DateTime lastModified) {
 /// Returns true if the passed [pathToDirectory] is an
 /// empty directory.
 /// For large directories this operation can be expensive.
-Future<bool> isEmpty(String pathToDirectory) async =>
-    _Is().isEmpty(pathToDirectory);
+Future<bool> isEmpty(String pathToDirectory) => _Is().isEmpty(pathToDirectory);
 
 class _Is extends DCliFunction {
   bool isFile(String path) {
@@ -139,7 +138,7 @@ class _Is extends DCliFunction {
   /// Returns true if the passed [pathToDirectory] is an
   /// empty directory.
   /// For large directories this operation can be expensive.
-  Future<bool> isEmpty(String pathToDirectory) async {
+  Future<bool> isEmpty(String pathToDirectory) {
     verbose(() => 'isEmpty: ${truepath(pathToDirectory)}');
 
     return Directory(pathToDirectory).list(followLinks: false).isEmpty;

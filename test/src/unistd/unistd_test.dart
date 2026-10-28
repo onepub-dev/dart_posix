@@ -9,13 +9,14 @@ import 'dart:io';
 
 import 'package:cli_script/cli_script.dart';
 import 'package:path/path.dart' hide equals;
-import 'package:posix/posix.dart';
+import 'package:posix/posix.dart' as posix;
+import 'package:posix/posix.dart' hide stat;
 import 'package:test/test.dart';
 
 import '../dcli/temp_file.dart' as temp;
 
 void main() {
-  test('getcwd ...', () async {
+  test('getcwd ...', () {
     /// call the dart version which wraps the posix version.
     expect(getcwd(), equals(Directory.current.path));
   });
@@ -28,7 +29,7 @@ void main() {
 
     expect(gethostname(), equals(hostname));
   });
-  test('getpid ...', () async {
+  test('getpid ...', () {
     expect(getpid(), equals(pid));
   });
 
@@ -61,7 +62,7 @@ void main() {
     );
   });
 
-  test('getppid ...', () async {
+  test('getppid ...', () {
     expect(getppid(), equals(isPositive));
     expect(getppid(), isNot(equals(pid)));
   });
@@ -89,9 +90,9 @@ void main() {
 
   test('chmod', () async {
     await temp.withTempFile((file) async {
-      var stat = stat(file);
+      var stat = posix.stat(file);
       chmod(file, '777');
-      stat = stat(file);
+      stat = posix.stat(file);
       expect(stat.mode.isOwnerReadable, isTrue);
       expect(stat.mode.isOwnerWritable, isTrue);
       expect(stat.mode.isOwnerExecutable, isTrue);
@@ -103,7 +104,7 @@ void main() {
       expect(stat.mode.isOtherExecutable, isTrue);
 
       chmod(file, '666');
-      stat = stat(file);
+      stat = posix.stat(file);
       expect(stat.mode.isOwnerReadable, isTrue);
       expect(stat.mode.isOwnerWritable, isTrue);
       expect(stat.mode.isOwnerExecutable, isFalse);
@@ -115,7 +116,7 @@ void main() {
       expect(stat.mode.isOtherExecutable, isFalse);
 
       chmod(file, '444');
-      stat = stat(file);
+      stat = posix.stat(file);
       expect(stat.mode.isOwnerReadable, isTrue);
       expect(stat.mode.isOwnerWritable, isFalse);
       expect(stat.mode.isOwnerExecutable, isFalse);
@@ -127,7 +128,7 @@ void main() {
       expect(stat.mode.isOtherExecutable, isFalse);
 
       chmod(file, '222');
-      stat = stat(file);
+      stat = posix.stat(file);
       expect(stat.mode.isOwnerReadable, isFalse);
       expect(stat.mode.isOwnerWritable, isTrue);
       expect(stat.mode.isOwnerExecutable, isFalse);

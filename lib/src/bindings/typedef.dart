@@ -112,34 +112,34 @@ typedef _dart_dup2 = int Function(
 );
 
 typedef _dart_execl = int Function(
-  ffi.Pointer<ffi.Int8> __path,
-  ffi.Pointer<ffi.Int8> __arg0,
+  ffi.Pointer<ffi.Int8> path,
+  ffi.Pointer<ffi.Int8> arg0,
 );
 
 typedef _dart_execle = int Function(
-  ffi.Pointer<ffi.Int8> __path,
-  ffi.Pointer<ffi.Int8> __arg0,
+  ffi.Pointer<ffi.Int8> path,
+  ffi.Pointer<ffi.Int8> arg0,
 );
 
 typedef _dart_execlp = int Function(
-  ffi.Pointer<ffi.Int8> __file,
-  ffi.Pointer<ffi.Int8> __arg0,
+  ffi.Pointer<ffi.Int8> file,
+  ffi.Pointer<ffi.Int8> arg0,
 );
 
 typedef _dart_execv = int Function(
-  ffi.Pointer<ffi.Int8> __path,
-  ffi.Pointer<ffi.Pointer<ffi.Int8>> __argv,
+  ffi.Pointer<ffi.Int8> path,
+  ffi.Pointer<ffi.Pointer<ffi.Int8>> argv,
 );
 
 typedef _dart_execve = int Function(
-  ffi.Pointer<ffi.Int8> __file,
-  ffi.Pointer<ffi.Pointer<ffi.Int8>> __argv,
-  ffi.Pointer<ffi.Pointer<ffi.Int8>> __envp,
+  ffi.Pointer<ffi.Int8> file,
+  ffi.Pointer<ffi.Pointer<ffi.Int8>> argv,
+  ffi.Pointer<ffi.Pointer<ffi.Int8>> envp,
 );
 
 typedef _dart_execvp = int Function(
-  ffi.Pointer<ffi.Int8> __file,
-  ffi.Pointer<ffi.Pointer<ffi.Int8>> __argv,
+  ffi.Pointer<ffi.Int8> file,
+  ffi.Pointer<ffi.Pointer<ffi.Int8>> argv,
 );
 
 typedef _dart_fork = int Function();
@@ -258,9 +258,9 @@ typedef _dart_unlink = int Function(
 );
 
 typedef _dart_write = int Function(
-  int __fd,
-  ffi.Pointer<ffi.Void> __buf,
-  int __nbyte,
+  int fd,
+  ffi.Pointer<ffi.Void> buf,
+  int nbyte,
 );
 
 typedef _dart_confstr = int Function(
@@ -340,17 +340,17 @@ typedef _dart_nice = int Function(
 );
 
 typedef _dart_pread = int Function(
-  int __fd,
-  ffi.Pointer<ffi.Void> __buf,
-  int __nbyte,
-  int __offset,
+  int fd,
+  ffi.Pointer<ffi.Void> buf,
+  int nbyte,
+  int offset,
 );
 
 typedef _dart_pwrite = int Function(
-  int __fd,
-  ffi.Pointer<ffi.Void> __buf,
-  int __nbyte,
-  int __offset,
+  int fd,
+  ffi.Pointer<ffi.Void> buf,
+  int nbyte,
+  int offset,
 );
 
 typedef _dart_sbrk = ffi.Pointer<ffi.Void> Function(
@@ -485,9 +485,9 @@ typedef _dart_add_profil = int Function(
 typedef _dart_endusershell = void Function();
 
 typedef _dart_execvP = int Function(
-  ffi.Pointer<ffi.Int8> __file,
-  ffi.Pointer<ffi.Int8> __searchpath,
-  ffi.Pointer<ffi.Pointer<ffi.Int8>> __argv,
+  ffi.Pointer<ffi.Int8> file,
+  ffi.Pointer<ffi.Int8> searchpath,
+  ffi.Pointer<ffi.Pointer<ffi.Int8>> argv,
 );
 
 typedef _dart_fflagstostr = ffi.Pointer<ffi.Int8> Function(
@@ -1075,15 +1075,15 @@ typedef _dart_mkdirat = int Function(
 );
 
 typedef _dart_futimens = int Function(
-  int __fd,
-  ffi.Pointer<timespec> __times,
+  int fd,
+  ffi.Pointer<timespec> times,
 );
 
 typedef _dart_utimensat = int Function(
-  int __fd,
-  ffi.Pointer<ffi.Int8> __path,
-  ffi.Pointer<timespec> __times,
-  int __flag,
+  int fd,
+  ffi.Pointer<ffi.Int8> path,
+  ffi.Pointer<timespec> times,
+  int flag,
 );
 
 typedef _dart_chflags = int Function(

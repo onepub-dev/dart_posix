@@ -139,20 +139,20 @@ enum Signal {
 
 typedef _dart_access = int Function(
   ffi.Pointer<Utf8> name,
-  int __type,
+  int type,
 );
 
 typedef _dart_faccessat = int Function(
   int fd,
   ffi.Pointer<Utf8> file,
-  int __type,
+  int type,
   int flag,
 );
 
 typedef _dart_lseek = int Function(
   int fd,
   int offset,
-  int __whence,
+  int whence,
 );
 
 typedef _dart_close = int Function(
@@ -186,7 +186,7 @@ typedef _dart_pwrite = int Function(
 );
 
 typedef _dart_pipe = int Function(
-  ffi.Pointer<ffi.Int32> __pipedes,
+  ffi.Pointer<ffi.Int32> pipedes,
 );
 
 typedef _dart_alarm = int Function(
@@ -240,7 +240,7 @@ typedef _dart_fchownat = int Function(
 );
 
 typedef _dart_chdir = int Function(
-  ffi.Pointer<Utf8> __path,
+  ffi.Pointer<Utf8> path,
 );
 
 typedef _dart_fchdir = int Function(
@@ -248,8 +248,8 @@ typedef _dart_fchdir = int Function(
 );
 
 typedef _dart_getcwd = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<ffi.Int8> __buf,
-  int __size,
+  ffi.Pointer<ffi.Int8> buf,
+  int size,
 );
 
 typedef _dart_getwd = ffi.Pointer<ffi.Int8> Function(
@@ -266,37 +266,37 @@ typedef _dart_dup2 = int Function(
 );
 
 typedef _dart_execve = int Function(
-  ffi.Pointer<Utf8> __path,
-  ffi.Pointer<ffi.Pointer<Utf8>> __argv,
-  ffi.Pointer<ffi.Pointer<Utf8>> __envp,
+  ffi.Pointer<Utf8> path,
+  ffi.Pointer<ffi.Pointer<Utf8>> argv,
+  ffi.Pointer<ffi.Pointer<Utf8>> envp,
 );
 
 typedef _dart_fexecve = int Function(
   int fd,
-  ffi.Pointer<ffi.Pointer<Utf8>> __argv,
-  ffi.Pointer<ffi.Pointer<Utf8>> __envp,
+  ffi.Pointer<ffi.Pointer<Utf8>> argv,
+  ffi.Pointer<ffi.Pointer<Utf8>> envp,
 );
 
 typedef _dart_execv = int Function(
-  ffi.Pointer<Utf8> __path,
-  ffi.Pointer<ffi.Pointer<Utf8>> __argv,
+  ffi.Pointer<Utf8> path,
+  ffi.Pointer<ffi.Pointer<Utf8>> argv,
 );
 
 typedef _dart_execvp = int Function(
   ffi.Pointer<Utf8> file,
-  ffi.Pointer<ffi.Pointer<Utf8>> __argv,
+  ffi.Pointer<ffi.Pointer<Utf8>> argv,
 );
 
 typedef _dart_nice = int Function(
-  int __inc,
+  int inc,
 );
 
 typedef _dart__exit = void Function(
-  int __status,
+  int status,
 );
 
 typedef _dart_pathconf = int Function(
-  ffi.Pointer<Utf8> __path,
+  ffi.Pointer<Utf8> path,
   int name,
 );
 
@@ -332,7 +332,7 @@ typedef _dart_getpgid = int Function(
 
 typedef _dart_setpgid = int Function(
   int pid,
-  int __pgid,
+  int pgid,
 );
 
 typedef _dart_setpgrp = int Function();
@@ -398,38 +398,38 @@ typedef _dart_isatty = int Function(
 typedef _dart_ttyslot = int Function();
 
 typedef _dart_link = int Function(
-  ffi.Pointer<Utf8> __from,
-  ffi.Pointer<Utf8> __to,
+  ffi.Pointer<Utf8> from,
+  ffi.Pointer<Utf8> to,
 );
 
 typedef _dart_linkat = int Function(
-  int __fromfd,
-  ffi.Pointer<Utf8> __from,
-  int __tofd,
-  ffi.Pointer<Utf8> __to,
+  int fromfd,
+  ffi.Pointer<Utf8> from,
+  int tofd,
+  ffi.Pointer<Utf8> to,
   int flags,
 );
 
 typedef _dart_symlink = int Function(
-  ffi.Pointer<Utf8> __from,
-  ffi.Pointer<Utf8> __to,
+  ffi.Pointer<Utf8> from,
+  ffi.Pointer<Utf8> to,
 );
 
 typedef _dart_readlink = int Function(
-  ffi.Pointer<Utf8> __path,
+  ffi.Pointer<Utf8> path,
   ffi.Pointer<Utf8> buf,
   int len,
 );
 
 typedef _dart_symlinkat = int Function(
-  ffi.Pointer<Utf8> __from,
-  int __tofd,
-  ffi.Pointer<Utf8> __to,
+  ffi.Pointer<Utf8> from,
+  int tofd,
+  ffi.Pointer<Utf8> to,
 );
 
 typedef _dart_readlinkat = int Function(
   int fd,
-  ffi.Pointer<Utf8> __path,
+  ffi.Pointer<Utf8> path,
   ffi.Pointer<Utf8> buf,
   int len,
 );
@@ -445,7 +445,7 @@ typedef _dart_unlinkat = int Function(
 );
 
 typedef _dart_rmdir = int Function(
-  ffi.Pointer<Utf8> __path,
+  ffi.Pointer<Utf8> path,
 );
 
 typedef _dart_tcgetpgrp = int Function(
@@ -470,8 +470,8 @@ typedef _dart_setlogin = int Function(
 
 typedef _dart_getopt = int Function(
   int argc,
-  ffi.Pointer<ffi.Pointer<Utf8>> ___argv,
-  ffi.Pointer<Utf8> __shortopts,
+  ffi.Pointer<ffi.Pointer<Utf8>> argv,
+  ffi.Pointer<Utf8> shortopts,
 );
 
 typedef _dart_gethostname = int Function(
@@ -527,11 +527,11 @@ typedef _dart_daemon = int Function(
 );
 
 typedef _dart_chroot = int Function(
-  ffi.Pointer<Utf8> __path,
+  ffi.Pointer<Utf8> path,
 );
 
 typedef _dart_getpass = ffi.Pointer<Utf8> Function(
-  ffi.Pointer<Utf8> __prompt,
+  ffi.Pointer<Utf8> prompt,
 );
 
 typedef _dart_fsync = int Function(
@@ -565,7 +565,7 @@ typedef _dart_sbrk = ffi.Pointer<ffi.Void> Function(
 );
 
 typedef _dart_syscall = int Function(
-  int __sysno,
+  int sysno,
 );
 
 typedef _dart_lockf = int Function(

@@ -40,7 +40,7 @@ import 'verbose.dart';
 /// ```
 ///
 
-Future<String> createDir(String path, {bool recursive = false}) async =>
+Future<String> createDir(String path, {bool recursive = false}) =>
     _CreateDir().createDir(path, recursive: recursive);
 
 /// Creates a temp directory and then calls [action].
@@ -77,7 +77,7 @@ Future<R> withTempDir<R>(Future<R> Function(String tempDir) action,
 /// The temporary directory name is formed from a uuid.
 /// It is your responsiblity to delete the directory once you have
 /// finsihed with it.
-Future<String> createTempDir() async => _CreateDir().createDir(
+Future<String> createTempDir() => _CreateDir().createDir(
       join(Directory.systemTemp.path, '.dclitmp', const Uuid().v4()),
       recursive: true,
     );
@@ -92,8 +92,7 @@ class _CreateDir extends DCliFunction {
       }
 
       await Directory(path).create(recursive: recursive);
-    }
-    catch (e) {
+    } catch (e) {
       throw CreateDirException(
         'Unable to create the directory ${truepath(path)}. Error: $e',
       );

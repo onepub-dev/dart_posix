@@ -11,7 +11,7 @@ import 'package:posix/posix.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('pwd ...', () async {
+  test('pwd ...', () {
     final passwd = getpwnam(Platform.environment['USER']!);
 
     print(passwd);
@@ -27,7 +27,7 @@ void main() {
     expect(byUid.homePathTo, equals(passwd.homePathTo));
   }, skip: Platform.isWindows);
 
-  test('pwd list users', () async {
+  test('pwd list users', () {
     final users = getUsers();
     for (final user in users) {
       print(user);
