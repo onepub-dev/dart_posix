@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-
 import 'dart:convert';
 import 'dart:ffi' as ffi;
 import 'dart:io' show Platform;

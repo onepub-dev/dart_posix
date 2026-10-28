@@ -15,8 +15,8 @@ class PosixException implements Exception {
   int code;
 
   /// An optional value which allows the caller to over-ride the
-  /// standard error returned vi [sterror(errno)]. If not supplied then
-  /// we call [strerror(errno)] to get the posix error description.
+  /// standard error returned via [strerror]. If not supplied then
+  /// we call [strerror] with [code] to get the posix error description.
   String? posixError;
 
   @override

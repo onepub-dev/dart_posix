@@ -313,7 +313,7 @@ int native_execv(
 
 _dart_execv? _execv;
 
-/// Execute PATH with ARG as argv[0] and the current Dart environment.
+/// Execute PATH with ARG as `argv[0]` and the current Dart environment.
 ///
 /// The variadic libc function cannot safely be called through a fixed-arity
 /// FFI binding, so this uses execve with terminated argument vectors.
@@ -336,7 +336,7 @@ int execle(
       return native_execve(path, argv, envp);
     });
 
-/// Execute PATH with ARG as argv[0] and the current environment.
+/// Execute PATH with ARG as `argv[0]` and the current environment.
 ///
 /// Uses execv to supply a correctly terminated argument vector.
 int execl(
@@ -373,7 +373,7 @@ int native_execvp(
 
 _dart_execvp? _execvp;
 
-/// Execute FILE, searching PATH, with ARG as argv[0].
+/// Execute FILE, searching PATH, with ARG as `argv[0]`.
 ///
 /// Uses execvp to supply a correctly terminated argument vector.
 int execlp(

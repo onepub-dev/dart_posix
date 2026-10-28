@@ -197,7 +197,7 @@ _dart_pwrite? _pwrite;
 
 /// Create a one-way communication channel (pipe).
 /// If successful, two file descriptors are stored in PIPEDES;
-/// bytes written on PIPEDES[1] can be read from PIPEDES[0].
+/// bytes written on `PIPEDES[1]` can be read from `PIPEDES[0]`.
 /// Returns 0 if successful, -1 if not.
 List<int> native_pipe(
   ffi.Pointer<ffi.Int32> pipedes,

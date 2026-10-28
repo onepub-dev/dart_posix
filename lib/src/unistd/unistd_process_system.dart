@@ -984,7 +984,7 @@ _dart_revoke? _revoke;
 /// Enable statistical profiling, writing samples of the PC into at most
 /// SIZE bytes of SAMPLE_BUFFER; every processor clock tick while profiling
 /// is enabled, the system examines the user PC and increments
-/// SAMPLE_BUFFER[((PC - OFFSET) / 2) * SCALE / 65536].  If SCALE is zero,
+/// `SAMPLE_BUFFER[((PC - OFFSET) / 2) * SCALE / 65536]`. If SCALE is zero,
 /// disable profiling.  Returns zero on success, -1 on error.
 int native_profil(
   ffi.Pointer<ffi.Uint16> SampleBuffer,
