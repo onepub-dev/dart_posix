@@ -13,7 +13,6 @@ import '../../posix.dart';
 import '../libc.dart';
 import 'os.dart';
 
-// ignore: non_constant_identifier_names
 final macLStat = MacStatCall(r'lstat$INODE64');
 final macStat = MacStatCall(r'stat$INODE64');
 
@@ -33,7 +32,7 @@ class MacStatCall extends OsStatCall {
     return stat;
   }
 
-  late final _call = _lookupCall(name);
+  late final MacStatCall_dart _call = _lookupCall(name);
 
   MacStatCall_dart _lookupCall(String symbol) {
     final dylib = Libc().dylib;

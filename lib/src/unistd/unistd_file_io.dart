@@ -1,5 +1,4 @@
-// ignore: lines_longer_than_80_chars
-// ignore_for_file: non_constant_identifier_names, constant_identifier_names, camel_case_types
+// ignore_for_file: non_constant_identifier_names
 
 part of 'unistd.dart';
 
@@ -201,7 +200,7 @@ _dart_pwrite? _pwrite;
 /// bytes written on PIPEDES[1] can be read from PIPEDES[0].
 /// Returns 0 if successful, -1 if not.
 List<int> native_pipe(
-  ffi.Pointer<ffi.Int32> __pipedes,
+  ffi.Pointer<ffi.Int32> pipedes,
 ) {
   final cPipedes = malloc<ffi.Int32>(2);
   try {

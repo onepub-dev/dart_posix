@@ -1,37 +1,36 @@
-// ignore: lines_longer_than_80_chars
-// ignore_for_file: non_constant_identifier_names, constant_identifier_names, camel_case_types
+// ignore_for_file: non_constant_identifier_names, constant_identifier_names
 
 part of 'unistd.dart';
 
-const int R_OK = 4;
+const R_OK = 4;
 
-const int W_OK = 2;
+const W_OK = 2;
 
-const int X_OK = 1;
+const X_OK = 1;
 
-const int F_OK = 0;
+const F_OK = 0;
 
-const int SEEK_SET = 0;
+const SEEK_SET = 0;
 
-const int SEEK_CUR = 1;
+const SEEK_CUR = 1;
 
-const int SEEK_END = 2;
+const SEEK_END = 2;
 
-const int L_SET = 0;
+const L_SET = 0;
 
-const int L_INCR = 1;
+const L_INCR = 1;
 
-const int L_XTND = 2;
+const L_XTND = 2;
 
-const int F_ULOCK = 0;
+const F_ULOCK = 0;
 
-const int F_LOCK = 1;
+const F_LOCK = 1;
 
-const int F_TLOCK = 2;
+const F_TLOCK = 2;
 
-const int F_TEST = 3;
+const F_TEST = 3;
 
-const int PATH_MAX = 4096;
+const PATH_MAX = 4096;
 
 /// A signal that can be sent to a process with [kill].
 ///

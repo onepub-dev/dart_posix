@@ -1,5 +1,4 @@
-// ignore: lines_longer_than_80_chars
-// ignore_for_file: non_constant_identifier_names, constant_identifier_names, camel_case_types
+// ignore_for_file: non_constant_identifier_names
 
 part of 'unistd.dart';
 
@@ -55,7 +54,7 @@ void chmod(
   String filename,
   String permissions,
 ) {
-  final _permissions = int.parse(permissions, radix: 8);
+  final permissions0 = int.parse(permissions, radix: 8);
   final cFilename = toNativeUtf8Checked(filename);
 
   clearErrno();
@@ -64,7 +63,7 @@ void chmod(
       ffi.Int32 Function(ffi.Pointer<Utf8>, ffi.Uint32), _dart_chmod>('chmod');
   final results = _chmod!(
     cFilename,
-    _permissions,
+    permissions0,
   );
   malloc.free(cFilename);
 
@@ -250,8 +249,8 @@ _dart_dup2? _dup2;
 /// environment ENVP.  ARGV and ENVP are terminated by NULL pointers.
 int native_execve(
   String path, // ffi.Pointer<Utf8> __path,
-  ffi.Pointer<ffi.Pointer<Utf8>> __argv,
-  ffi.Pointer<ffi.Pointer<Utf8>> __envp,
+  ffi.Pointer<ffi.Pointer<Utf8>> argv,
+  ffi.Pointer<ffi.Pointer<Utf8>> envp,
 ) {
   final cPath = toNativeUtf8Checked(path);
 
@@ -261,8 +260,8 @@ int native_execve(
       _dart_execve>('execve');
   final result = _execve!(
     cPath,
-    __argv,
-    __envp,
+    argv,
+    envp,
   );
 
   malloc.free(cPath);
@@ -276,8 +275,8 @@ _dart_execve? _execve;
 /// ARGV and ENVP are passed to the new program, as for `execve'.
 int native_fexecve(
   int fd,
-  ffi.Pointer<ffi.Pointer<Utf8>> __argv,
-  ffi.Pointer<ffi.Pointer<Utf8>> __envp,
+  ffi.Pointer<ffi.Pointer<Utf8>> argv,
+  ffi.Pointer<ffi.Pointer<Utf8>> envp,
 ) {
   _fexecve ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(ffi.Int32, ffi.Pointer<ffi.Pointer<Utf8>>,
@@ -285,8 +284,8 @@ int native_fexecve(
       _dart_fexecve>('fexecve');
   return _fexecve!(
     fd,
-    __argv,
-    __envp,
+    argv,
+    envp,
   );
 }
 
@@ -295,7 +294,7 @@ _dart_fexecve? _fexecve;
 /// Execute PATH with arguments ARGV and environment from `environ'.
 int native_execv(
   String path, // ffi.Pointer<Utf8> __path,
-  ffi.Pointer<ffi.Pointer<Utf8>> __argv,
+  ffi.Pointer<ffi.Pointer<Utf8>> argv,
 ) {
   final cPath = toNativeUtf8Checked(path);
 
@@ -304,7 +303,7 @@ int native_execv(
       _dart_execv>('execv');
   final result = _execv!(
     cPath,
-    __argv,
+    argv,
   );
 
   malloc.free(cPath);
@@ -355,7 +354,7 @@ int execl(
 /// no slashes, with arguments ARGV and environment from `environ'.
 int native_execvp(
   String file, // ffi.Pointer<Utf8> file,
-  ffi.Pointer<ffi.Pointer<Utf8>> __argv,
+  ffi.Pointer<ffi.Pointer<Utf8>> argv,
 ) {
   final cFile = toNativeUtf8Checked(file);
 
@@ -364,7 +363,7 @@ int native_execvp(
       _dart_execvp>('execvp');
   final result = _execvp!(
     cFile,
-    __argv,
+    argv,
   );
 
   malloc.free(cFile);

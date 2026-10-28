@@ -11,7 +11,7 @@ import 'dart:io' show Platform;
 import '../posix.dart';
 
 // ignore: constant_identifier_names
-const int NULL = 0;
+const NULL = 0;
 
 class Libc {
   factory Libc() => _self;
@@ -25,7 +25,7 @@ class Libc {
     }
     _dylib = ffi.DynamicLibrary.open(path);
   }
-  static final Libc _self = Libc._internal();
+  static final _self = Libc._internal();
 
   ffi.DynamicLibrary? _dylib;
 

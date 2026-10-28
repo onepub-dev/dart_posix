@@ -211,30 +211,30 @@ class Mode {
   }
 }
 
-const int S_IFMT = 0xF000;
-const int S_IFIFO = 0x1000;
-const int S_IFCHR = 0x2000;
-const int S_IFDIR = 0x4000;
-const int S_IFBLK = 0x6000;
-const int S_IFREG = 0x8000;
-const int S_IFLNK = 0xA000;
-const int S_IFSOCK = 0xC000;
+const S_IFMT = 0xF000;
+const S_IFIFO = 0x1000;
+const S_IFCHR = 0x2000;
+const S_IFDIR = 0x4000;
+const S_IFBLK = 0x6000;
+const S_IFREG = 0x8000;
+const S_IFLNK = 0xA000;
+const S_IFSOCK = 0xC000;
 
-const int S_ISUID = 0x0800;
-const int S_ISGID = 0x0400;
-const int S_ISVTX = 0x0200;
+const S_ISUID = 0x0800;
+const S_ISGID = 0x0400;
+const S_ISVTX = 0x0200;
 
-const int S_IRWXU = 0x01C0;
-const int S_IRUSR = 0x0100;
-const int S_IWUSR = 0x0080;
-const int S_IXUSR = 0x0040;
+const S_IRWXU = 0x01C0;
+const S_IRUSR = 0x0100;
+const S_IWUSR = 0x0080;
+const S_IXUSR = 0x0040;
 
-const int S_IRWXG = 0x0038;
-const int S_IRGRP = 0x0020;
-const int S_IWGRP = 0x0010;
-const int S_IXGRP = 0x0008;
+const S_IRWXG = 0x0038;
+const S_IRGRP = 0x0020;
+const S_IWGRP = 0x0010;
+const S_IXGRP = 0x0008;
 
-const int S_IRWXO = 0x0007;
-const int S_IROTH = 0x0004;
-const int S_IWOTH = 0x0002;
-const int S_IXOTH = 0x0001;
+const S_IRWXO = 0x0007;
+const S_IROTH = 0x0004;
+const S_IWOTH = 0x0002;
+const S_IXOTH = 0x0001;

@@ -32,7 +32,7 @@ class LinuxStatCall extends OsStatCall {
     return stat;
   }
 
-  late final _call =
+  late final LinuxStatCall_dart _call =
       Libc().dylib.lookupFunction<LinuxStatCall_c, LinuxStatCall_dart>(name);
 
   ffi.Pointer<LinuxStatStruct> _alloc() =>

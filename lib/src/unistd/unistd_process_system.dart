@@ -1,5 +1,4 @@
-// ignore: lines_longer_than_80_chars
-// ignore_for_file: non_constant_identifier_names, constant_identifier_names, camel_case_types
+// ignore_for_file: non_constant_identifier_names
 
 part of 'unistd.dart';
 
@@ -425,9 +424,9 @@ _dart_link? _link;
 ///
 /// Throws a [PosixException] if an error occurs.
 void linkat(
-  int __fromfd,
+  int fromfd,
   String from,
-  int __tofd,
+  int tofd,
   String to,
   int flags,
 ) {
@@ -441,9 +440,9 @@ void linkat(
           ffi.Pointer<Utf8>, ffi.Int32),
       _dart_linkat>('linkat');
   final result = _linkat!(
-    __fromfd,
+    fromfd,
     cFrom,
-    __tofd,
+    tofd,
     cTo,
     flags,
   );
@@ -823,8 +822,8 @@ _dart_setlogin? _setlogin;
 
 int native_getopt(
   int argc,
-  ffi.Pointer<ffi.Pointer<Utf8>> ___argv,
-  ffi.Pointer<Utf8> __shortopts,
+  ffi.Pointer<ffi.Pointer<Utf8>> argv,
+  ffi.Pointer<Utf8> shortopts,
 ) {
   _getopt ??= Libc().dylib.lookupFunction<
       ffi.Int32 Function(
@@ -832,8 +831,8 @@ int native_getopt(
       _dart_getopt>('getopt');
   return _getopt!(
     argc,
-    ___argv,
-    __shortopts,
+    argv,
+    shortopts,
   );
 }
 
@@ -1100,12 +1099,12 @@ _dart_chroot? _chroot;
 /// Prompt with PROMPT and read a string from the terminal without echoing.
 /// Uses /dev/tty if possible; otherwise stderr and stdin.
 ffi.Pointer<Utf8> native_getpass(
-  ffi.Pointer<Utf8> __prompt,
+  ffi.Pointer<Utf8> prompt,
 ) {
   _getpass ??= Libc().dylib.lookupFunction<
       ffi.Pointer<Utf8> Function(ffi.Pointer<Utf8>), _dart_getpass>('getpass');
   return _getpass!(
-    __prompt,
+    prompt,
   );
 }
 
@@ -1248,13 +1247,13 @@ _dart_sbrk? _sbrk;
 /// In Mach, all system calls take normal arguments and always return an
 /// error code (zero for success).
 int syscall(
-  int __sysno,
+  int sysno,
 ) {
   _syscall ??= Libc()
       .dylib
       .lookupFunction<ffi.Int64 Function(ffi.Int64), _dart_syscall>('syscall');
   return _syscall!(
-    __sysno,
+    sysno,
   );
 }
 

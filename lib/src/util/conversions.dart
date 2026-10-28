@@ -51,13 +51,13 @@ List<String> copyCStringListToDartList(
 
   var count = 0;
   while (true) {
-    final _value = cStringList[count];
+    final value = cStringList[count];
 
-    if (_value.address == 0) {
+    if (value.address == 0) {
       break;
     }
 
-    list.add(_value.cast<Utf8>().toDartString());
+    list.add(value.cast<Utf8>().toDartString());
     count += 1;
   }
 

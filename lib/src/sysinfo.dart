@@ -19,7 +19,7 @@ import 'unistd/errno.dart';
 /// Return system information.
 Sysinfo sysinfo() {
   _sysinfo ??= Libc().dylib.lookupFunction<
-      ffi.Int32 Function(ffi.Pointer<_sysinfo_t> __info),
+      ffi.Int32 Function(ffi.Pointer<_sysinfo_t> info),
       _dart_sysinfo>('sysinfo');
 
   final ptr = ffi.malloc<_sysinfo_t>();
@@ -215,7 +215,6 @@ class _ArrayHelper_sysinfo_loads_level0 {
   final int level;
   final int _absoluteIndex;
   int get length => dimensions[level];
-  // ignore: sort_constructors_first
   _ArrayHelper_sysinfo_loads_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
@@ -262,7 +261,6 @@ class _ArrayHelper_sysinfo__f_level0 {
   final int level;
   final int _absoluteIndex;
   int get length => dimensions[level];
-  // ignore: sort_constructors_first
   _ArrayHelper_sysinfo__f_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
@@ -289,7 +287,7 @@ class _ArrayHelper_sysinfo__f_level0 {
   }
 }
 
-const int SI_LOAD_SHIFT = 16;
+const SI_LOAD_SHIFT = 16;
 
 typedef _dart_sysinfo = int Function(
   ffi.Pointer<_sysinfo_t> __info,

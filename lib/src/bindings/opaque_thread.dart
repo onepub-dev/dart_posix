@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-// ignore_for_file: non_constant_identifier_names
 part of 'mac.dart';
 
 // class _opaque_pthread_t extends ffi.Struct {

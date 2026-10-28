@@ -69,7 +69,7 @@ _dart_getgrent? _getgrent;
 /// therefore not marked with __THROW.
 // ignore: non_constant_identifier_names
 Group native_fgetgrent(
-  ffi.Pointer<IO_FILE> __stream,
+  ffi.Pointer<IO_FILE> stream,
 ) {
   clearErrno();
   _fgetgrent ??= Libc().dylib.lookupFunction<
@@ -77,7 +77,7 @@ Group native_fgetgrent(
       _dart_fgetgrent>('fgetgrent');
 
   return _buildGroup(
-      _fgetgrent!(__stream),
+      _fgetgrent!(stream),
       'Error occured attempting to get the next group entry from the group'
       ' database stream');
 }

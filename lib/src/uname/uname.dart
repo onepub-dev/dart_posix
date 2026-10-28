@@ -31,7 +31,7 @@ Utsname uname() => Platform.isMacOS ? _unameBsd() : _unameGnu();
 
 Utsname _unameBsd() {
   final f = _uname_bsd_f ??= Libc().dylib.lookupFunction<
-      ffi.Int32 Function(ffi.Pointer<_utsname_bsd_t> __info),
+      ffi.Int32 Function(ffi.Pointer<_utsname_bsd_t> info),
       _dart_utsname_bsd>('uname');
 
   final buf = ffi.malloc<_utsname_bsd_t>();
@@ -48,7 +48,7 @@ Utsname _unameBsd() {
 
 Utsname _unameGnu() {
   final f = _uname_gnu_f ??= Libc().dylib.lookupFunction<
-      ffi.Int32 Function(ffi.Pointer<_utsname_gnu_t> __info),
+      ffi.Int32 Function(ffi.Pointer<_utsname_gnu_t> info),
       _dart_utsname_gnu>('uname');
 
   final buf = ffi.malloc<_utsname_gnu_t>();

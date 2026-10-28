@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-// ignore_for_file: non_constant_identifier_names
 part of 'mac.dart';
 
 /// Helper for array `__opaque` in struct `_opaque_pthread_t`.

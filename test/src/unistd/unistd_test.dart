@@ -21,12 +21,12 @@ void main() {
   });
 
   test('gethostname ...', () async {
-    late String _hostname;
+    late String hostname;
     await Process.run('hostname', []).then((results) {
-      _hostname = results.stdout.toString().split('\n')[0];
+      hostname = results.stdout.toString().split('\n')[0];
     });
 
-    expect(gethostname(), equals(_hostname));
+    expect(gethostname(), equals(hostname));
   });
   test('getpid ...', () async {
     expect(getpid(), equals(pid));
@@ -89,54 +89,54 @@ void main() {
 
   test('chmod', () async {
     await temp.withTempFile((file) async {
-      var _stat = stat(file);
+      var stat = stat(file);
       chmod(file, '777');
-      _stat = stat(file);
-      expect(_stat.mode.isOwnerReadable, isTrue);
-      expect(_stat.mode.isOwnerWritable, isTrue);
-      expect(_stat.mode.isOwnerExecutable, isTrue);
-      expect(_stat.mode.isGroupReadable, isTrue);
-      expect(_stat.mode.isGroupWritable, isTrue);
-      expect(_stat.mode.isGroupExecutable, isTrue);
-      expect(_stat.mode.isOtherReadable, isTrue);
-      expect(_stat.mode.isOtherWritable, isTrue);
-      expect(_stat.mode.isOtherExecutable, isTrue);
+      stat = stat(file);
+      expect(stat.mode.isOwnerReadable, isTrue);
+      expect(stat.mode.isOwnerWritable, isTrue);
+      expect(stat.mode.isOwnerExecutable, isTrue);
+      expect(stat.mode.isGroupReadable, isTrue);
+      expect(stat.mode.isGroupWritable, isTrue);
+      expect(stat.mode.isGroupExecutable, isTrue);
+      expect(stat.mode.isOtherReadable, isTrue);
+      expect(stat.mode.isOtherWritable, isTrue);
+      expect(stat.mode.isOtherExecutable, isTrue);
 
       chmod(file, '666');
-      _stat = stat(file);
-      expect(_stat.mode.isOwnerReadable, isTrue);
-      expect(_stat.mode.isOwnerWritable, isTrue);
-      expect(_stat.mode.isOwnerExecutable, isFalse);
-      expect(_stat.mode.isGroupReadable, isTrue);
-      expect(_stat.mode.isGroupWritable, isTrue);
-      expect(_stat.mode.isGroupExecutable, isFalse);
-      expect(_stat.mode.isOtherReadable, isTrue);
-      expect(_stat.mode.isOtherWritable, isTrue);
-      expect(_stat.mode.isOtherExecutable, isFalse);
+      stat = stat(file);
+      expect(stat.mode.isOwnerReadable, isTrue);
+      expect(stat.mode.isOwnerWritable, isTrue);
+      expect(stat.mode.isOwnerExecutable, isFalse);
+      expect(stat.mode.isGroupReadable, isTrue);
+      expect(stat.mode.isGroupWritable, isTrue);
+      expect(stat.mode.isGroupExecutable, isFalse);
+      expect(stat.mode.isOtherReadable, isTrue);
+      expect(stat.mode.isOtherWritable, isTrue);
+      expect(stat.mode.isOtherExecutable, isFalse);
 
       chmod(file, '444');
-      _stat = stat(file);
-      expect(_stat.mode.isOwnerReadable, isTrue);
-      expect(_stat.mode.isOwnerWritable, isFalse);
-      expect(_stat.mode.isOwnerExecutable, isFalse);
-      expect(_stat.mode.isGroupReadable, isTrue);
-      expect(_stat.mode.isGroupWritable, isFalse);
-      expect(_stat.mode.isGroupExecutable, isFalse);
-      expect(_stat.mode.isOtherReadable, isTrue);
-      expect(_stat.mode.isOtherWritable, isFalse);
-      expect(_stat.mode.isOtherExecutable, isFalse);
+      stat = stat(file);
+      expect(stat.mode.isOwnerReadable, isTrue);
+      expect(stat.mode.isOwnerWritable, isFalse);
+      expect(stat.mode.isOwnerExecutable, isFalse);
+      expect(stat.mode.isGroupReadable, isTrue);
+      expect(stat.mode.isGroupWritable, isFalse);
+      expect(stat.mode.isGroupExecutable, isFalse);
+      expect(stat.mode.isOtherReadable, isTrue);
+      expect(stat.mode.isOtherWritable, isFalse);
+      expect(stat.mode.isOtherExecutable, isFalse);
 
       chmod(file, '222');
-      _stat = stat(file);
-      expect(_stat.mode.isOwnerReadable, isFalse);
-      expect(_stat.mode.isOwnerWritable, isTrue);
-      expect(_stat.mode.isOwnerExecutable, isFalse);
-      expect(_stat.mode.isGroupReadable, isFalse);
-      expect(_stat.mode.isGroupWritable, isTrue);
-      expect(_stat.mode.isGroupExecutable, isFalse);
-      expect(_stat.mode.isOtherReadable, isFalse);
-      expect(_stat.mode.isOtherWritable, isTrue);
-      expect(_stat.mode.isOtherExecutable, isFalse);
+      stat = stat(file);
+      expect(stat.mode.isOwnerReadable, isFalse);
+      expect(stat.mode.isOwnerWritable, isTrue);
+      expect(stat.mode.isOwnerExecutable, isFalse);
+      expect(stat.mode.isGroupReadable, isFalse);
+      expect(stat.mode.isGroupWritable, isTrue);
+      expect(stat.mode.isGroupExecutable, isFalse);
+      expect(stat.mode.isOtherReadable, isFalse);
+      expect(stat.mode.isOtherWritable, isTrue);
+      expect(stat.mode.isOtherExecutable, isFalse);
     });
   }, skip: true, tags: ['sudo']);
 
