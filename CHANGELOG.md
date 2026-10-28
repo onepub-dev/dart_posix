@@ -1,3 +1,10 @@
+# 6.5.4
+- documentation fixes.
+- add example.
+- lint fixes.
+- upgraded  dev dependencies.
+- increased the description length to make pub.dev analytics happy.
+
 # 6.5.3
 - Harden native string and buffer handling in filesystem, host, account, and I/O wrappers.
 - Use terminated argument and environment vectors for the `execl` family.
